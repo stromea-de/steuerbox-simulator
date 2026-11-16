@@ -1,0 +1,5 @@
+/* Loaded only by the server-rendered library when scripting is disabled. */
+main > :not(header):not(noscript):not(#report-list-fallback):not(footer){display:none}
+header .preferences,#practice-badge{display:none}
+#report-list-fallback{padding:28px 48px}
+@media(max-width:600px){#report-list-fallback{padding:20px}}

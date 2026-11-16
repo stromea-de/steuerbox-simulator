@@ -1,0 +1,5 @@
+/* 041: Ohne JavaScript zeigt /protokoll die serverseitige Ansicht; mit JavaScript bleibt sie bis zur fertigen Ansicht verborgen (kein ungestylter Zwischenzustand). */
+#saved-fallback.saved-pending{display:block!important}
+.footer-about{display:none!important}
+/* Review R041-05: without JavaScript the start view and the server-rendered report list are never hidden by the loading state. */
+html.booting main>*{visibility:visible!important}

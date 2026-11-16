@@ -1,0 +1,2492 @@
+[
+  {
+    "name": "consumption-quick-empty",
+    "report": {
+      "mode": "onsite",
+      "schemaVersion": 1,
+      "config": {
+        "scope": "consumption",
+        "testProfile": "quick",
+        "lpc": 4200,
+        "lpp": 1000,
+        "tolerance": 50
+      },
+      "steps": []
+    },
+    "counts": {
+      "passed": 0,
+      "failed": 0,
+      "notChecked": 0,
+      "open": 4
+    },
+    "matrix": [
+      {
+        "title": "Grenze angenommen",
+        "lpc": "open",
+        "lpp": "excluded"
+      },
+      {
+        "title": "Grenze wirkt",
+        "lpc": "open",
+        "lpp": "excluded"
+      },
+      {
+        "title": "Notbetrieb bei Ausfall",
+        "lpc": "open",
+        "lpp": "excluded"
+      },
+      {
+        "title": "Rückkehr zum Normalbetrieb",
+        "lpc": "open",
+        "lpp": "excluded"
+      }
+    ]
+  },
+  {
+    "name": "consumption-quick-complete",
+    "report": {
+      "mode": "onsite",
+      "schemaVersion": 1,
+      "config": {
+        "scope": "consumption",
+        "testProfile": "quick",
+        "lpc": 4200,
+        "lpp": 1000,
+        "tolerance": 50
+      },
+      "steps": [
+        {
+          "name": "Ausgangsmessung MPC",
+          "passed": true,
+          "watts": 8000
+        },
+        {
+          "name": "LPC Grenze + Quittung",
+          "passed": true
+        },
+        {
+          "name": "LPC gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC Heartbeat-Ausfall",
+          "passed": true
+        },
+        {
+          "name": "LPC Failsafe gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC Vorzeitige Freigabe",
+          "passed": true
+        },
+        {
+          "name": "LPC Vorzeitige Rückkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC Wiederkehr",
+          "passed": true
+        },
+        {
+          "name": "LPC Wiederkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Ausgangsmessung MPC",
+          "passed": true,
+          "watts": -5000
+        },
+        {
+          "name": "LPP Grenze + Quittung",
+          "passed": true
+        },
+        {
+          "name": "LPP gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Heartbeat-Ausfall",
+          "passed": true
+        },
+        {
+          "name": "LPP Failsafe gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Vorzeitige Freigabe",
+          "passed": true
+        },
+        {
+          "name": "LPP Vorzeitige Rückkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Wiederkehr",
+          "passed": true
+        },
+        {
+          "name": "LPP Wiederkehr gemessene Wirkung",
+          "passed": true
+        }
+      ]
+    },
+    "counts": {
+      "passed": 4,
+      "failed": 0,
+      "notChecked": 0,
+      "open": 0
+    },
+    "matrix": [
+      {
+        "title": "Grenze angenommen",
+        "lpc": "passed",
+        "lpp": "excluded"
+      },
+      {
+        "title": "Grenze wirkt",
+        "lpc": "passed",
+        "lpp": "excluded"
+      },
+      {
+        "title": "Notbetrieb bei Ausfall",
+        "lpc": "passed",
+        "lpp": "excluded"
+      },
+      {
+        "title": "Rückkehr zum Normalbetrieb",
+        "lpc": "passed",
+        "lpp": "excluded"
+      }
+    ]
+  },
+  {
+    "name": "consumption-quick-retry-failure",
+    "report": {
+      "mode": "onsite",
+      "schemaVersion": 1,
+      "config": {
+        "scope": "consumption",
+        "testProfile": "quick",
+        "lpc": 4200,
+        "lpp": 1000,
+        "tolerance": 50
+      },
+      "steps": [
+        {
+          "name": "Ausgangsmessung MPC",
+          "passed": true,
+          "watts": 8000
+        },
+        {
+          "name": "LPC Grenze + Quittung",
+          "passed": true
+        },
+        {
+          "name": "LPC gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC Heartbeat-Ausfall",
+          "passed": true
+        },
+        {
+          "name": "LPC Failsafe gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC Vorzeitige Freigabe",
+          "passed": true
+        },
+        {
+          "name": "LPC Vorzeitige Rückkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC Wiederkehr",
+          "passed": true
+        },
+        {
+          "name": "LPC Wiederkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC gemessene Wirkung",
+          "passed": false
+        },
+        {
+          "name": "LPP Ausgangsmessung MPC",
+          "passed": true,
+          "watts": -5000
+        },
+        {
+          "name": "LPP Grenze + Quittung",
+          "passed": true
+        },
+        {
+          "name": "LPP gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Heartbeat-Ausfall",
+          "passed": true
+        },
+        {
+          "name": "LPP Failsafe gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Vorzeitige Freigabe",
+          "passed": true
+        },
+        {
+          "name": "LPP Vorzeitige Rückkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Wiederkehr",
+          "passed": true
+        },
+        {
+          "name": "LPP Wiederkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP gemessene Wirkung",
+          "passed": false
+        }
+      ]
+    },
+    "counts": {
+      "passed": 3,
+      "failed": 1,
+      "notChecked": 0,
+      "open": 0
+    },
+    "matrix": [
+      {
+        "title": "Grenze angenommen",
+        "lpc": "passed",
+        "lpp": "excluded"
+      },
+      {
+        "title": "Grenze wirkt",
+        "lpc": "failed",
+        "lpp": "excluded"
+      },
+      {
+        "title": "Notbetrieb bei Ausfall",
+        "lpc": "passed",
+        "lpp": "excluded"
+      },
+      {
+        "title": "Rückkehr zum Normalbetrieb",
+        "lpc": "passed",
+        "lpp": "excluded"
+      }
+    ]
+  },
+  {
+    "name": "consumption-quick-low-load",
+    "report": {
+      "mode": "onsite",
+      "schemaVersion": 1,
+      "config": {
+        "scope": "consumption",
+        "testProfile": "quick",
+        "lpc": 4200,
+        "lpp": 1000,
+        "tolerance": 50
+      },
+      "steps": [
+        {
+          "name": "Ausgangsmessung MPC",
+          "passed": true,
+          "watts": 0
+        },
+        {
+          "name": "LPC Grenze + Quittung",
+          "passed": true
+        },
+        {
+          "name": "LPC gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC Heartbeat-Ausfall",
+          "passed": true
+        },
+        {
+          "name": "LPC Failsafe gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC Vorzeitige Freigabe",
+          "passed": true
+        },
+        {
+          "name": "LPC Vorzeitige Rückkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC Wiederkehr",
+          "passed": true
+        },
+        {
+          "name": "LPC Wiederkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Ausgangsmessung MPC",
+          "passed": true,
+          "watts": 0
+        },
+        {
+          "name": "LPP Grenze + Quittung",
+          "passed": true
+        },
+        {
+          "name": "LPP gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Heartbeat-Ausfall",
+          "passed": true
+        },
+        {
+          "name": "LPP Failsafe gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Vorzeitige Freigabe",
+          "passed": true
+        },
+        {
+          "name": "LPP Vorzeitige Rückkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Wiederkehr",
+          "passed": true
+        },
+        {
+          "name": "LPP Wiederkehr gemessene Wirkung",
+          "passed": true
+        }
+      ]
+    },
+    "counts": {
+      "passed": 3,
+      "failed": 0,
+      "notChecked": 1,
+      "open": 0
+    },
+    "matrix": [
+      {
+        "title": "Grenze angenommen",
+        "lpc": "passed",
+        "lpp": "excluded"
+      },
+      {
+        "title": "Grenze wirkt",
+        "lpc": "not_checked",
+        "lpp": "excluded"
+      },
+      {
+        "title": "Notbetrieb bei Ausfall",
+        "lpc": "passed",
+        "lpp": "excluded"
+      },
+      {
+        "title": "Rückkehr zum Normalbetrieb",
+        "lpc": "passed",
+        "lpp": "excluded"
+      }
+    ]
+  },
+  {
+    "name": "consumption-full-empty",
+    "report": {
+      "mode": "onsite",
+      "schemaVersion": 1,
+      "config": {
+        "scope": "consumption",
+        "testProfile": "full",
+        "lpc": 4200,
+        "lpp": 1000,
+        "tolerance": 50
+      },
+      "steps": []
+    },
+    "counts": {
+      "passed": 0,
+      "failed": 0,
+      "notChecked": 0,
+      "open": 5
+    },
+    "matrix": [
+      {
+        "title": "Grenze angenommen",
+        "lpc": "open",
+        "lpp": "excluded"
+      },
+      {
+        "title": "Grenze wirkt",
+        "lpc": "open",
+        "lpp": "excluded"
+      },
+      {
+        "title": "Notbetrieb bei Ausfall",
+        "lpc": "open",
+        "lpp": "excluded"
+      },
+      {
+        "title": "Rückkehr zum Normalbetrieb",
+        "lpc": "open",
+        "lpp": "excluded"
+      },
+      {
+        "title": "Notbetrieb hält Mindestdauer",
+        "lpc": "open",
+        "lpp": "excluded"
+      }
+    ]
+  },
+  {
+    "name": "consumption-full-complete",
+    "report": {
+      "mode": "onsite",
+      "schemaVersion": 1,
+      "config": {
+        "scope": "consumption",
+        "testProfile": "full",
+        "lpc": 4200,
+        "lpp": 1000,
+        "tolerance": 50
+      },
+      "steps": [
+        {
+          "name": "Ausgangsmessung MPC",
+          "passed": true,
+          "watts": 8000
+        },
+        {
+          "name": "LPC Grenze + Quittung",
+          "passed": true
+        },
+        {
+          "name": "LPC gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC Heartbeat-Ausfall",
+          "passed": true
+        },
+        {
+          "name": "LPC Failsafe gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC Vorzeitige Freigabe",
+          "passed": true
+        },
+        {
+          "name": "LPC Vorzeitige Rückkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC Wiederkehr",
+          "passed": true
+        },
+        {
+          "name": "LPC Wiederkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Ausgangsmessung MPC",
+          "passed": true,
+          "watts": -5000
+        },
+        {
+          "name": "LPP Grenze + Quittung",
+          "passed": true
+        },
+        {
+          "name": "LPP gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Heartbeat-Ausfall",
+          "passed": true
+        },
+        {
+          "name": "LPP Failsafe gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Vorzeitige Freigabe",
+          "passed": true
+        },
+        {
+          "name": "LPP Vorzeitige Rückkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Wiederkehr",
+          "passed": true
+        },
+        {
+          "name": "LPP Wiederkehr gemessene Wirkung",
+          "passed": true
+        }
+      ]
+    },
+    "counts": {
+      "passed": 5,
+      "failed": 0,
+      "notChecked": 0,
+      "open": 0
+    },
+    "matrix": [
+      {
+        "title": "Grenze angenommen",
+        "lpc": "passed",
+        "lpp": "excluded"
+      },
+      {
+        "title": "Grenze wirkt",
+        "lpc": "passed",
+        "lpp": "excluded"
+      },
+      {
+        "title": "Notbetrieb bei Ausfall",
+        "lpc": "passed",
+        "lpp": "excluded"
+      },
+      {
+        "title": "Rückkehr zum Normalbetrieb",
+        "lpc": "passed",
+        "lpp": "excluded"
+      },
+      {
+        "title": "Notbetrieb hält Mindestdauer",
+        "lpc": "passed",
+        "lpp": "excluded"
+      }
+    ]
+  },
+  {
+    "name": "consumption-full-retry-failure",
+    "report": {
+      "mode": "onsite",
+      "schemaVersion": 1,
+      "config": {
+        "scope": "consumption",
+        "testProfile": "full",
+        "lpc": 4200,
+        "lpp": 1000,
+        "tolerance": 50
+      },
+      "steps": [
+        {
+          "name": "Ausgangsmessung MPC",
+          "passed": true,
+          "watts": 8000
+        },
+        {
+          "name": "LPC Grenze + Quittung",
+          "passed": true
+        },
+        {
+          "name": "LPC gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC Heartbeat-Ausfall",
+          "passed": true
+        },
+        {
+          "name": "LPC Failsafe gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC Vorzeitige Freigabe",
+          "passed": true
+        },
+        {
+          "name": "LPC Vorzeitige Rückkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC Wiederkehr",
+          "passed": true
+        },
+        {
+          "name": "LPC Wiederkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC gemessene Wirkung",
+          "passed": false
+        },
+        {
+          "name": "LPP Ausgangsmessung MPC",
+          "passed": true,
+          "watts": -5000
+        },
+        {
+          "name": "LPP Grenze + Quittung",
+          "passed": true
+        },
+        {
+          "name": "LPP gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Heartbeat-Ausfall",
+          "passed": true
+        },
+        {
+          "name": "LPP Failsafe gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Vorzeitige Freigabe",
+          "passed": true
+        },
+        {
+          "name": "LPP Vorzeitige Rückkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Wiederkehr",
+          "passed": true
+        },
+        {
+          "name": "LPP Wiederkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP gemessene Wirkung",
+          "passed": false
+        }
+      ]
+    },
+    "counts": {
+      "passed": 4,
+      "failed": 1,
+      "notChecked": 0,
+      "open": 0
+    },
+    "matrix": [
+      {
+        "title": "Grenze angenommen",
+        "lpc": "passed",
+        "lpp": "excluded"
+      },
+      {
+        "title": "Grenze wirkt",
+        "lpc": "failed",
+        "lpp": "excluded"
+      },
+      {
+        "title": "Notbetrieb bei Ausfall",
+        "lpc": "passed",
+        "lpp": "excluded"
+      },
+      {
+        "title": "Rückkehr zum Normalbetrieb",
+        "lpc": "passed",
+        "lpp": "excluded"
+      },
+      {
+        "title": "Notbetrieb hält Mindestdauer",
+        "lpc": "passed",
+        "lpp": "excluded"
+      }
+    ]
+  },
+  {
+    "name": "consumption-full-low-load",
+    "report": {
+      "mode": "onsite",
+      "schemaVersion": 1,
+      "config": {
+        "scope": "consumption",
+        "testProfile": "full",
+        "lpc": 4200,
+        "lpp": 1000,
+        "tolerance": 50
+      },
+      "steps": [
+        {
+          "name": "Ausgangsmessung MPC",
+          "passed": true,
+          "watts": 0
+        },
+        {
+          "name": "LPC Grenze + Quittung",
+          "passed": true
+        },
+        {
+          "name": "LPC gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC Heartbeat-Ausfall",
+          "passed": true
+        },
+        {
+          "name": "LPC Failsafe gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC Vorzeitige Freigabe",
+          "passed": true
+        },
+        {
+          "name": "LPC Vorzeitige Rückkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC Wiederkehr",
+          "passed": true
+        },
+        {
+          "name": "LPC Wiederkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Ausgangsmessung MPC",
+          "passed": true,
+          "watts": 0
+        },
+        {
+          "name": "LPP Grenze + Quittung",
+          "passed": true
+        },
+        {
+          "name": "LPP gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Heartbeat-Ausfall",
+          "passed": true
+        },
+        {
+          "name": "LPP Failsafe gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Vorzeitige Freigabe",
+          "passed": true
+        },
+        {
+          "name": "LPP Vorzeitige Rückkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Wiederkehr",
+          "passed": true
+        },
+        {
+          "name": "LPP Wiederkehr gemessene Wirkung",
+          "passed": true
+        }
+      ]
+    },
+    "counts": {
+      "passed": 4,
+      "failed": 0,
+      "notChecked": 1,
+      "open": 0
+    },
+    "matrix": [
+      {
+        "title": "Grenze angenommen",
+        "lpc": "passed",
+        "lpp": "excluded"
+      },
+      {
+        "title": "Grenze wirkt",
+        "lpc": "not_checked",
+        "lpp": "excluded"
+      },
+      {
+        "title": "Notbetrieb bei Ausfall",
+        "lpc": "passed",
+        "lpp": "excluded"
+      },
+      {
+        "title": "Rückkehr zum Normalbetrieb",
+        "lpc": "passed",
+        "lpp": "excluded"
+      },
+      {
+        "title": "Notbetrieb hält Mindestdauer",
+        "lpc": "passed",
+        "lpp": "excluded"
+      }
+    ]
+  },
+  {
+    "name": "production-quick-empty",
+    "report": {
+      "mode": "onsite",
+      "schemaVersion": 1,
+      "config": {
+        "scope": "production",
+        "testProfile": "quick",
+        "lpc": 4200,
+        "lpp": 1000,
+        "tolerance": 50
+      },
+      "steps": []
+    },
+    "counts": {
+      "passed": 0,
+      "failed": 0,
+      "notChecked": 0,
+      "open": 4
+    },
+    "matrix": [
+      {
+        "title": "Grenze angenommen",
+        "lpc": "excluded",
+        "lpp": "open"
+      },
+      {
+        "title": "Grenze wirkt",
+        "lpc": "excluded",
+        "lpp": "open"
+      },
+      {
+        "title": "Notbetrieb bei Ausfall",
+        "lpc": "excluded",
+        "lpp": "open"
+      },
+      {
+        "title": "Rückkehr zum Normalbetrieb",
+        "lpc": "excluded",
+        "lpp": "open"
+      }
+    ]
+  },
+  {
+    "name": "production-quick-complete",
+    "report": {
+      "mode": "onsite",
+      "schemaVersion": 1,
+      "config": {
+        "scope": "production",
+        "testProfile": "quick",
+        "lpc": 4200,
+        "lpp": 1000,
+        "tolerance": 50
+      },
+      "steps": [
+        {
+          "name": "Ausgangsmessung MPC",
+          "passed": true,
+          "watts": 8000
+        },
+        {
+          "name": "LPC Grenze + Quittung",
+          "passed": true
+        },
+        {
+          "name": "LPC gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC Heartbeat-Ausfall",
+          "passed": true
+        },
+        {
+          "name": "LPC Failsafe gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC Vorzeitige Freigabe",
+          "passed": true
+        },
+        {
+          "name": "LPC Vorzeitige Rückkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC Wiederkehr",
+          "passed": true
+        },
+        {
+          "name": "LPC Wiederkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Ausgangsmessung MPC",
+          "passed": true,
+          "watts": -5000
+        },
+        {
+          "name": "LPP Grenze + Quittung",
+          "passed": true
+        },
+        {
+          "name": "LPP gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Heartbeat-Ausfall",
+          "passed": true
+        },
+        {
+          "name": "LPP Failsafe gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Vorzeitige Freigabe",
+          "passed": true
+        },
+        {
+          "name": "LPP Vorzeitige Rückkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Wiederkehr",
+          "passed": true
+        },
+        {
+          "name": "LPP Wiederkehr gemessene Wirkung",
+          "passed": true
+        }
+      ]
+    },
+    "counts": {
+      "passed": 4,
+      "failed": 0,
+      "notChecked": 0,
+      "open": 0
+    },
+    "matrix": [
+      {
+        "title": "Grenze angenommen",
+        "lpc": "excluded",
+        "lpp": "passed"
+      },
+      {
+        "title": "Grenze wirkt",
+        "lpc": "excluded",
+        "lpp": "passed"
+      },
+      {
+        "title": "Notbetrieb bei Ausfall",
+        "lpc": "excluded",
+        "lpp": "passed"
+      },
+      {
+        "title": "Rückkehr zum Normalbetrieb",
+        "lpc": "excluded",
+        "lpp": "passed"
+      }
+    ]
+  },
+  {
+    "name": "production-quick-retry-failure",
+    "report": {
+      "mode": "onsite",
+      "schemaVersion": 1,
+      "config": {
+        "scope": "production",
+        "testProfile": "quick",
+        "lpc": 4200,
+        "lpp": 1000,
+        "tolerance": 50
+      },
+      "steps": [
+        {
+          "name": "Ausgangsmessung MPC",
+          "passed": true,
+          "watts": 8000
+        },
+        {
+          "name": "LPC Grenze + Quittung",
+          "passed": true
+        },
+        {
+          "name": "LPC gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC Heartbeat-Ausfall",
+          "passed": true
+        },
+        {
+          "name": "LPC Failsafe gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC Vorzeitige Freigabe",
+          "passed": true
+        },
+        {
+          "name": "LPC Vorzeitige Rückkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC Wiederkehr",
+          "passed": true
+        },
+        {
+          "name": "LPC Wiederkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC gemessene Wirkung",
+          "passed": false
+        },
+        {
+          "name": "LPP Ausgangsmessung MPC",
+          "passed": true,
+          "watts": -5000
+        },
+        {
+          "name": "LPP Grenze + Quittung",
+          "passed": true
+        },
+        {
+          "name": "LPP gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Heartbeat-Ausfall",
+          "passed": true
+        },
+        {
+          "name": "LPP Failsafe gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Vorzeitige Freigabe",
+          "passed": true
+        },
+        {
+          "name": "LPP Vorzeitige Rückkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Wiederkehr",
+          "passed": true
+        },
+        {
+          "name": "LPP Wiederkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP gemessene Wirkung",
+          "passed": false
+        }
+      ]
+    },
+    "counts": {
+      "passed": 3,
+      "failed": 1,
+      "notChecked": 0,
+      "open": 0
+    },
+    "matrix": [
+      {
+        "title": "Grenze angenommen",
+        "lpc": "excluded",
+        "lpp": "passed"
+      },
+      {
+        "title": "Grenze wirkt",
+        "lpc": "excluded",
+        "lpp": "failed"
+      },
+      {
+        "title": "Notbetrieb bei Ausfall",
+        "lpc": "excluded",
+        "lpp": "passed"
+      },
+      {
+        "title": "Rückkehr zum Normalbetrieb",
+        "lpc": "excluded",
+        "lpp": "passed"
+      }
+    ]
+  },
+  {
+    "name": "production-quick-low-load",
+    "report": {
+      "mode": "onsite",
+      "schemaVersion": 1,
+      "config": {
+        "scope": "production",
+        "testProfile": "quick",
+        "lpc": 4200,
+        "lpp": 1000,
+        "tolerance": 50
+      },
+      "steps": [
+        {
+          "name": "Ausgangsmessung MPC",
+          "passed": true,
+          "watts": 0
+        },
+        {
+          "name": "LPC Grenze + Quittung",
+          "passed": true
+        },
+        {
+          "name": "LPC gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC Heartbeat-Ausfall",
+          "passed": true
+        },
+        {
+          "name": "LPC Failsafe gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC Vorzeitige Freigabe",
+          "passed": true
+        },
+        {
+          "name": "LPC Vorzeitige Rückkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC Wiederkehr",
+          "passed": true
+        },
+        {
+          "name": "LPC Wiederkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Ausgangsmessung MPC",
+          "passed": true,
+          "watts": 0
+        },
+        {
+          "name": "LPP Grenze + Quittung",
+          "passed": true
+        },
+        {
+          "name": "LPP gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Heartbeat-Ausfall",
+          "passed": true
+        },
+        {
+          "name": "LPP Failsafe gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Vorzeitige Freigabe",
+          "passed": true
+        },
+        {
+          "name": "LPP Vorzeitige Rückkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Wiederkehr",
+          "passed": true
+        },
+        {
+          "name": "LPP Wiederkehr gemessene Wirkung",
+          "passed": true
+        }
+      ]
+    },
+    "counts": {
+      "passed": 3,
+      "failed": 0,
+      "notChecked": 1,
+      "open": 0
+    },
+    "matrix": [
+      {
+        "title": "Grenze angenommen",
+        "lpc": "excluded",
+        "lpp": "passed"
+      },
+      {
+        "title": "Grenze wirkt",
+        "lpc": "excluded",
+        "lpp": "not_checked"
+      },
+      {
+        "title": "Notbetrieb bei Ausfall",
+        "lpc": "excluded",
+        "lpp": "passed"
+      },
+      {
+        "title": "Rückkehr zum Normalbetrieb",
+        "lpc": "excluded",
+        "lpp": "passed"
+      }
+    ]
+  },
+  {
+    "name": "production-full-empty",
+    "report": {
+      "mode": "onsite",
+      "schemaVersion": 1,
+      "config": {
+        "scope": "production",
+        "testProfile": "full",
+        "lpc": 4200,
+        "lpp": 1000,
+        "tolerance": 50
+      },
+      "steps": []
+    },
+    "counts": {
+      "passed": 0,
+      "failed": 0,
+      "notChecked": 0,
+      "open": 5
+    },
+    "matrix": [
+      {
+        "title": "Grenze angenommen",
+        "lpc": "excluded",
+        "lpp": "open"
+      },
+      {
+        "title": "Grenze wirkt",
+        "lpc": "excluded",
+        "lpp": "open"
+      },
+      {
+        "title": "Notbetrieb bei Ausfall",
+        "lpc": "excluded",
+        "lpp": "open"
+      },
+      {
+        "title": "Rückkehr zum Normalbetrieb",
+        "lpc": "excluded",
+        "lpp": "open"
+      },
+      {
+        "title": "Notbetrieb hält Mindestdauer",
+        "lpc": "excluded",
+        "lpp": "open"
+      }
+    ]
+  },
+  {
+    "name": "production-full-complete",
+    "report": {
+      "mode": "onsite",
+      "schemaVersion": 1,
+      "config": {
+        "scope": "production",
+        "testProfile": "full",
+        "lpc": 4200,
+        "lpp": 1000,
+        "tolerance": 50
+      },
+      "steps": [
+        {
+          "name": "Ausgangsmessung MPC",
+          "passed": true,
+          "watts": 8000
+        },
+        {
+          "name": "LPC Grenze + Quittung",
+          "passed": true
+        },
+        {
+          "name": "LPC gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC Heartbeat-Ausfall",
+          "passed": true
+        },
+        {
+          "name": "LPC Failsafe gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC Vorzeitige Freigabe",
+          "passed": true
+        },
+        {
+          "name": "LPC Vorzeitige Rückkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC Wiederkehr",
+          "passed": true
+        },
+        {
+          "name": "LPC Wiederkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Ausgangsmessung MPC",
+          "passed": true,
+          "watts": -5000
+        },
+        {
+          "name": "LPP Grenze + Quittung",
+          "passed": true
+        },
+        {
+          "name": "LPP gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Heartbeat-Ausfall",
+          "passed": true
+        },
+        {
+          "name": "LPP Failsafe gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Vorzeitige Freigabe",
+          "passed": true
+        },
+        {
+          "name": "LPP Vorzeitige Rückkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Wiederkehr",
+          "passed": true
+        },
+        {
+          "name": "LPP Wiederkehr gemessene Wirkung",
+          "passed": true
+        }
+      ]
+    },
+    "counts": {
+      "passed": 5,
+      "failed": 0,
+      "notChecked": 0,
+      "open": 0
+    },
+    "matrix": [
+      {
+        "title": "Grenze angenommen",
+        "lpc": "excluded",
+        "lpp": "passed"
+      },
+      {
+        "title": "Grenze wirkt",
+        "lpc": "excluded",
+        "lpp": "passed"
+      },
+      {
+        "title": "Notbetrieb bei Ausfall",
+        "lpc": "excluded",
+        "lpp": "passed"
+      },
+      {
+        "title": "Rückkehr zum Normalbetrieb",
+        "lpc": "excluded",
+        "lpp": "passed"
+      },
+      {
+        "title": "Notbetrieb hält Mindestdauer",
+        "lpc": "excluded",
+        "lpp": "passed"
+      }
+    ]
+  },
+  {
+    "name": "production-full-retry-failure",
+    "report": {
+      "mode": "onsite",
+      "schemaVersion": 1,
+      "config": {
+        "scope": "production",
+        "testProfile": "full",
+        "lpc": 4200,
+        "lpp": 1000,
+        "tolerance": 50
+      },
+      "steps": [
+        {
+          "name": "Ausgangsmessung MPC",
+          "passed": true,
+          "watts": 8000
+        },
+        {
+          "name": "LPC Grenze + Quittung",
+          "passed": true
+        },
+        {
+          "name": "LPC gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC Heartbeat-Ausfall",
+          "passed": true
+        },
+        {
+          "name": "LPC Failsafe gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC Vorzeitige Freigabe",
+          "passed": true
+        },
+        {
+          "name": "LPC Vorzeitige Rückkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC Wiederkehr",
+          "passed": true
+        },
+        {
+          "name": "LPC Wiederkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC gemessene Wirkung",
+          "passed": false
+        },
+        {
+          "name": "LPP Ausgangsmessung MPC",
+          "passed": true,
+          "watts": -5000
+        },
+        {
+          "name": "LPP Grenze + Quittung",
+          "passed": true
+        },
+        {
+          "name": "LPP gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Heartbeat-Ausfall",
+          "passed": true
+        },
+        {
+          "name": "LPP Failsafe gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Vorzeitige Freigabe",
+          "passed": true
+        },
+        {
+          "name": "LPP Vorzeitige Rückkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Wiederkehr",
+          "passed": true
+        },
+        {
+          "name": "LPP Wiederkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP gemessene Wirkung",
+          "passed": false
+        }
+      ]
+    },
+    "counts": {
+      "passed": 4,
+      "failed": 1,
+      "notChecked": 0,
+      "open": 0
+    },
+    "matrix": [
+      {
+        "title": "Grenze angenommen",
+        "lpc": "excluded",
+        "lpp": "passed"
+      },
+      {
+        "title": "Grenze wirkt",
+        "lpc": "excluded",
+        "lpp": "failed"
+      },
+      {
+        "title": "Notbetrieb bei Ausfall",
+        "lpc": "excluded",
+        "lpp": "passed"
+      },
+      {
+        "title": "Rückkehr zum Normalbetrieb",
+        "lpc": "excluded",
+        "lpp": "passed"
+      },
+      {
+        "title": "Notbetrieb hält Mindestdauer",
+        "lpc": "excluded",
+        "lpp": "passed"
+      }
+    ]
+  },
+  {
+    "name": "production-full-low-load",
+    "report": {
+      "mode": "onsite",
+      "schemaVersion": 1,
+      "config": {
+        "scope": "production",
+        "testProfile": "full",
+        "lpc": 4200,
+        "lpp": 1000,
+        "tolerance": 50
+      },
+      "steps": [
+        {
+          "name": "Ausgangsmessung MPC",
+          "passed": true,
+          "watts": 0
+        },
+        {
+          "name": "LPC Grenze + Quittung",
+          "passed": true
+        },
+        {
+          "name": "LPC gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC Heartbeat-Ausfall",
+          "passed": true
+        },
+        {
+          "name": "LPC Failsafe gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC Vorzeitige Freigabe",
+          "passed": true
+        },
+        {
+          "name": "LPC Vorzeitige Rückkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC Wiederkehr",
+          "passed": true
+        },
+        {
+          "name": "LPC Wiederkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Ausgangsmessung MPC",
+          "passed": true,
+          "watts": 0
+        },
+        {
+          "name": "LPP Grenze + Quittung",
+          "passed": true
+        },
+        {
+          "name": "LPP gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Heartbeat-Ausfall",
+          "passed": true
+        },
+        {
+          "name": "LPP Failsafe gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Vorzeitige Freigabe",
+          "passed": true
+        },
+        {
+          "name": "LPP Vorzeitige Rückkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Wiederkehr",
+          "passed": true
+        },
+        {
+          "name": "LPP Wiederkehr gemessene Wirkung",
+          "passed": true
+        }
+      ]
+    },
+    "counts": {
+      "passed": 4,
+      "failed": 0,
+      "notChecked": 1,
+      "open": 0
+    },
+    "matrix": [
+      {
+        "title": "Grenze angenommen",
+        "lpc": "excluded",
+        "lpp": "passed"
+      },
+      {
+        "title": "Grenze wirkt",
+        "lpc": "excluded",
+        "lpp": "not_checked"
+      },
+      {
+        "title": "Notbetrieb bei Ausfall",
+        "lpc": "excluded",
+        "lpp": "passed"
+      },
+      {
+        "title": "Rückkehr zum Normalbetrieb",
+        "lpc": "excluded",
+        "lpp": "passed"
+      },
+      {
+        "title": "Notbetrieb hält Mindestdauer",
+        "lpc": "excluded",
+        "lpp": "passed"
+      }
+    ]
+  },
+  {
+    "name": "both-quick-empty",
+    "report": {
+      "mode": "onsite",
+      "schemaVersion": 1,
+      "config": {
+        "scope": "both",
+        "testProfile": "quick",
+        "lpc": 4200,
+        "lpp": 1000,
+        "tolerance": 50
+      },
+      "steps": []
+    },
+    "counts": {
+      "passed": 0,
+      "failed": 0,
+      "notChecked": 0,
+      "open": 4
+    },
+    "matrix": [
+      {
+        "title": "Grenze angenommen",
+        "lpc": "open",
+        "lpp": "open"
+      },
+      {
+        "title": "Grenze wirkt",
+        "lpc": "open",
+        "lpp": "open"
+      },
+      {
+        "title": "Notbetrieb bei Ausfall",
+        "lpc": "open",
+        "lpp": "open"
+      },
+      {
+        "title": "Rückkehr zum Normalbetrieb",
+        "lpc": "open",
+        "lpp": "open"
+      }
+    ]
+  },
+  {
+    "name": "both-quick-complete",
+    "report": {
+      "mode": "onsite",
+      "schemaVersion": 1,
+      "config": {
+        "scope": "both",
+        "testProfile": "quick",
+        "lpc": 4200,
+        "lpp": 1000,
+        "tolerance": 50
+      },
+      "steps": [
+        {
+          "name": "Ausgangsmessung MPC",
+          "passed": true,
+          "watts": 8000
+        },
+        {
+          "name": "LPC Grenze + Quittung",
+          "passed": true
+        },
+        {
+          "name": "LPC gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC Heartbeat-Ausfall",
+          "passed": true
+        },
+        {
+          "name": "LPC Failsafe gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC Vorzeitige Freigabe",
+          "passed": true
+        },
+        {
+          "name": "LPC Vorzeitige Rückkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC Wiederkehr",
+          "passed": true
+        },
+        {
+          "name": "LPC Wiederkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Ausgangsmessung MPC",
+          "passed": true,
+          "watts": -5000
+        },
+        {
+          "name": "LPP Grenze + Quittung",
+          "passed": true
+        },
+        {
+          "name": "LPP gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Heartbeat-Ausfall",
+          "passed": true
+        },
+        {
+          "name": "LPP Failsafe gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Vorzeitige Freigabe",
+          "passed": true
+        },
+        {
+          "name": "LPP Vorzeitige Rückkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Wiederkehr",
+          "passed": true
+        },
+        {
+          "name": "LPP Wiederkehr gemessene Wirkung",
+          "passed": true
+        }
+      ]
+    },
+    "counts": {
+      "passed": 4,
+      "failed": 0,
+      "notChecked": 0,
+      "open": 0
+    },
+    "matrix": [
+      {
+        "title": "Grenze angenommen",
+        "lpc": "passed",
+        "lpp": "passed"
+      },
+      {
+        "title": "Grenze wirkt",
+        "lpc": "passed",
+        "lpp": "passed"
+      },
+      {
+        "title": "Notbetrieb bei Ausfall",
+        "lpc": "passed",
+        "lpp": "passed"
+      },
+      {
+        "title": "Rückkehr zum Normalbetrieb",
+        "lpc": "passed",
+        "lpp": "passed"
+      }
+    ]
+  },
+  {
+    "name": "both-quick-retry-failure",
+    "report": {
+      "mode": "onsite",
+      "schemaVersion": 1,
+      "config": {
+        "scope": "both",
+        "testProfile": "quick",
+        "lpc": 4200,
+        "lpp": 1000,
+        "tolerance": 50
+      },
+      "steps": [
+        {
+          "name": "Ausgangsmessung MPC",
+          "passed": true,
+          "watts": 8000
+        },
+        {
+          "name": "LPC Grenze + Quittung",
+          "passed": true
+        },
+        {
+          "name": "LPC gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC Heartbeat-Ausfall",
+          "passed": true
+        },
+        {
+          "name": "LPC Failsafe gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC Vorzeitige Freigabe",
+          "passed": true
+        },
+        {
+          "name": "LPC Vorzeitige Rückkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC Wiederkehr",
+          "passed": true
+        },
+        {
+          "name": "LPC Wiederkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC gemessene Wirkung",
+          "passed": false
+        },
+        {
+          "name": "LPP Ausgangsmessung MPC",
+          "passed": true,
+          "watts": -5000
+        },
+        {
+          "name": "LPP Grenze + Quittung",
+          "passed": true
+        },
+        {
+          "name": "LPP gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Heartbeat-Ausfall",
+          "passed": true
+        },
+        {
+          "name": "LPP Failsafe gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Vorzeitige Freigabe",
+          "passed": true
+        },
+        {
+          "name": "LPP Vorzeitige Rückkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Wiederkehr",
+          "passed": true
+        },
+        {
+          "name": "LPP Wiederkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP gemessene Wirkung",
+          "passed": false
+        }
+      ]
+    },
+    "counts": {
+      "passed": 3,
+      "failed": 1,
+      "notChecked": 0,
+      "open": 0
+    },
+    "matrix": [
+      {
+        "title": "Grenze angenommen",
+        "lpc": "passed",
+        "lpp": "passed"
+      },
+      {
+        "title": "Grenze wirkt",
+        "lpc": "failed",
+        "lpp": "failed"
+      },
+      {
+        "title": "Notbetrieb bei Ausfall",
+        "lpc": "passed",
+        "lpp": "passed"
+      },
+      {
+        "title": "Rückkehr zum Normalbetrieb",
+        "lpc": "passed",
+        "lpp": "passed"
+      }
+    ]
+  },
+  {
+    "name": "both-quick-low-load",
+    "report": {
+      "mode": "onsite",
+      "schemaVersion": 1,
+      "config": {
+        "scope": "both",
+        "testProfile": "quick",
+        "lpc": 4200,
+        "lpp": 1000,
+        "tolerance": 50
+      },
+      "steps": [
+        {
+          "name": "Ausgangsmessung MPC",
+          "passed": true,
+          "watts": 0
+        },
+        {
+          "name": "LPC Grenze + Quittung",
+          "passed": true
+        },
+        {
+          "name": "LPC gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC Heartbeat-Ausfall",
+          "passed": true
+        },
+        {
+          "name": "LPC Failsafe gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC Vorzeitige Freigabe",
+          "passed": true
+        },
+        {
+          "name": "LPC Vorzeitige Rückkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC Wiederkehr",
+          "passed": true
+        },
+        {
+          "name": "LPC Wiederkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Ausgangsmessung MPC",
+          "passed": true,
+          "watts": 0
+        },
+        {
+          "name": "LPP Grenze + Quittung",
+          "passed": true
+        },
+        {
+          "name": "LPP gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Heartbeat-Ausfall",
+          "passed": true
+        },
+        {
+          "name": "LPP Failsafe gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Vorzeitige Freigabe",
+          "passed": true
+        },
+        {
+          "name": "LPP Vorzeitige Rückkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Wiederkehr",
+          "passed": true
+        },
+        {
+          "name": "LPP Wiederkehr gemessene Wirkung",
+          "passed": true
+        }
+      ]
+    },
+    "counts": {
+      "passed": 3,
+      "failed": 0,
+      "notChecked": 1,
+      "open": 0
+    },
+    "matrix": [
+      {
+        "title": "Grenze angenommen",
+        "lpc": "passed",
+        "lpp": "passed"
+      },
+      {
+        "title": "Grenze wirkt",
+        "lpc": "not_checked",
+        "lpp": "not_checked"
+      },
+      {
+        "title": "Notbetrieb bei Ausfall",
+        "lpc": "passed",
+        "lpp": "passed"
+      },
+      {
+        "title": "Rückkehr zum Normalbetrieb",
+        "lpc": "passed",
+        "lpp": "passed"
+      }
+    ]
+  },
+  {
+    "name": "both-full-empty",
+    "report": {
+      "mode": "onsite",
+      "schemaVersion": 1,
+      "config": {
+        "scope": "both",
+        "testProfile": "full",
+        "lpc": 4200,
+        "lpp": 1000,
+        "tolerance": 50
+      },
+      "steps": []
+    },
+    "counts": {
+      "passed": 0,
+      "failed": 0,
+      "notChecked": 0,
+      "open": 5
+    },
+    "matrix": [
+      {
+        "title": "Grenze angenommen",
+        "lpc": "open",
+        "lpp": "open"
+      },
+      {
+        "title": "Grenze wirkt",
+        "lpc": "open",
+        "lpp": "open"
+      },
+      {
+        "title": "Notbetrieb bei Ausfall",
+        "lpc": "open",
+        "lpp": "open"
+      },
+      {
+        "title": "Rückkehr zum Normalbetrieb",
+        "lpc": "open",
+        "lpp": "open"
+      },
+      {
+        "title": "Notbetrieb hält Mindestdauer",
+        "lpc": "open",
+        "lpp": "open"
+      }
+    ]
+  },
+  {
+    "name": "both-full-complete",
+    "report": {
+      "mode": "onsite",
+      "schemaVersion": 1,
+      "config": {
+        "scope": "both",
+        "testProfile": "full",
+        "lpc": 4200,
+        "lpp": 1000,
+        "tolerance": 50
+      },
+      "steps": [
+        {
+          "name": "Ausgangsmessung MPC",
+          "passed": true,
+          "watts": 8000
+        },
+        {
+          "name": "LPC Grenze + Quittung",
+          "passed": true
+        },
+        {
+          "name": "LPC gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC Heartbeat-Ausfall",
+          "passed": true
+        },
+        {
+          "name": "LPC Failsafe gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC Vorzeitige Freigabe",
+          "passed": true
+        },
+        {
+          "name": "LPC Vorzeitige Rückkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC Wiederkehr",
+          "passed": true
+        },
+        {
+          "name": "LPC Wiederkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Ausgangsmessung MPC",
+          "passed": true,
+          "watts": -5000
+        },
+        {
+          "name": "LPP Grenze + Quittung",
+          "passed": true
+        },
+        {
+          "name": "LPP gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Heartbeat-Ausfall",
+          "passed": true
+        },
+        {
+          "name": "LPP Failsafe gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Vorzeitige Freigabe",
+          "passed": true
+        },
+        {
+          "name": "LPP Vorzeitige Rückkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Wiederkehr",
+          "passed": true
+        },
+        {
+          "name": "LPP Wiederkehr gemessene Wirkung",
+          "passed": true
+        }
+      ]
+    },
+    "counts": {
+      "passed": 5,
+      "failed": 0,
+      "notChecked": 0,
+      "open": 0
+    },
+    "matrix": [
+      {
+        "title": "Grenze angenommen",
+        "lpc": "passed",
+        "lpp": "passed"
+      },
+      {
+        "title": "Grenze wirkt",
+        "lpc": "passed",
+        "lpp": "passed"
+      },
+      {
+        "title": "Notbetrieb bei Ausfall",
+        "lpc": "passed",
+        "lpp": "passed"
+      },
+      {
+        "title": "Rückkehr zum Normalbetrieb",
+        "lpc": "passed",
+        "lpp": "passed"
+      },
+      {
+        "title": "Notbetrieb hält Mindestdauer",
+        "lpc": "passed",
+        "lpp": "passed"
+      }
+    ]
+  },
+  {
+    "name": "both-full-retry-failure",
+    "report": {
+      "mode": "onsite",
+      "schemaVersion": 1,
+      "config": {
+        "scope": "both",
+        "testProfile": "full",
+        "lpc": 4200,
+        "lpp": 1000,
+        "tolerance": 50
+      },
+      "steps": [
+        {
+          "name": "Ausgangsmessung MPC",
+          "passed": true,
+          "watts": 8000
+        },
+        {
+          "name": "LPC Grenze + Quittung",
+          "passed": true
+        },
+        {
+          "name": "LPC gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC Heartbeat-Ausfall",
+          "passed": true
+        },
+        {
+          "name": "LPC Failsafe gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC Vorzeitige Freigabe",
+          "passed": true
+        },
+        {
+          "name": "LPC Vorzeitige Rückkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC Wiederkehr",
+          "passed": true
+        },
+        {
+          "name": "LPC Wiederkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC gemessene Wirkung",
+          "passed": false
+        },
+        {
+          "name": "LPP Ausgangsmessung MPC",
+          "passed": true,
+          "watts": -5000
+        },
+        {
+          "name": "LPP Grenze + Quittung",
+          "passed": true
+        },
+        {
+          "name": "LPP gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Heartbeat-Ausfall",
+          "passed": true
+        },
+        {
+          "name": "LPP Failsafe gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Vorzeitige Freigabe",
+          "passed": true
+        },
+        {
+          "name": "LPP Vorzeitige Rückkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Wiederkehr",
+          "passed": true
+        },
+        {
+          "name": "LPP Wiederkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP gemessene Wirkung",
+          "passed": false
+        }
+      ]
+    },
+    "counts": {
+      "passed": 4,
+      "failed": 1,
+      "notChecked": 0,
+      "open": 0
+    },
+    "matrix": [
+      {
+        "title": "Grenze angenommen",
+        "lpc": "passed",
+        "lpp": "passed"
+      },
+      {
+        "title": "Grenze wirkt",
+        "lpc": "failed",
+        "lpp": "failed"
+      },
+      {
+        "title": "Notbetrieb bei Ausfall",
+        "lpc": "passed",
+        "lpp": "passed"
+      },
+      {
+        "title": "Rückkehr zum Normalbetrieb",
+        "lpc": "passed",
+        "lpp": "passed"
+      },
+      {
+        "title": "Notbetrieb hält Mindestdauer",
+        "lpc": "passed",
+        "lpp": "passed"
+      }
+    ]
+  },
+  {
+    "name": "both-full-low-load",
+    "report": {
+      "mode": "onsite",
+      "schemaVersion": 1,
+      "config": {
+        "scope": "both",
+        "testProfile": "full",
+        "lpc": 4200,
+        "lpp": 1000,
+        "tolerance": 50
+      },
+      "steps": [
+        {
+          "name": "Ausgangsmessung MPC",
+          "passed": true,
+          "watts": 0
+        },
+        {
+          "name": "LPC Grenze + Quittung",
+          "passed": true
+        },
+        {
+          "name": "LPC gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC Heartbeat-Ausfall",
+          "passed": true
+        },
+        {
+          "name": "LPC Failsafe gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC Vorzeitige Freigabe",
+          "passed": true
+        },
+        {
+          "name": "LPC Vorzeitige Rückkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPC Wiederkehr",
+          "passed": true
+        },
+        {
+          "name": "LPC Wiederkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Ausgangsmessung MPC",
+          "passed": true,
+          "watts": 0
+        },
+        {
+          "name": "LPP Grenze + Quittung",
+          "passed": true
+        },
+        {
+          "name": "LPP gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Heartbeat-Ausfall",
+          "passed": true
+        },
+        {
+          "name": "LPP Failsafe gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Vorzeitige Freigabe",
+          "passed": true
+        },
+        {
+          "name": "LPP Vorzeitige Rückkehr gemessene Wirkung",
+          "passed": true
+        },
+        {
+          "name": "LPP Wiederkehr",
+          "passed": true
+        },
+        {
+          "name": "LPP Wiederkehr gemessene Wirkung",
+          "passed": true
+        }
+      ]
+    },
+    "counts": {
+      "passed": 4,
+      "failed": 0,
+      "notChecked": 1,
+      "open": 0
+    },
+    "matrix": [
+      {
+        "title": "Grenze angenommen",
+        "lpc": "passed",
+        "lpp": "passed"
+      },
+      {
+        "title": "Grenze wirkt",
+        "lpc": "not_checked",
+        "lpp": "not_checked"
+      },
+      {
+        "title": "Notbetrieb bei Ausfall",
+        "lpc": "passed",
+        "lpp": "passed"
+      },
+      {
+        "title": "Rückkehr zum Normalbetrieb",
+        "lpc": "passed",
+        "lpp": "passed"
+      },
+      {
+        "title": "Notbetrieb hält Mindestdauer",
+        "lpc": "passed",
+        "lpp": "passed"
+      }
+    ]
+  }
+]

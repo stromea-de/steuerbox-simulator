@@ -1,0 +1,274 @@
+[
+  {
+    "id": "UX-G1",
+    "decision": "Kein Auf-/Zuklappen (details/Akkordeon) für Inhalte unter ca. 4 Zeilen oder unter 3 Bedienelementen. Inhalt direkt zeigen."
+  },
+  {
+    "id": "UX-G2",
+    "decision": "Keine Bestätigungs-Checkboxen ohne rechtlichen Zwang („Ich habe … verglichen/gelesen“)."
+  },
+  {
+    "id": "UX-G3",
+    "decision": "Technik zuerst, Bürokratie danach: „Prüfung einstellen“ und „Angaben für den Bericht“ sind getrennte Karten, in dieser Reihenfolge."
+  },
+  {
+    "id": "UX-G4",
+    "decision": "Leere Zustände holen den Nutzer ab (was als Nächstes, in Schritten), keine einzeilige Notiz auf leerer Fläche."
+  },
+  {
+    "id": "UX-G5",
+    "decision": "Leere Listen/Tabellen: Hinweis als Zeile **in** der Tabelle (verbundene Zelle, dezent grau), nicht über der Tabelle."
+  },
+  {
+    "id": "UX-G6",
+    "decision": "Footer schwebt am Desktop (> 600 px) am unteren Fensterrand (sticky) wie Kopf und Menü, am Telefon steht er am Seitenende; bei wenig Inhalt immer am Seitenende; die farbige Detailspalte reicht bis zum Footer. (geändert 041, Nutzer 2026-11-14: „Footer floating wie Header/Menü“)"
+  },
+  {
+    "id": "UX-G7",
+    "decision": "Einheiten konsistent: Leistung in W überall (Text, Achsen, Bericht), deutsche Zahlformate (1.050 W, 10,9 W)."
+  },
+  {
+    "id": "UX-G8",
+    "decision": "Externe Links öffnen in neuem Tab (`target=_blank rel=noopener`) und sind als extern erkennbar; keine unerwarteten Sprünge nach GitHub."
+  },
+  {
+    "id": "UX-G9",
+    "decision": "Kennungen/IDs nie kürzen, wenn Platz da ist; nur bei echtem Platzmangel mit Tooltip auf den vollen Wert."
+  },
+  {
+    "id": "UX-G10",
+    "decision": "Auswahl, die vom Gerät abhängt, zeigt nur Mögliches: nicht unterstützte Optionen ausgegraut mit Grund, nie wählbar."
+  },
+  {
+    "id": "UX-G11",
+    "decision": "Jede Option (Radio/Checkbox) hat einen halben Satz Erklärung direkt daneben, was sie bewirkt."
+  },
+  {
+    "id": "UX-G12",
+    "decision": "Navigation bricht nie: Neu laden, Zurück, Vor in jedem Schritt führen zu einem gültigen Zustand ohne Datenverlust."
+  },
+  {
+    "id": "UX-G13",
+    "decision": "Ein Knopf, der dieselbe Seite erneut zeigt, existiert nicht."
+  },
+  {
+    "id": "UX-G14",
+    "decision": "Links aus einem Formular heraus (z. B. ins Profil) verlieren keine Eingaben und führen zurück."
+  },
+  {
+    "id": "UX-G15",
+    "decision": "Keine Hinweise, die nur wiederholen, was Header oder Überschrift schon sagen (z. B. kein Hinweis „Prototyp: Ergebnis und Downloads …“ unter dem Prototyp-Header). (2026-11-09)"
+  },
+  {
+    "id": "UX-G16",
+    "decision": "Kein Layoutsprung durch Statusmeldungen: Status und Begründungen (z. B. „Suche läuft…“, „Verbindung wird aufgebaut (0:54)“, „✓ Gekoppelt“, Grund am Startknopf) stehen an einem festen, reservierten Platz; Knöpfe und Felder darüber und daneben bleiben, wo sie sind. Test: UX-G16, `scripts/test_ux043.mjs`. (043, Nutzer 2026-11-14)"
+  },
+  {
+    "id": "UX-G17",
+    "decision": "Navigation verliert keinen Zustand: Profil, Hilfe, Protokolle, Neu laden, Zurück und Vor führen genau in den verlassenen Schritt zurück; Geräteauswahl, Freigabe, gelesene Gerätefunktionen und alle eingegebenen Prüfwerte bleiben erhalten – auch wenn die Verbindung zwischendurch abbrach (dann bietet Schritt 2 „Neu verbinden“). Test: UX-G17, `scripts/test_ux043.mjs`. (043, Nutzer 2026-11-14)"
+  },
+  {
+    "id": "UX-G18",
+    "decision": "Kein deaktivierter Primärknopf ohne sichtbare Begründung direkt daneben. Fehlt nur eine behebbare Angabe, bleibt der Knopf aktiv und erklärt beim Klick (Dialog oder Feldlink). Test: UX-G18, `scripts/test_ux043.mjs`. (043, Nutzer 2026-11-14)"
+  },
+  {
+    "id": "UX-S1",
+    "decision": "Schritt 1: Kein „Netzwerkdetails“-Aufklapper. Adapter-Dropdown hat sichtbares Label „Netzwerkadapter“; nur echte Adapter, kein Loopback (nur im Übungsmodus intern). Bei genau einem Adapter: kein Dropdown, nur Text."
+  },
+  {
+    "id": "UX-S2",
+    "decision": "Schritt 1 leer: Karte „So geht's“ mit 4 Schritten: 1. Zu prüfendes Gerät im Netzwerk suchen und auswählen · 2. Verbindung herstellen und Gerätetyp erkennen · 3. Prüfumfang und Prüfwerte einstellen · 4. Prüfung starten und Bericht erhalten."
+  },
+  {
+    "id": "UX-S3",
+    "decision": "Geräteliste zeigt die volle Gerätekennung (SKI), gruppiert lesbar."
+  },
+  {
+    "id": "UX-S4",
+    "decision": "Schritt 2 Prüfumfang: zwei Checkboxen nebeneinander „Bezug begrenzen (LPC)“ und „Einspeisung begrenzen (LPP)“, vorausgewählt = was das Gerät unterstützt, nicht Unterstütztes ausgegraut. Kein Dropdown. Gleiche Darstellung wie im Bericht."
+  },
+  {
+    "id": "UX-S5",
+    "decision": "Schritt 2 Modus: Funktionsprüfung / Langzeitprüfung je mit Kurz-Erklärung daneben."
+  },
+  {
+    "id": "UX-S6",
+    "decision": "„Hinweise zur Prüfung“ und „Unterschriftsfelder im Prüfbericht“ sichtbar ohne Aufklappen."
+  },
+  {
+    "id": "UX-S7",
+    "decision": "Angaben für den Bericht: Kunde & Anlage (optional, immer sichtbar) und Prüfbetrieb als Zusammenfassung aus dem Profil (Firma, Adresse, Prüfer, Logo). In der Zeile „Firma“ steht „– (im Profil ändern)“ bzw. „Firma (im Profil ändern)“; „im Profil ändern“ ist ein Link in derselben Schriftgröße wie „Firma“ (UX-G14); kein Hinweis „Ergänze Firma und Prüfer im Profil.“ und kein zweiter Link darunter; der Übungshinweis ist kursiv. Keine Felder doppelt erfassen. (geändert 041, Nutzer 2026-11-14)"
+  },
+  {
+    "id": "UX-S8",
+    "decision": "Profil: „Prüfer / Prüferin“ zuerst in voller Breite, als einziges Feld „Pflichtfeld“; alle anderen Felder (Firma, Logo, Straße, PLZ, Ort, Land) sind als „optional“ gekennzeichnet. „Firma“ (nicht „Fachbetrieb“) und Logo-Auswahl teilen sich eine Zeile, der Logo-Knopf steht bündig mit dem Firmenfeld; „Straße“; PLZ, Ort und Land (einfaches Textfeld, voreingetragen „Deutschland“) in einer Zeile. Unter dem Formular: „Profil speichern“ (nur aktiv, solange sich etwas vom gespeicherten Profil unterscheidet), daneben „Zurück zur Prüfung“ als Sekundärknopf (wie „Simulator-Kennung erneuern“; nur wenn eine Prüfung/Verbindung besteht; führt in den verlassenen Schritt zurück), rechts daneben im Hilfetext-Stil „Profil gespeichert“. Kein Text „Logo verkleinert …“. „Simulator-Kennung erneuern“ unter den Aktionen nach einer Trennlinie, Erklärung rechts neben dem Knopf. Mobil untereinander. (geändert 041; geändert 043, Nutzer 2026-11-14)"
+  },
+  {
+    "id": "UX-S9",
+    "decision": "Hilfe: keine Aufklapper; jede Frage als Zwischenüberschrift, Antwort darunter. Korrektes Deutsch. Frage „Wo finde ich detaillierte technische Informationen zum Simulator?“ mit Link (neuer Tab). Die Frage zur Leistung nennt, welche Leistung gemeint ist (tatsächlicher Bezug/Einspeisung des Geräts, nicht die eingestellten Watt-Werte); die Antwort zum Browserfenster nennt „Simulator beenden“. (präzisiert 041, Nutzer 2026-11-14)"
+  },
+  {
+    "id": "UX-S10",
+    "decision": "Footer ohne Link „Hilfe & Dokumentation“; Haftungssatz nur, wenn nötig, und dann in einfachem Deutsch."
+  },
+  {
+    "id": "UX-S11",
+    "decision": "Ergebnis: keine Aufklapp-Kaskaden; offene Nachweise und nicht bewertete Schritte in derselben Tabellenform wie „Geprüfte Funktionen“."
+  },
+  {
+    "id": "UX-S12",
+    "decision": "Diagramme: Achse in W, lesbare Linienstärke, sinnvolle Achsenskalierung, durchgehende Linie; Lücken nur bei echtem Datenausfall und dann beschriftet; nichts überlagert Text."
+  },
+  {
+    "id": "UX-S13",
+    "decision": "Protokolle: Platz je Spalte reicht für realistische Inhalte (lange Namen, Adressen, Zählernummern), im Prototyp mit Beispielprotokollen geprüft."
+  },
+  {
+    "id": "UX-S14",
+    "decision": "Prototyp/Übungsmodus läuft zeitlich 10× schneller (nur Übungsmodus, nie bei realer Prüfung); Anzeige nennt die echte Prüfdauer."
+  },
+  {
+    "id": "UX-S15",
+    "decision": "Schritt 1, Desktop (≥ 820 px): Hinweis zum Netzwerkanschluss steht rechts neben dem Adapter-Dropdown, nicht darunter; mobil darunter. (2026-11-09)"
+  },
+  {
+    "id": "UX-S16",
+    "decision": "Ergebnis/Bericht im Web (live, gespeichert, ohne JavaScript): Das Aufheben der Testgrenzen steht genau einmal als letzte Zeile „Testgrenzen aufgehoben“ der Tabelle „Geprüfte Funktionen“, mit denselben Symbolen wie die übrigen Zeilen (✓ vom Gerät bestätigt, × keine Bestätigung, – nicht geprüft, ○ ausstehend); kein Satz darunter, kein eigener Abschnitt oder Block mit Überschrift, keine Wiederholung im Ergebnisbanner, kein ✓ bei unbestätigter Rückmeldung; ein Hinweis darf dort nur eine Handlung empfehlen. Kein Eintrag „Testergebnis aufheben“. Im PDF steht weiterhin genau ein Satz direkt unter der Funktionsmatrix. Der Untertitel des Messverlaufs nennt nach Abschluss keinen Prüfschritt. (2026-11-09, präzisiert 036f, geändert 038 auf Wunsch des Produktinhabers)"
+  },
+  {
+    "id": "UX-S17",
+    "decision": "Ergebnis/Bericht: „Kundendaten korrigieren“ ist ein Textlink (kein Knopf) am Ende der Kundenzeile („Kunde: … · Adresse Anlagenbetreiber: … · Kundendaten korrigieren“, nur eingetragene Felder, sonst „Kunde: nicht eingetragen“) direkt unter der Prüfzeile, mit demselben grünen Strich. Das Formular öffnet unter dem Ergebniskopf als Karte in voller Breite; am Desktop steht die Schaltfläche rechts neben den Feldern, der Hinweis zur neuen Berichtsversion darunter. Keine Meldung „Kundendaten gespeichert.“. (2026-11-09, 037; geändert 041, Nutzer 2026-11-14)"
+  },
+  {
+    "id": "UX-S18",
+    "decision": "Ergebnis/Bericht im Browser: Gibt es mehrere Versionen, steht in der Aktionsspalte „v2 · v1“ (neueste zuerst; die angezeigte Version fett, die anderen als Link zum Wechseln), auch ohne JavaScript; sonst keine Versionsanzeige. Kein Link „Frühere Version“. Ältere Versionen lassen sich nicht mehr korrigieren (kein Korrekturlink, Server HTTP 409). Das PDF nennt seine Version weiterhin. (2026-11-09, 037; geändert 041, Nutzer 2026-11-14)"
+  },
+  {
+    "id": "UX-S19",
+    "decision": "Messverlauf (Web und PDF) als Treppenlinie: Jeder Messwert gilt waagerecht bis zum nächsten Messpunkt, ein Sprung ist eine senkrechte Linie; keine schrägen Verbindungen. Grenzwerte: siehe UX-S21. Lücke nur bei echtem Messausfall: Die Linie hält bis zum Ausfall und setzt mit dem nächsten Messwert neu an. (2026-11-09, 037)"
+  },
+  {
+    "id": "UX-S20",
+    "decision": "Ergebnis/Bericht: Hinweis unter den Aktionen lautet „Alle Protokolle werden lokal gespeichert.“; das Wort „Protokolle“ ist ein Link auf die Protokollübersicht (gleiche Route wie das Menü), öffnet in neuem Tab (`target=_blank rel=noopener`) mit ↗ wie externe Links und verborgenem Hinweis „(öffnet in neuem Tab)“. Übersetzungen markieren das Linkwort im ganzen Satz (`{link}…{/link}`), kein Zusammenkleben von Satzteilen. Offline-Prototyp: gleicher Satz, der Link öffnet die Protokollansicht des Prototyps im selben Fenster (kein Server für einen neuen Tab). (2026-11-09, 037b)"
+  },
+  {
+    "id": "UX-S21",
+    "decision": "Messverlauf (Web und PDF): Grenzwerte (Bezugsgrenze LPC positiv, Einspeisegrenze LPP negativ, Notbetrieb) als gestrichelte Treppe nur für die aufgezeichnete Zeit: Grenze ab Quittung, Notbetrieb gepunktet ab Ablauf der Ausfallfrist (oder früher gemessen); senkrechter Sprung beim Wechsel, kein Strich, wo keine Grenze galt. Rückkehr aus dem Notbetrieb gilt nur als belegt im Simulator (neuer Heartbeat) oder durch Messung, sonst hell gepunktet „nicht bestätigt“. Phasenbänder und -beschriftungen nutzen denselben Grenzverlauf (keine „Freigabe“ unter aktiver Grenze); die Linie endet beim letzten Messpunkt. Grundlage ist der aufgezeichnete Grenzverlauf (`limits`), nie Schrittnamen; ältere Berichte ohne Verlauf zeigen keine Grenzlinien und sagen das. (2026-11-09, präzisiert 037d)"
+  },
+  {
+    "id": "UX-S22",
+    "decision": "Schritt 2 „Testgrenzen“: Die Felder behalten ihre Position, wenn Bezug oder Einspeisung an- oder abgewählt wird; die nicht geprüfte Richtung bleibt sichtbar, deaktiviert und mit Grund „Nicht im Prüfumfang“ – auch wenn keine Richtung gewählt ist. „Hinweise zur Prüfung“ ohne den Satz „Der Simulator versucht am Ende, die Testgrenzen aufzuheben …“; im Übungsmodus steht dort der Übungshinweis. (2026-11-10, 038)"
+  },
+  {
+    "id": "UX-S23",
+    "decision": "Messverlauf (Web und PDF): Bezug (LPC) und Einspeisung (LPP) in getrennten Diagrammen, je mit Titel und nur den Grenzen der eigenen Richtung; ein Messwert gehört zum Prüfabschnitt, in dem er aufgezeichnet wurde (ab der ersten Einspeisungs-Messung zum Einspeisungsdiagramm). Phasen als Maßpfeile ←→ mit Namen oberhalb des Diagramms, keine Farbflächen; jeder Pfeil hat einen sichtbaren Namen ohne Überlappung (bei Platzmangel eine weitere Zeile darüber, auch bei 390 px). Kein Text „Jeder Messwert gilt bis zum nächsten Messpunkt“. (2026-11-10, 038)"
+  },
+  {
+    "id": "UX-S24",
+    "decision": "PDF-Anhang: „Verbindung“ steht links neben dem Verbindungsbalken, dessen Legende beginnt bündig mit dem Balken. Gerätefunktionen je Zeile „… vom Gerät angeboten“ bzw. „nicht angeboten“. Beginn, Ende und Funktionen stehen im eigenen Abschnitt „Prüfung“ nach „Firma & Prüfer“. Verbindungsereignisse klein und grau wie der Detailtext der Schritttabelle. Kein Hinweiskasten; der Hinweis „Dokumentierter Funktionstest. Ersetzt keine Konformitätsprüfung.“ bleibt nach ADR 012 als kleine graue Zeile in Footergröße unter „Dokumentierter Prüfumfang“ (geändert 038c, PO 11.11.2026). Mehr Abstand um die Prüfsummenzeile im Footer. Unterschriftsfelder unter einem Abschnittskopf „Unterschriften“ wie „Dokumentierter Prüfumfang“. (2026-11-10, 038)"
+  },
+  {
+    "id": "UX-S25",
+    "decision": "QR-Kopplung: Alle Aktionen (Bild auswählen, Aus Zwischenablage einfügen, QR-Text übernehmen, Mit Kamera scannen/Kamera stoppen) sind gleich breit und bündig; Meldungen stehen an einer festen Stelle mit reserviertem Platz unter den Aktionen, nichts springt bei Fehlern. Kleingedrucktes und Meldungen sind zentriert. Kein Hinweis „Oder mit Strg+V / ⌘V einfügen.“. Kamerafehler mit eigener kurzer Meldung, nie der Browsertext. Test: `scripts/qa039-checks.mjs` qrPanel. (2026-11-12, 039, Produktinhaber)"
+  },
+  {
+    "id": "UX-S26",
+    "decision": "Schritt 1: Die Aktionen heißen „Im Netzwerk suchen“, „QR-Code“ und „Manuell“ und stehen in allen 7 Sprachen bei 390–1920 px in einer Zeile; die ausführliche Bezeichnung steht im Tooltip. Test: pairMethods. (2026-11-12, 039, Produktinhaber)"
+  },
+  {
+    "id": "UX-S27",
+    "decision": "Seitenleisten lassen sich in jedem Viewport bis zum letzten Element scrollen: mobil an den sichtbaren Bereich gebunden (visualViewport, sonst 100dvh; Bildschirmtastatur), mit Endabstand inkl. safe-area; am Desktop ohne Scroll-Sperre zur Seite und mit dvh. Test: sidebarEnd. (2026-11-12, 039, Produktinhaber)"
+  },
+  {
+    "id": "UX-S28",
+    "decision": "Native Browserdialoge (Datei auswählen, Kamera-Berechtigung) und die Rückkehr daraus (Fokus, Sichtbarkeit, bfcache, Neuladen) schließen eine offene Seitenleiste nicht; Inhalt (QR-Text) bleibt erhalten. Schließen nur durch Schließen/Abbrechen, Escape, Tippen auf den Hintergrund oder Navigation. Test: nativeDialogs. (2026-11-12, 039, Produktinhaber)"
+  },
+  {
+    "id": "UX-S29",
+    "decision": "Ohne Netzwerkverbindung: kurze Warnkarte „Kein Netzwerk“ und alle Kopplungsaktionen gesperrt (Suchen, QR-Code, Manuell, Verbinden sowie Bild, Zwischenablage, QR-Text, Kamera); der Übungsmodus funktioniert weiter. Die Sperre gilt auch serverseitig (Suche, Gerätewahl, Verbinden, Wiederverbinden: HTTP 409) und folgt Netzwerkverlust/-rückkehr live (auch „Erneut versuchen“). Test: noNetwork, networkChange, `internal/webui/offline039_test.go`. (2026-11-12, 039, Produktinhaber; präzisiert Review 039)"
+  },
+  {
+    "id": "UX-S30",
+    "decision": "Diktat am SKI-Feld: SF-Symbol-artiges Linien-Mikrofon als SVG in currentColor, gleiche Farbe wie die übrigen Icon-Knöpfe, kein Emoji; während der Aufnahme ein Stopp-Quadrat. Die Funktion bleibt (blockweises Diktat mit Prüfansicht, nur bei Browserunterstützung und Deutsch). Test: micIcon. (2026-11-12, 039, Produktinhaber)"
+  },
+  {
+    "id": "UX-S31",
+    "decision": "Manuelle Eingabe: Fehlermeldungen kurz und präzise in einer reservierten Zeile unter dem Feld, Fehlerrahmen ohne Größenänderung (kein Layoutsprung). Die SKI wird nur um Trennzeichen bereinigt, nie gekürzt; ungültige Zeichen und Überlänge (z. B. „45 / 40“) werden benannt, Portbereich „1–65535“ ebenso. Test: manualEntry. (2026-11-12, 039)"
+  },
+  {
+    "id": "UX-S32",
+    "decision": "Protokolle: eine Zeile je Prüfung mit der neuesten Version, ohne Versionszeile und ohne Link auf frühere Versionen. Jeder Bericht lässt sich nach Bestätigung samt allen Versionen löschen („Löschen“ als rote, fette, unterstrichene Textaktion auf derselben Linie wie die übrigen Aktionen); Linknamen sind je Zeile eindeutig (Datum, Kunde, Ergebnis). Test: reportList, UX-S32 im UX-Test. (2026-11-12, 039; geändert 041, Nutzer 2026-11-14)"
+  },
+  {
+    "id": "UX-S33",
+    "decision": "Schritt 2: „Abbrechen“ während „Gerätewerte lesen“ beendet nur das Lesen; das Gerät bleibt verbunden (auch beim Neuladen während des Lesens), die Meldung lautet „Lesen abgebrochen. Lade die Gerätewerte bei Bedarf erneut.“ Der Abbruch einer Prüfung oder Verbindung trennt weiterhin. Test: UX-S33 im UX-Test, Go: prepare040_test. (2026-11-13, 040)"
+  },
+  {
+    "id": "UX-S34",
+    "decision": "Start: Modus, Adapterwahl und Aktionen stehen ab dem ersten Bild an ihrem endgültigen Platz (kein Wechsel „Übungsmodus starten“ → „Gerät vor Ort“, kein Layoutsprung nach dem Laden); „Im Netzwerk suchen“ hat sichtbaren Abstand zum Adapter-Dropdown. Test: UX-S34. (041, Nutzer 2026-11-14, Bild 1→2)"
+  },
+  {
+    "id": "UX-S35",
+    "decision": "Simulator-Kennung und QR-Text werden über ein Kopiersymbol rechts neben dem Wert kopiert (Detailspalte, QR-Kopplung, Fehlermeldung) wie beim Koppeln; der Simulator-QR-Code steht linksbündig; die Kopiermeldung hat einen festen Platz darunter, nichts verschiebt sich. Test: UX-S35. (041, Nutzer 2026-11-14)"
+  },
+  {
+    "id": "UX-S36",
+    "decision": "Menü: „Simulator beenden“ ist der letzte Menüpunkt; das Übungsmodus-Abzeichen steht rechts vom Menü (das Menü verschiebt sich nicht). Bestätigungsdialog persistent (Klick daneben schließt nicht), Enter = „Schließen“; bei laufender Prüfung Hinweis auf Abbruch und Aufheben der Testgrenzen. Danach ruhiger Endzustand „Simulator beendet“. Beendet nur den Simulator-Dienst. Test: UX-S36, Go: shutdown041. (041, Nutzer 2026-11-14)"
+  },
+  {
+    "id": "UX-S37",
+    "decision": "„Über den Stromea Steuerbox-Simulator“ ist ein fetter Link im Footer rechts neben „Quellcode (GitHub)“ und öffnet einen Dialog mit „Schließen“ (nicht persistent). Test: UX-S37. (041, Nutzer 2026-11-14)"
+  },
+  {
+    "id": "UX-S38",
+    "decision": "Hilfe „Wie übertrage ich alle Daten auf einen anderen Computer?“ mit „Exportdatei erzeugen“ (ZIP mit Protokollen, Profil inkl. Logo und Simulator-Kennung) und „Exportdatei importieren“ sowie Vertraulichkeitshinweis. Import-Dialog mit Checkboxen „Protokolle/Profil/Simulator-Kennung importieren“ und Hinweis zum Überschreiben; persistent, Enter = „Abbrechen“ auch bei fokussiertem Import-Knopf (präzisiert 045, 2026-11-16). Bei Profil-Speicherfehler bleiben bisheriges Profil und Entwurf erhalten; bestätigte Serverübernahmen werden konkret als unvollständiger Import gemeldet. Der Dialog bleibt offen und wählt für einen erneuten Versuch nur das Profil aus. Erfolg erst nach dauerhafter Speicherung; E2E mit Neuladen und QuotaExceededError. (Folgerunde 045, 2026-11-17) Test: `scripts/test_release045.mjs`, UX-S38, Go: transfer041, nutzer041. (041, Nutzer 2026-11-14, ADR 064)"
+  },
+  {
+    "id": "UX-S39",
+    "decision": "Protokolle: rechts neben der Suche „Übungs-Protokolle anzeigen“ (standardmäßig aus); Datum zweistellig (08.11.2026); Aktionen „Ansehen“, „PDF laden“, „Messdaten (JSON)“, „Löschen“. „Ansehen“ zeigt keinen ungestylten Zwischenzustand. Test: UX-S39. (041, Nutzer 2026-11-14)"
+  },
+  {
+    "id": "UX-S40",
+    "decision": "Prüfung vorbereiten: Watt-Felder halb so breit, Inhalt rechtsbündig neben „W“, LPC/LPP fett, automatisches Tausendertrennzeichen der UI-Sprache (Protokoll/PDF bleibt deutsch); ist „Bezug begrenzen“ abgewählt, ist „Rechner öffnen“ unsichtbar ohne Layoutsprung. Die Zeile zur Prüfdauer endet ohne Umbruch mit „Lass das Browserfenster geöffnet. Prüfe am Ende, ob die Testgrenzen aufgehoben wurden.“, ohne „interne Simulation 10× schneller“. Test: UX-S40. (041, Nutzer 2026-11-14)"
+  },
+  {
+    "id": "UX-S41",
+    "decision": "Berechnungshilfe Bezugsgrenze: Quellen stehen direkt kleingedruckt unter der Erklärung, jede als Link in neuem Tab; kein Aufklapper „Vorgaben nachlesen“. Test: UX-S41. (041, Nutzer 2026-11-14)"
+  },
+  {
+    "id": "UX-S42",
+    "decision": "Ergebnis/Bericht: Der Ergebnistitel nennt den geprüften Umfang: „LPC-Funktionsprüfung bestanden“ (nur Bezug), „LPP-…“ (nur Einspeisung), „LPC/LPP-…“ (beides); ebenso „… nicht bestanden“, „… unvollständig“ und „… abgebrochen“ (vom Prüfer abgebrochen) sowie für die Langzeitprüfung. Der PDF-Titel lautet entsprechend „LPC-Prüfung am Gerät“ bzw. „LPC/LPP-Prüfung im Simulator“ (Übungsmodus). Notbetriebswerte im PDF: Feld „Notbetriebswerte des Geräts“ mit gelesenen Werten und „… wiederhergestellt und vom Gerät bestätigt. Bei Kommunikationsausfall verhält sich das Gerät wieder wie vor der Prüfung.“, darunter ein Satz Erklärung; ohne Bestätigung ein roter Hinweis „Achtung: …“ mit Handlung und Werten; hat die Prüfung keine Notbetriebswerte geschrieben (früher Abbruch, Werte nicht lesbar), „Nicht verändert …“ ohne Warnung. Im Web nur bei fehlender Bestätigung ein Hinweis mit Handlung. Test: UX-S42, Go: title042, `scripts/test_title042.js`. (042, Nutzer 2026-11-14)"
+  },
+  {
+    "id": "UX-S43",
+    "decision": "Kopplung ohne zweiten Klick: Nach erfolgreicher Verbindung steht an der Stelle des Knopfs „✓ Gekoppelt. Weiter zur Prüfung …“, danach öffnet sich Schritt 2 von selbst (mit „✓ Gerät erfolgreich gekoppelt.“). Die Restzeit steht inline in der grünen Zeile „Verbindung wird aufgebaut (0:54)“, keine zweite graue Zeile. „Wartet auf Freigabe am Gerät…“ nur während des Verbindungsaufbaus; bricht eine bestätigte Verbindung ab, heißt es „Verbindung getrennt“. Test: UX-S43, `scripts/test_ux043.mjs`. (043, Nutzer 2026-11-14, Bild 9/10)"
+  },
+  {
+    "id": "UX-S44",
+    "decision": "Gerätesuche: „Suche läuft…“ in einer reservierten Zeile unter „Im Netzwerk suchen · QR-Code · Manuell“ (die Aktionen bleiben in einer Zeile und an ihrem Platz, „Suche stoppen“ ist gleich breit). Jedes Suchergebnis nennt den Netzwerkadapter, über den es gefunden wurde („über WLAN (en1)“); die Verbindung nutzt genau diesen Adapter, auch wenn die Adapterauswahl danach wechselt, und die Detailspalte zeigt ihn. Verbindungsdetails (TCP, TLS, WebSocket, SHIP, Adapter) stehen rechts in der Detailspalte, nie als Aufklapper unter dem Schritt. Test: UX-S44, `scripts/test_ux043.mjs`. (043, Nutzer 2026-11-14, Bild 6–8)"
+  },
+  {
+    "id": "UX-S45",
+    "decision": "Prüfung vorbereiten: unter „Prüfumfang“ steht „Erkanntes Gerät:“ mit dem Gerätetyp als Chip (Wallbox, Wärmepumpe, Wechselrichter, Energiemanagementsystem …, sonst „unbekannt“; im Übungsmodus „Simuliertes Gerät“). Bei LPC/LPP ist auch das „W“ fett. „Rechner öffnen“ steht genau einmal, als Link am Ende des Hilfetexts. Über „Unterschriftsfeld für die prüfende Fachkraft“ 6 pt (8 px) mehr Abstand. Test: UX-S45. (043, Nutzer 2026-11-14)"
+  },
+  {
+    "id": "UX-S46",
+    "decision": "„Prüfung starten“ ohne Raten: Pflicht ist nur der Name der prüfenden Person (auch serverseitig; Firma optional). Fehlt er, öffnet der Knopf einen persistenten Dialog „Prüfer / Prüferin“ mit Textfeld, „Speichern & weiter“ und „Abbrechen“ (zurück zu Schritt 2); der Name wird im Profil gespeichert und die Prüfung startet sofort. „Angaben prüfen“ nennt den Fehler konkret und verlinkt das Feld (Detailspalte gleichlautend). Nach einem Verbindungsabbruch heißt der Primärknopf an derselben Stelle „Neu verbinden“, daneben „Verbindung zum Gerät getrennt. Deine Eingaben bleiben erhalten.“; ein Klick verbindet neu und bleibt in Schritt 2. Test: UX-S46, `scripts/test_ux043.mjs`. (043, Nutzer 2026-11-14)"
+  },
+  {
+    "id": "UX-S47",
+    "decision": "Leistung zu niedrig: genau eine Karte „Wie soll die Prüfung weitergehen?“ mit der Restzeit (m:ss) im Kartenkopf, einer Tabelle „Prüfrichtung · Gemessen · Nötig“ je Richtung und zwei Optionen mit je einem halben Satz Erklärung: „Erneut messen“ (Last einschalten, dann messen) und „Nur Geräteantworten prüfen“ (Leistungsänderung und Notbetrieb stehen im Bericht als nicht geprüft). Kein zweites Banner, kein Fließtext-Block. Test: UX-S47, `scripts/test_ux043.mjs`. (043, Nutzer 2026-11-14, Konzept Gemini `docs/prototyp-043/`)"
+  },
+  {
+    "id": "UX-S48",
+    "decision": "Ergebnis nach Abbruch: Die Ursache steht direkt unter dem Ergebnistitel – was passiert ist, in welchem Schritt, nach welcher Zeit – mit genau einer Handlung („Neu verbinden“ bzw. „Erneut prüfen“; in gespeicherten Berichten ohne Handlung). Ein Verbindungsabbruch während der Leistungsentscheidung gilt als „Verbindung zum Gerät unterbrochen“. Keine Warnkarte „Prüfung unterbrochen“ weiter unten. Die Zeile heißt „Prüfumfang:“ (nicht „Geprüfter Umfang:“). Test: UX-S48, `scripts/test_ux043.mjs`, Go: lowload043. (043, Nutzer 2026-11-14)"
+  },
+  {
+    "id": "UX-S49",
+    "decision": "Am Desktop (>1050 px) steht die Detailspalte in jedem Zustand aller drei Schritte rechts neben dem Hauptinhalt mit gleicher Oberkante, auch bei Suche, geöffnetem Gerät, Kennungsvergleich und Verbinden. Mobil bleibt sie eine aufklappbare Seitenleiste. Test: `scripts/test_release045.mjs` (1280 und 1790 px), UX-Katalog. (045, Nutzer 2026-11-16)"
+  },
+  {
+    "id": "UX-S50",
+    "decision": "Beim Verbinden stehen zwischen den Verbindungsphasen und der Statuszeile mit Spinner mindestens 12 px (Raster: 16 px). Der Aktionsbereich reserviert den Platz bereits vor dem Verbinden; Statuswechsel verschieben den folgenden Inhalt nicht. Test: `scripts/test_release045.mjs`, UX-Katalog. (045, Nutzer 2026-11-16)"
+  }
+]

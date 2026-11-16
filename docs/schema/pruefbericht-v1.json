@@ -1,0 +1,563 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://stromea.de/simulator/schema/pruefbericht-v1.json",
+  "title": "Stromea Prüfbericht v1",
+  "description": "Eigenes Austauschformat für Kommunikationsprüfungen; kein normiertes Konformitätsprotokoll. Zeiten RFC 3339 mit Offset; Leistungen W mit Vorzeichen; Dauern Nanosekunden. PDF-Anhang und JSON-Export sind bytegleich. SHA-256 über den vollständigen JSON-Export separat im PDF. Fehlende Pflichtprüfpunkte zählen als nicht geprüft. category workflow zählt nicht als Prüfpunkt. required=false bezeichnet optionale Prüfpunkte. passed ist die konservative Gesamtbewertung; abortReason beschreibt Abbruch oder fehlenden Lastnachweis. Alte JSON-Berichte ohne schemaVersion werden unverändert mit der Legacy-Auswertung gelesen.",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[0-9A-HJKMNP-TV-Z]{4}(-[0-9A-HJKMNP-TV-Z]{4}){3}$"
+    },
+    "software": {
+      "type": "string"
+    },
+    "abortReason": {
+      "type": "string",
+      "enum": [
+        "connection_lost",
+        "insufficient_load",
+        "user_cancel",
+        "timeout"
+      ]
+    },
+    "abortText": {
+      "type": "string"
+    },
+    "controlUnresponsive": {
+      "type": "boolean"
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/step"
+      }
+    },
+    "heartbeats": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/heartbeat"
+      }
+    },
+    "capabilities": {
+      "type": "object",
+      "properties": {
+        "lpc": {
+          "type": "boolean"
+        },
+        "lpp": {
+          "type": "boolean"
+        },
+        "mpc": {
+          "type": "boolean"
+        },
+        "scenarios": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        }
+      },
+      "required": [
+        "lpc",
+        "lpp",
+        "mpc"
+      ],
+      "additionalProperties": false
+    },
+    "samples": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/sample"
+      }
+    },
+    "limits": {
+      "type": "array",
+      "description": "Grenzverlauf je Richtung (UX-S21): ab 'at' gültige Grenze, erfasst bei quittierten Grenz-Schreibvorgängen und Heartbeat-Änderungen; Vorzeichen Bezug +, Einspeisung −; watts null = keine Grenze.",
+      "items": {
+        "$ref": "#/$defs/limitChange"
+      }
+    },
+    "failsafeOriginals": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/failsafe"
+      }
+    },
+    "mode": {
+      "type": "string",
+      "enum": [
+        "onsite",
+        "simulator"
+      ]
+    },
+    "localSki": {
+      "type": "string"
+    },
+    "business": {
+      "type": "string"
+    },
+    "inspector": {
+      "type": "string"
+    },
+    "started": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "finished": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "device": {
+      "$ref": "#/$defs/device"
+    },
+    "config": {
+      "$ref": "#/$defs/config"
+    },
+    "profile": {
+      "type": "string"
+    },
+    "notice": {
+      "type": "string"
+    },
+    "steps": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "$ref": "#/$defs/step"
+      }
+    },
+    "passed": {
+      "type": "boolean"
+    },
+    "protocolId": {
+      "type": "string",
+      "description": "Beibehaltene historische PDF-ID; nur beim Lesen/Ändern alter Berichte."
+    },
+    "revision": {
+      "$ref": "#/$defs/reportRevision"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "id",
+    "mode",
+    "started",
+    "finished",
+    "device",
+    "config",
+    "steps",
+    "passed"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "site": {
+      "type": "object",
+      "properties": {
+        "customer": {
+          "type": "string",
+          "maxLength": 1000
+        },
+        "address": {
+          "type": "string",
+          "maxLength": 1000
+        },
+        "meter": {
+          "type": "string",
+          "maxLength": 1000
+        },
+        "note": {
+          "type": "string",
+          "maxLength": 1000
+        },
+        "customerAddress": {
+          "type": "string",
+          "maxLength": 1000
+        }
+      },
+      "required": [
+        "customer",
+        "address",
+        "meter",
+        "note"
+      ],
+      "additionalProperties": false
+    },
+    "config": {
+      "type": "object",
+      "properties": {
+        "pauseLowLoad": {
+          "type": "boolean"
+        },
+        "longTest": {
+          "type": "boolean"
+        },
+        "signOperator": {
+          "type": "boolean"
+        },
+        "signInspector": {
+          "type": "boolean"
+        },
+        "authorized": {
+          "type": "boolean"
+        },
+        "scope": {
+          "type": "string"
+        },
+        "testProfile": {
+          "type": "string"
+        },
+        "business": {
+          "type": "string"
+        },
+        "inspector": {
+          "type": "string"
+        },
+        "lpc": {
+          "type": "number",
+          "minimum": 0
+        },
+        "lpp": {
+          "type": "number",
+          "minimum": 0
+        },
+        "failsafe": {
+          "type": "number",
+          "minimum": 0
+        },
+        "tolerance": {
+          "type": "number",
+          "minimum": 0
+        },
+        "stepTimeout": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Dauer in Nanosekunden (Go time.Duration)."
+        },
+        "effectTimeout": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Dauer in Nanosekunden (Go time.Duration)."
+        },
+        "failsafeTimeout": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Dauer in Nanosekunden (Go time.Duration)."
+        },
+        "recoveryTimeout": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Dauer in Nanosekunden (Go time.Duration)."
+        },
+        "cleanupTimeout": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Dauer in Nanosekunden (Go time.Duration)."
+        },
+        "failsafeMinimum": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Dauer in Nanosekunden (Go time.Duration)."
+        },
+        "site": {
+          "$ref": "#/$defs/site"
+        },
+        "profile": {
+          "$ref": "#/$defs/profile"
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    },
+    "step": {
+      "type": "object",
+      "properties": {
+        "category": {
+          "type": "string",
+          "enum": [
+            "checkpoint",
+            "workflow"
+          ]
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "reason": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "",
+            "not_checked",
+            "done",
+            "failed"
+          ]
+        },
+        "name": {
+          "type": "string"
+        },
+        "passed": {
+          "type": "boolean"
+        },
+        "detail": {
+          "type": "string"
+        },
+        "at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "watts": {
+          "type": "number",
+          "description": "Gemeldete Wirkleistung in W; Bezug positiv, Einspeisung negativ."
+        }
+      },
+      "required": [
+        "name",
+        "passed",
+        "detail",
+        "at"
+      ],
+      "additionalProperties": false
+    },
+    "sample": {
+      "type": "object",
+      "properties": {
+        "at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "step": {
+          "type": "string"
+        },
+        "watts": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "at",
+        "step",
+        "watts"
+      ],
+      "additionalProperties": false
+    },
+    "device": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "ski": {
+          "type": "string"
+        },
+        "brand": {
+          "type": "string"
+        },
+        "model": {
+          "type": "string"
+        },
+        "serial": {
+          "type": "string"
+        },
+        "firmware": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "ski",
+        "brand",
+        "model"
+      ],
+      "additionalProperties": false
+    },
+    "failsafe": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "type": "string"
+        },
+        "readAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "power": {
+          "type": "number"
+        },
+        "minimum": {
+          "type": "integer"
+        },
+        "powerNumber": {
+          "type": "integer"
+        },
+        "powerScale": {
+          "type": "integer"
+        },
+        "minimumRaw": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "power",
+        "minimum"
+      ],
+      "additionalProperties": false
+    },
+    "heartbeat": {
+      "type": "object",
+      "properties": {
+        "stopped": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "receipt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "direction": {
+          "type": "string"
+        },
+        "reference": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "basis": {
+          "type": "string"
+        },
+        "deadline": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "reserve": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Beobachtungsreserve in Nanosekunden."
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    },
+    "profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "business": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "street": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "postalCode": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "city": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "country": {
+          "type": "string",
+          "maxLength": 200,
+          "description": "041: Land des Prüfbetriebs, Standard Deutschland"
+        },
+        "inspector": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "logo": {
+          "type": "string",
+          "maxLength": 1000000
+        }
+      }
+    },
+    "reportRevision": {
+      "type": "object",
+      "description": "Neue Berichtsfassung bei Korrektur der Zuordnungsdaten. Messdaten und ursprünglicher Prüfzeitraum bleiben erhalten; Vorgänger bleibt abrufbar.",
+      "properties": {
+        "number": {
+          "type": "integer",
+          "minimum": 2
+        },
+        "rootId": {
+          "type": "string",
+          "pattern": "^[0-9A-Za-z-]{1,20}$"
+        },
+        "previousId": {
+          "type": "string",
+          "pattern": "^[0-9A-Za-z-]{1,20}$"
+        },
+        "previousDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "created": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "number",
+        "rootId",
+        "previousId",
+        "previousDate",
+        "created"
+      ],
+      "additionalProperties": false
+    },
+    "limitChange": {
+      "type": "object",
+      "required": [
+        "at",
+        "direction",
+        "watts"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "direction": {
+          "enum": [
+            "LPC",
+            "LPP"
+          ]
+        },
+        "watts": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "failsafe": {
+          "type": "boolean"
+        },
+        "unconfirmed": {
+          "type": "boolean",
+          "description": "Notbetrieb vom Simulator beendet, Rückkehr des Geräts aber nicht durch Messung bestätigt (037d)."
+        }
+      }
+    }
+  }
+}

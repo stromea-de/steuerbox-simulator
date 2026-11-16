@@ -1,0 +1,82 @@
+version: 2
+project_name: stromea-steuerbox-simulator
+dist: dist
+builds:
+  - id: stromea
+    main: ./cmd/steuerbox-simulator
+    binary: stromea-steuerbox-simulator
+    goos: [linux, windows]
+    goarch: [amd64, arm64]
+    env: [CGO_ENABLED=0]
+    flags: [-trimpath, -buildvcs=false]
+    ldflags:
+      - '-s -w -buildid= {{ if eq .Os "windows" }}-H=windowsgui{{ end }} -X github.com/stromea-de/steuerbox-simulator/internal/report.Version={{ .Env.STROMEA_REPORT_VERSION }} -X github.com/stromea-de/steuerbox-simulator/internal/report.Commit={{ .Env.STROMEA_REPORT_COMMIT }}'
+    mod_timestamp: '{{ .CommitTimestamp }}'
+  - id: stromea-macos
+    main: ./cmd/steuerbox-simulator
+    binary: stromea-steuerbox-simulator
+    goos: [darwin]
+    goarch: [amd64, arm64]
+    env: [CGO_ENABLED=1, MACOSX_DEPLOYMENT_TARGET=13.0]
+    flags: [-trimpath, -buildvcs=false]
+    ldflags: ['-s -w -buildid= -X github.com/stromea-de/steuerbox-simulator/internal/report.Version={{ .Env.STROMEA_REPORT_VERSION }} -X github.com/stromea-de/steuerbox-simulator/internal/report.Commit={{ .Env.STROMEA_REPORT_COMMIT }}']
+    mod_timestamp: '{{ .CommitTimestamp }}'
+archives:
+  - id: portable
+    ids: [stromea, stromea-macos]
+    name_template: '{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}'
+    formats: [tar.gz]
+    format_overrides:
+      - goos: windows
+        formats: [zip]
+    builds_info:
+      mtime: '{{ .CommitDate }}'
+    files:
+      - src: LICENSE
+        info: {mtime: '{{ .CommitDate }}'}
+      - src: README.md
+        info: {mtime: '{{ .CommitDate }}'}
+      - src: docs/LIZENZEN.md
+        info: {mtime: '{{ .CommitDate }}'}
+      - src: docs/third-party/*
+        info: {mtime: '{{ .CommitDate }}'}
+source:
+  # release.sh archives the checked-out commit, also before the first tag.
+  enabled: false
+  name_template: '{{ .ProjectName }}_{{ .Version }}_source'
+  format: tar.gz
+  prefix_template: '{{ .ProjectName }}-{{ .Version }}/'
+nfpms:
+  - id: linux
+    ids: [stromea]
+    package_name: stromea-steuerbox-simulator
+    file_name_template: '{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}'
+    formats: [deb, rpm]
+    maintainer: Stromea <kontakt@stromea.de>
+    homepage: https://github.com/stromea-de/steuerbox-simulator
+    description: Stromea Steuerbox-Simulator – Software-Simulation der Steuerbox, keine Steuerbox-Hardware; keine Zertifizierung.
+    license: AGPL-3.0-only
+    bindir: /usr/bin
+    mtime: '{{ .CommitDate }}'
+    contents:
+      - src: LICENSE
+        dst: /usr/share/licenses/stromea-steuerbox-simulator/LICENSE
+      - src: docs/LIZENZEN.md
+        dst: /usr/share/doc/stromea-steuerbox-simulator/LIZENZEN.md
+      - src: docs/third-party/
+        dst: /usr/share/doc/stromea-steuerbox-simulator/third-party/
+        type: tree
+checksum:
+  name_template: SHA256SUMS
+  algorithm: sha256
+signs:
+  - cmd: minisign
+    artifacts: checksum
+    args: [-S, -s, '{{ .Env.MINISIGN_SECRET_KEY }}', -m, '${artifact}', -x, '${signature}', -t, 'Stromea Steuerbox-Simulator release checksums']
+    signature: '${artifact}.minisig'
+snapshot:
+  version_template: 1.0.0
+changelog:
+  disable: true
+release:
+  disable: true

@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Stromea Steuerbox-Simulator
+Comment=Software-Simulation der Steuerbox per EEBUS, keine Steuerbox-Hardware
+Exec=stromea-steuerbox-simulator serve
+Icon=stromea-steuerbox-simulator
+Terminal=true
+Categories=Utility;

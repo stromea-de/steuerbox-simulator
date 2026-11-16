@@ -1,0 +1,4 @@
+#!/bin/sh
+appdir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+if [ "$#" -eq 0 ]; then set -- serve; fi
+exec "$appdir/usr/bin/stromea-steuerbox-simulator" "$@"

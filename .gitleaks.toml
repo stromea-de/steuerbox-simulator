@@ -1,0 +1,12 @@
+# Keep all default rules. This one invalid SKI is a public parser-test fixture.
+[extend]
+useDefault = true
+
+[[rules]]
+id = "generic-api-key"
+[[rules.allowlists]]
+description = "Deliberately invalid synthetic SKI in NormalizeSKI regression"
+condition = "AND"
+paths = ['''^internal/identity/identity_test\.go$''']
+regexTarget = "secret"
+regexes = ['''^zz23456789abcdef0123456789abcdef01234567$''']

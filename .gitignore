@@ -1,0 +1,26 @@
+/bin/
+/artifacts/
+/dist/
+__pycache__/
+*.minisign.key
+*.sec
+*.pem
+*.key
+*.p12
+.DS_Store
+
+# 034: Vollständige E2E-Screenshots nur lokal (~900 MB); versioniert sind Kontaktbögen und im Bericht verlinkte Screens.
+docs/tests/034/**/*.png
+!docs/tests/034/kontakt-*.png
+
+# 035: gleiche lokale PNG-Regel wie 034.
+docs/tests/035/**/*.png
+!docs/tests/035/kontakt-*.png
+
+# 035b: Einzelaufnahmen bleiben lokal.
+docs/tests/035b/**/*.png
+!docs/tests/035b/kontakt-*.png
+
+# 035c: Einzelaufnahmen bleiben lokal.
+docs/tests/035c/**/*.png
+!docs/tests/035c/kontakt-*.png

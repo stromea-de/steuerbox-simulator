@@ -1,0 +1,16 @@
+<noscript>
+<link rel="stylesheet" href="/report-list.css">
+<section id="report-list-fallback" class="card report-page">
+<h2>Protokolle</h2><p>Auf diesem Computer gespeicherte Prüfungen.</p>
+{{if .Error}}<p role="alert">Protokolle konnten nicht geladen werden.</p>{{else}}
+<table class="report-library"><caption class="sr-only">Protokolle</caption>
+<thead><tr><th>Datum</th><th>Kunde</th><th>Zähler / Anlage</th><th>Gerät</th><th>Ergebnis</th><th>Aktionen</th></tr></thead><tbody>
+{{range .Entries}}<tr class="report-row" data-id="{{.ID}}">
+<td><span class="report-cell-label">Datum</span><span>{{.Report.Started.Format "02.01.2006 15:04"}}</span></td>
+<td><span class="report-cell-label">Kunde</span><span data-user-content>{{if .Report.Config.Site.Customer}}{{.Report.Config.Site.Customer}}{{else}}–{{end}}</span></td>
+<td class="report-meter"><span class="report-cell-label">Zähler / Anlage</span><span class="report-meter-value" title="{{.Report.Config.Site.Meter}}">{{range .MeterLines}}<span data-user-content>{{.}}</span>{{end}}</span></td>
+<td><span class="report-cell-label">Gerät</span><span data-user-content>{{if .Report.Device.Name}}{{.Report.Device.Name}}{{else}}{{.Report.Device.ModelLabel}}{{end}}</span></td>
+<td><span class="report-cell-label">Ergebnis</span><span data-column="result">{{.StatusLabel}}</span><br><small class="help">Modus: <span data-column="mode">{{if eq .Report.Mode "simulator"}}Übungsmodus{{else if eq .Report.Mode "onsite"}}Gerät vor Ort{{else}}Nicht gespeichert{{end}}</span></small></td>
+<td><span class="report-cell-label">Aktionen</span><div class="report-downloads"><a class="text-link" href="/protokoll?id={{.ID}}">Ansehen<span class="sr-only" data-user-content> – {{.Report.Started.Format "02.01.2006 15:04"}}{{if .Report.Config.Site.Customer}} · {{.Report.Config.Site.Customer}}{{end}}</span></a><a class="text-link" href="/api/report.pdf?id={{.ID}}" download>PDF laden<span class="sr-only" data-user-content> – {{.Report.Started.Format "02.01.2006 15:04"}}{{if .Report.Config.Site.Customer}} · {{.Report.Config.Site.Customer}}{{end}}</span></a></div></td>
+</tr>{{else}}<tr class="report-empty"><td colspan="6">Noch keine gespeicherten Protokolle. Starte eine Prüfung, dann erscheint ihr Bericht hier.</td></tr>{{end}}</tbody></table>{{end}}
+</section></noscript>

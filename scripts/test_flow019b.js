@@ -1,0 +1,73 @@
+// Offline system-WebKit acceptance: real product assets with synthetic API data.
+(async()=>{
+ const t=window.uiTest={done:false,error:'',checks:0,snapshots:{}};
+ const el=id=>document.getElementById(id),pause=ms=>new Promise(r=>setTimeout(r,ms||80));
+ const assert=(ok,msg)=>{t.checks++;if(!ok)throw Error(msg);};
+ const click=async id=>{el(id).click();await pause();};
+ const clickLabel=async id=>{document.querySelector('label[for="'+id+'"]').click();await pause();};
+ const translated=()=>{if(StromeaI18n.language()==='de')return;const w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);let n,text='';while(n=w.nextNode()){const p=n.parentElement;if(!p.closest('script,style,.raw-technical,[data-user-content]') && p.getClientRects().length)text+=n.nodeValue+' ';}text=text.replaceAll('Stromea Steuerbox-Simulator','');assert(!/Prüf|Gerät|Einspeis|Bezug|Nicht |Übung|Zurück|Messwert|Freigabe|ungeprüft|Notbetrieb|Feldhilfe|Zeitpunkt|Messdetails|nicht /.test(text),'translated visible copy '+StromeaI18n.language()+': '+text);};
+ const stepLabels=label=>{for(const button of document.querySelectorAll('.wizard button')){const range=document.createRange();range.selectNodeContents(button);assert(range.getBoundingClientRect().right<=button.getBoundingClientRect().right+1,'step label not clipped '+label+' '+button.textContent);}};
+ const shot=async name=>{StromeaI18n.walk();const primaryBackground=getComputedStyle(el('downloads').querySelector('.button')).backgroundColor;const actions=[...document.querySelectorAll('button,a.button')].filter(n=>!n.disabled && n.getClientRects().length && getComputedStyle(n).backgroundColor===primaryBackground);assert(actions.length<=1,'one primary action '+name+': '+actions.map(n=>n.id || n.textContent));await pause();stepLabels(name); assert(document.documentElement.scrollWidth<=innerWidth,'overflow '+name);const copy=document.documentElement.cloneNode(true);copy.querySelectorAll('script').forEach(n=>n.remove());const freeze=document.createElement('style');freeze.textContent='*,*::before,*::after{animation:none!important;transition:none!important}';copy.querySelector('head').append(freeze);document.querySelectorAll('option').forEach((n,i)=>copy.querySelectorAll('option')[i].toggleAttribute('selected',n.selected));t.snapshots[name]=copy.outerHTML;};
+ const d={name:'Beispielgerät',ski:'0123456789abcdef0123456789abcdef01234567',address:'192.0.2.50:4711'};
+ try {
+  await pause();StromeaI18n.setLanguage('de');
+  assert(!el('technical-toggle'),'global technical checkbox removed');assert(el('detail-inspector'),'inspector exists');
+  const main=el('step-1').getBoundingClientRect(),side=el('detail-inspector').getBoundingClientRect();
+  if(innerWidth>1050){assert(side.left>=main.right,'desktop split');assert(side.width>=320 && side.width<=360,'inspector width');}
+  assert(!document.querySelector('header>.eyebrow,header>p'),'compact header');
+  assert(el('field-context').hidden,'no field help in coupling');
+  assert(el('diagnostics').querySelector('dl'),'readable diagnostic definitions');
+  await shot('einstieg');await click('manual-toggle');
+  assert(el('detail-inspector').contains(el('ski')) && el('ski').tagName==='TEXTAREA','manual multiline SKI in inspector');
+  await shot('manuell');
+  if(innerWidth<=1050){const focusable=[...el('detail-inspector').querySelectorAll('button,input,textarea,select')].filter(n=>!n.disabled && n.getClientRects().length);focusable.at(-1).focus();document.dispatchEvent(new KeyboardEvent('keydown',{key:'Tab',bubbles:true}));assert(document.activeElement===focusable[0],'panel traps Tab');focusable[0].focus();document.dispatchEvent(new KeyboardEvent('keydown',{key:'Tab',shiftKey:true,bubbles:true}));assert(document.activeElement===focusable.at(-1),'panel traps Shift Tab');assert(el('detail-inspector').getAttribute('aria-modal')==='true','modal semantics');document.dispatchEvent(new KeyboardEvent('keydown',{key:'Escape',bubbles:true}));assert(document.activeElement===el('manual-toggle'),'Escape restores opener');await click('manual-toggle');}
+  el('address').value=d.address;el('ski').value=d.ski;el('ski').dispatchEvent(new Event('input',{bubbles:true}));await click('inspector-close');showDevice(d);
+  for(const id of ['device-ski','local-ski']){assert(parseFloat(getComputedStyle(el(id)).fontSize)>=15,'readable SKI '+id);assert(el(id).querySelectorAll('span').length===10,'all groups');assert(Number(getComputedStyle(el(id).querySelector('strong')).fontWeight)>=700,'bold end');if(innerWidth>=1280)assert(el(id).clientHeight<90,'two SKI rows');}
+  assert(getComputedStyle(el('qr-toggle')).borderTopColor==='rgba(0, 0, 0, 0)','QR text action');
+  mockAPI.connectBusy=true;await click('pair');assert(el('pair').disabled && el('pair').getAttribute('aria-busy')==='true','connecting spinner locked');assert(el('pair').textContent.includes('Verbinde'),'connecting label');await shot('verbindet');
+  mockAPI.state={...mockAPI.state,busy:true,trust:{device:true,simulator:false}};await refresh();assert(el('device').classList.contains('trusted') && !el('own-identity').classList.contains('trusted'),'separate trust evidence');
+  mockAPI.state={...mockAPI.state,busy:false,connected:true,trust:{device:true,simulator:true}};await refresh();assert(step===1,'no auto advance');await pause(800);assert(el('pair').textContent==='Prüfung vorbereiten →','explicit next');if(innerWidth>=1280)assert(el('pair').getBoundingClientRect().bottom<=innerHeight,'next action within pairing viewport');assert(!el('discover').getClientRects().length,'search compressed after selection');
+  assert(el('selected-device-summary').textContent.includes(d.address),'selected address summary');
+  assert(el('change-device').getClientRects().length,'change selection link');
+  assert(!/undefined|\{.*lpc/.test(el('diagnostics').textContent),'no raw capability dump');
+  await shot('vertraut');for(const code of ['en','ru','pl','uk','tr','ro']){StromeaI18n.setLanguage(code);await pause();translated();}StromeaI18n.setLanguage('de');
+  for(const error of ['Verbindung abgewiesen: Vertrauen fehlt','Anderes Gerät antwortet – SKI prüfen']){mockAPI.state={...mockAPI.state,error,connected:false,trust:{device:false,simulator:false}};await refresh();assert(!el('pair-error').hidden,'error at step');assert(el('pair').hidden!==el('retry').hidden,'single correction action');assert(!el('discover').getClientRects().length,'no competing search on error');await shot(error.startsWith('Anderes')?'falsche-ski':'abgelehnt');}
+  mockAPI.state={...mockAPI.state,error:'',kind:'',busy:false};await refresh();await click('qr-toggle');assert(el('qr-image').accept==='image/png,image/jpeg','PNG JPG picker');assert(el('qr-paste'),'clipboard action');
+  let pickerClicks=0;el('qr-image').addEventListener('click',e=>{pickerClicks++;e.preventDefault();});el('qr-image-select').click();assert(pickerClicks===1,'image button opens file picker');
+  await readQRImage(new Blob(['invalid'],{type:'image/png'}));assert(el('qr-status').textContent.includes('Bild nicht lesbar'),'invalid image feedback');assert(!el('qr-close').getClientRects().length,'only one QR close');
+  assert(el('qr-status').previousElementSibling===el('qr-image-select'),'QR error below image action');
+  if(innerWidth>1050)assert(el('qr-status').getBoundingClientRect().bottom<innerHeight,'QR error in viewport');
+  await shot('qr-ungueltig');
+  devices=[d];
+  const raw=StromeaQR.encode(StromeaInput.ownShip(d.ski,'fixture'),'raw',{ecc:'medium',border:4,scale:5}),bitmap=new StromeaQR.Bitmap({width:raw[0].length,height:raw.length});bitmap.data=raw;await readQRImage(new Blob([bitmap.toGIF()],{type:'image/gif'}));assert(fromQR,'actual local bitmap decoded');
+  // PNG/JPEG fixtures: own QR generated with the embedded codec, encoded by macOS sips.
+  // Legacy offscreen WebView cannot encode canvas images (toDataURL returns data:,).
+  let png;for(const type of ['image/png','image/jpeg']){const bytes=Uint8Array.from(atob(qrImageFixtures019[type]),c=>c.charCodeAt(0)),file=new Blob([bytes],{type});if(type==='image/png')png=file;await readQRImage(file);assert(fromQR && el('qr-status').textContent.includes('übernommen'),'local '+type+' decoded: '+el('qr-status').textContent);}
+  Object.defineProperty(navigator,'clipboard',{configurable:true,value:{read:async()=>[{types:['image/png'],getType:async()=>png}]}});await click('qr-paste');assert(fromQR && el('qr-status').textContent.includes('übernommen'),'clipboard image decoded');
+  Object.defineProperty(navigator,'clipboard',{configurable:true,value:{read:async()=>[{types:['text/plain'],getType:async()=>new Blob([StromeaInput.ownShip(d.ski,'fixture')],{type:'text/plain'})}]}});await click('qr-paste');assert(fromQR && el('qr-status').textContent.includes('übernommen'),'clipboard SHIP import');
+  applyQR('SHIP;SKI:'+d.ski+';ID:fixture;ENDSHIP;');assert(fromQR,'QR provenance');await click('qr-close');
+  real=true;paired=true;connected=true;deviceInfo={type:'HeatPump'};setCapabilities({lpc:true,lpp:false,mpc:true});goStep(2);el('lpc').focus();await pause();assert(el('field-help').textContent.includes('LPC'),'focus help');assert(!el('report-details').closest('details'),'report fields open');assert(el('duration').textContent.includes('bis zu ca. 20 Min., meist kürzer'),'honest budget');assert(el('real-config').tagName==='DETAILS' && !el('real-config').open,'advanced settings initially collapsed');
+  assert(![...el('step-2').querySelectorAll('.tip')].some(n=>n.getClientRects().length),'no redundant help icons');
+  el('business').focus();await clickLabel('lpc');assert(el('field-help').textContent.includes('LPC'),'label opens field help');
+  el('real-config').open=true;el('effect-timeout').value='125';el('effect-timeout').dispatchEvent(new Event('input',{bubbles:true}));assert(el('advanced-summary').textContent.includes('Angepasst'),'edited settings summary');el('effect-timeout').value='120';el('effect-timeout').dispatchEvent(new Event('input',{bubbles:true}));el('real-config').open=false;if(innerWidth<=1050)await click('inspector-close');
+  await shot('vorbereitung');for(const code of ['en','ru','pl','uk','tr','ro']){StromeaI18n.setLanguage(code);await pause();translated();}StromeaI18n.setLanguage('de');
+  const at=Date.now(),samples=Array.from({length:81},(_,i)=>({at:new Date(at+i*250).toISOString(),watts:8000-i*90,step:i<20?'Ausgangsmessung MPC':'LPC gemessene Wirkung'}));
+  mockAPI.state={...mockAPI.state,kind:'run',busy:true,progress:{current:'LPC gemessene Wirkung',steps:[{name:'Verbindung',passed:true,detail:'Fixture',at:new Date(at).toISOString()}],samples,lowLoad:{direction:'LPC',watts:200,required:4250}},config:{scope:'consumption',lpc:4200,failsafe:500}};await refresh();goStep(3);assert(el('low-load-text').textContent.includes('elektrisch ungeprüft') && el('low-load-text').textContent.includes('Protokolltest'),'low load consequence');assert(el('detail-inspector').contains(el('steps')),'live protocol right');assert(el('live').contains(el('power-monitor')),'live curve left');assert(el('detail-inspector').contains(el('power-table')),'live table inspector only');if(innerWidth>1050)assert(el('power-table').getBoundingClientRect().bottom<innerHeight,'live measurements visible without scrolling');await shot('lauf-wenig-last');
+  for(const [type,scope,sign] of [['HeatPump','consumption',1],['Inverter','production',-1],['ChargingStation','both',1]]){
+   mockAPI.state={...mockAPI.state,busy:true,report:null,progress:{...mockAPI.state.progress,lowLoad:null,samples:samples.map(s=>({...s,watts:s.watts*sign}))}};await refresh();assert(el('live').contains(el('power-monitor')),'live curve '+type);assert(el('power-direction').textContent===(sign<0?'Einspeisung':'Bezug'),'live direction '+type);
+   mockAPI.state={...mockAPI.state,busy:false,outcome:'Bestanden',report:{mode:'onsite',device:{...d,type},config:{scope,lpc:4200,lpp:3000,failsafe:500},samples:samples.map(s=>({...s,watts:s.watts*sign})),steps:[{name:'Grenzen aufheben',passed:true},{name:'LPC Wiederkehr',status:'not_checked',passed:false,detail:'Langtest nicht durchgeführt'}],started:new Date(at).toISOString(),finished:new Date(at+20000).toISOString()}};await refresh();assert(el('result-scope').textContent.length>10,'result scope');assert(!el('release-status').hidden && !el('open-evidence').hidden,'release and missing evidence together');assert(el('power-chart').querySelectorAll('.power-point').length===81,'real curve');assert(el('power-chart').textContent.includes('kW') && el('power-chart').textContent.includes('s'),'axes');assert(el('result-curve').contains(el('power-monitor')),'full result curve');
+   assert(el('detail-inspector').contains(el('power-table')),'result table inspector only');
+   assert(el('failsafe-warning').hidden,'no duplicate restoration warning');
+   assert(!/Mindestdauer abwarten.*Mindestdauer nicht abgewartet/.test(el('evidence-list').textContent),'concise open evidence');
+   assert(el('power-chart').querySelectorAll('.phase-band').length<10,'phase bands merged');
+   assert([...el('power-chart').querySelectorAll('.phase-label')].every(n=>parseFloat(n.style.fontSize)*el('power-chart').getBoundingClientRect().width/el('power-chart').viewBox.baseVal.width>=11),'phase labels readable');
+   for(const code of ['de','en','ru','pl','uk','tr','ro']){StromeaI18n.setLanguage(code);await pause();stepLabels(code); assert(document.documentElement.scrollWidth<=innerWidth,'result locale fits '+code);translated();if(['de','en','ru'].includes(code))await shot('ergebnis-'+type+'-'+code);}
+   StromeaI18n.setLanguage('de');
+  }
+  const old=Date.now()-240000;renderPower({busy:true,progress:{samples:[{at:new Date(old).toISOString(),watts:1234,step:'Ausgangsmessung MPC'},{at:new Date().toISOString(),watts:null,step:'LPC gemessene Wirkung'}]}});assert(el('power-value').textContent==='1234' && el('power-age').textContent.includes('240'),'old valid reading kept with age');assert(!el('power-chart').querySelector('.power-point'),'old reading outside live curve window');
+  mockAPI.state.report.steps=[{name:'Grenzen aufheben',passed:false}];mockAPI.state.outcome='Nicht bestanden';await refresh();assert(el('outcome').classList.contains('error') && el('release-status').classList.contains('warning'),'unsafe release stays prominent');
+  renderPower({busy:true,progress:{samples:[]}});assert(el('power-value').textContent==='–','missing sample clears old device value');
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches)assert(document.getAnimations().length===0,'reduced motion has no animations');
+  t.done=true;
+ }catch(e){t.error=e.message+' '+e.stack;t.done=true;}
+})();
