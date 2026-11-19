@@ -52,7 +52,7 @@ func (c Config) TimeBudget() time.Duration {
 	if c.Scope == ScopeBoth || c.Scope == "" {
 		n = 2
 	}
-	perDirection := 3*c.EffectTimeout + c.FailsafeTimeout + HeartbeatReserve + 10*c.StepTimeout + 3*c.CleanupTimeout
+	perDirection := 3*c.EffectTimeout + c.DeviceOutageTimeout() + HeartbeatReserve + 10*c.StepTimeout + 3*c.CleanupTimeout
 	if c.FullTest() {
 		perDirection += c.FailsafeMinimum
 	}
@@ -71,7 +71,7 @@ func (c Config) RunDeadline() time.Duration {
 	if c.Scope == ScopeBoth || c.Scope == "" {
 		n = 2
 	}
-	total := c.TimeBudget() + n*(c.FailsafeTimeout+HeartbeatReserve+c.StepTimeout)
+	total := c.TimeBudget() + n*(c.DeviceOutageTimeout()+HeartbeatReserve+c.StepTimeout)
 	if c.FullTest() && c.RecoveryTimeout > c.FailsafeMinimum {
 		total += n * (c.RecoveryTimeout - c.FailsafeMinimum)
 	}
@@ -116,5 +116,5 @@ func (c Config) ProtocolTimeBudget() time.Duration {
 	if c.Scope == ScopeBoth || c.Scope == "" {
 		n = 2
 	}
-	return n * (c.FailsafeTimeout + HeartbeatReserve + 10*c.StepTimeout + 3*c.CleanupTimeout)
+	return n * (c.DeviceOutageTimeout() + HeartbeatReserve + 10*c.StepTimeout + 3*c.CleanupTimeout)
 }

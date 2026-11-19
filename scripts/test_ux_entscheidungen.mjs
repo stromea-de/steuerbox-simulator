@@ -169,7 +169,7 @@ const checks={
    const shortSamples=[0,100].map(t=>({at:at(t),watts:8000,step:'LPC gemessene Wirkung'}));renderPower({busy:false,report:{config,samples:shortSamples,limits:[{at:at(20),direction:'LPC',watts:4200}]}});
    const short={d:document.querySelector('#power-chart .limit-line')?.getAttribute('d')||'',dots:[...document.querySelectorAll('#power-chart .power-point')].map(c=>Number(c.getAttribute('cx')))};
    resetPower(state.report?.config||null);renderPower(state);
-   const unconfirmedKey='Hell gepunktet: Rückkehr aus dem Notbetrieb nicht bestätigt (keine Messung).';
+   const unconfirmedKey='Hell gepunktet: Notbetrieb oder Rückkehr daraus nicht nachgewiesen.';
    return {recorded,legacy,unconfirmed,short,note:StromeaI18n.t('Gestrichelt: Grenze ab Quittung; gepunktet: Notbetrieb ab Ablauf der Ausfallfrist.'),legacyNote:StromeaI18n.t('Kein Grenzverlauf aufgezeichnet.'),noteKey:'Gestrichelt: Grenze ab Quittung; gepunktet: Notbetrieb ab Ablauf der Ausfallfrist.',legacyKey:'Kein Grenzverlauf aufgezeichnet.',unconfirmedKey,unconfirmedNote:StromeaI18n.t(unconfirmedKey)};});
   if(fixture){const {paths,dots}=fixture.recorded,near=(a,b)=>Math.abs(a-b)<.02;assert.equal(paths.length,2,'limit and failsafe step only: '+JSON.stringify(paths));
    const [limit,failsafe]=paths.map(x=>stepShape037(x.d).paths);assert.equal(limit.length,1);assert.equal(failsafe.length,1);const a=limit[0],b=failsafe[0];

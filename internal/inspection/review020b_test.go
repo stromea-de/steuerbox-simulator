@@ -9,6 +9,9 @@ import (
 
 // Virtual device clock: the measurement occurs at stop + delay without waiting
 // 125/151 real seconds. The actual context deadline determines its availability.
+// 046: the failsafe read now waits for the real heartbeat timeout, so the
+// timeout is scaled to 500 ms (below the 1 s sampling tick) and the delays to
+// timeout + 5 s / timeout + 31 s; the 30 s reserve is unchanged.
 type outage020b struct {
 	onsiteFake
 	receipt time.Time
@@ -43,12 +46,15 @@ func (f *outage020b) Power(ctx context.Context) (float64, error) {
 		return 4200, nil
 	}
 }
+
+const timeout020b = 500 * time.Millisecond
+
 func TestHeartbeatOptionalReceiptAndStopDeadline020b(t *testing.T) {
 	for _, receipt := range []string{"missing", "positive-older"} {
 		for _, tc := range []struct {
 			delay time.Duration
 			pass  bool
-		}{{125 * time.Second, true}, {151 * time.Second, false}} {
+		}{{timeout020b + 5*time.Second, true}, {timeout020b + 31*time.Second, false}} {
 			t.Run(receipt+"/"+tc.delay.String(), func(t *testing.T) {
 				f := &outage020b{onsiteFake: onsiteFake{caps: Capabilities{LPC: true, MPC: true}}, delay: tc.delay}
 				if receipt == "positive-older" {
@@ -58,7 +64,7 @@ func TestHeartbeatOptionalReceiptAndStopDeadline020b(t *testing.T) {
 				// like no response. The packet-level negative path is tested in eebus.
 				c := onsiteConfig()
 				c.Scope = ScopeConsumption
-				c.FailsafeTimeout = 120 * time.Second
+				c.FailsafeTimeout = timeout020b
 				r, err := RunOnSite(context.Background(), c, Device{}, f)
 				if err != nil {
 					t.Fatal(err)
@@ -76,7 +82,7 @@ func TestHeartbeatOptionalReceiptAndStopDeadline020b(t *testing.T) {
 					t.Fatalf("missing outage: %+v", r.Steps)
 				}
 				h := r.Heartbeats[0]
-				if h.Reference.Before(f.stopped) || h.Reference.Sub(f.stopped) > time.Second || h.Deadline.Sub(h.Reference) != 150*time.Second || !strings.Contains(h.Basis, "lokaler Stopp") {
+				if h.Reference.Before(f.stopped) || h.Reference.Sub(f.stopped) > time.Second || h.Deadline.Sub(h.Reference) != timeout020b+30*time.Second || !strings.Contains(h.Basis, "lokaler Stopp") {
 					t.Fatalf("wrong reference: %+v", h)
 				}
 				if tc.pass && !r.Passed {

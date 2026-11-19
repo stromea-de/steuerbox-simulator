@@ -171,7 +171,8 @@ func Test037dPDFUnconfirmedFailsafe(t *testing.T) {
 	if len(segs) != 2 || segs[0].dash == segs[1].dash {
 		t.Fatalf("unconfirmed failsafe must look different: %v", segs)
 	}
-	if !strings.Contains(got, "Rückkehr aus dem Notbetrieb nicht bestätigt") && !strings.Contains(got, "R\374ckkehr aus dem Notbetrieb nicht best\344tigt") && !strings.Contains(got, "ckkehr aus dem Notbetrieb nicht best") {
-		t.Fatal("legend must explain the unconfirmed return")
+	// 046: the light dotted line also marks an unproven failsafe entry.
+	if !strings.Contains(got, "Notbetrieb oder R") || !strings.Contains(got, "daraus nicht nachgewiesen") {
+		t.Fatal("legend must explain the unconfirmed failsafe or return")
 	}
 }

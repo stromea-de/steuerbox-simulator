@@ -1335,7 +1335,6 @@
   "(öffnet in neuem Tab)": "(откроется в новой вкладке)",
   "Kein Grenzverlauf aufgezeichnet.": "Ход ограничений не записан.",
   "Gestrichelt: Grenze ab Quittung; gepunktet: Notbetrieb ab Ablauf der Ausfallfrist.": "Пунктир: ограничение с момента подтверждения; точки: аварийный режим после истечения срока обнаружения потери связи.",
-  "Hell gepunktet: Rückkehr aus dem Notbetrieb nicht bestätigt (keine Messung).": "Светлые точки: возврат из аварийного режима не подтверждён (нет измерения).",
   "Testgrenzen aufgehoben": "Тестовые ограничения сняты",
   "Kamerazugriff nicht erlaubt. Bild oder QR-Text verwenden.": "Доступ к камере запрещён. Используй изображение или текст QR.",
   "Keine Kamera gefunden. Bild oder QR-Text verwenden.": "Камера не найдена. Используй изображение или текст QR.",
@@ -1464,5 +1463,11 @@
   "{time} min": "{time} мин",
   "Leistung anpassen: für Bezug Last einschalten, für Einspeisung Erzeugung erhöhen oder Verbraucher ausschalten. Dann erneut messen.": "Измени мощность: для потребления включи нагрузку, для отдачи в сеть увеличь генерацию или выключи потребителей. Затем измерь снова.",
   "Einspeisung erhöhen, z. B. Erzeugung abwarten oder Verbraucher ausschalten, dann erneut messen.": "Увеличь отдачу в сеть, например дождись генерации или выключи потребителей, затем измерь снова.",
-  "Import nicht vollständig. {details} Profil konnte nicht lokal gespeichert werden. Dein bisheriges Profil und dein Entwurf bleiben erhalten. Versuche den Import erneut; nur das Profil ist noch ausgewählt.": "Импорт завершён не полностью. {details} Не удалось сохранить профиль локально. Прежний профиль и черновик сохранены. Повтори импорт; выбран только профиль."
+  "Import nicht vollständig. {details} Profil konnte nicht lokal gespeichert werden. Dein bisheriges Profil und dein Entwurf bleiben erhalten. Versuche den Import erneut; nur das Profil ist noch ausgewählt.": "Импорт завершён не полностью. {details} Не удалось сохранить профиль локально. Прежний профиль и черновик сохранены. Повтори импорт; выбран только профиль.",
+  "Rückkehr nicht bewertbar: Der Notbetrieb wurde nicht nachgewiesen.": "Возврат нельзя оценить: аварийный режим не подтверждён.",
+  "Das Gerät meldet keinen Notbetrieb.": "Устройство не сообщает об аварийном режиме.",
+  "Hell gepunktet: Notbetrieb oder Rückkehr daraus nicht nachgewiesen.": "Светлый пунктир: аварийный режим или возврат из него не подтверждён.",
+  "Grenze nach neuem Lebenszeichen quittieren": "Подтвердить ограничение после нового сигнала жизни",
+  "Notbetrieb nicht unterscheidbar: Kein Leistungsabfall, der erst durch den Notbetrieb erklärbar ist.": "Аварийный режим неразличим: нет снижения мощности, которое объясняется только аварийным режимом.",
+  "Notbetrieb nicht bewertbar: Zeitbezug der Lebenszeichen unklar.": "Аварийный режим нельзя оценить: время сигналов жизни неясно."
 }

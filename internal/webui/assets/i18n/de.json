@@ -1335,7 +1335,6 @@
   "(öffnet in neuem Tab)": "(öffnet in neuem Tab)",
   "Kein Grenzverlauf aufgezeichnet.": "Kein Grenzverlauf aufgezeichnet.",
   "Gestrichelt: Grenze ab Quittung; gepunktet: Notbetrieb ab Ablauf der Ausfallfrist.": "Gestrichelt: Grenze ab Quittung; gepunktet: Notbetrieb ab Ablauf der Ausfallfrist.",
-  "Hell gepunktet: Rückkehr aus dem Notbetrieb nicht bestätigt (keine Messung).": "Hell gepunktet: Rückkehr aus dem Notbetrieb nicht bestätigt (keine Messung).",
   "Testgrenzen aufgehoben": "Testgrenzen aufgehoben",
   "Kamerazugriff nicht erlaubt. Bild oder QR-Text verwenden.": "Kamerazugriff nicht erlaubt. Bild oder QR-Text verwenden.",
   "Keine Kamera gefunden. Bild oder QR-Text verwenden.": "Keine Kamera gefunden. Bild oder QR-Text verwenden.",
@@ -1464,5 +1463,11 @@
   "{time} min": "{time} min",
   "Leistung anpassen: für Bezug Last einschalten, für Einspeisung Erzeugung erhöhen oder Verbraucher ausschalten. Dann erneut messen.": "Leistung anpassen: für Bezug Last einschalten, für Einspeisung Erzeugung erhöhen oder Verbraucher ausschalten. Dann erneut messen.",
   "Einspeisung erhöhen, z. B. Erzeugung abwarten oder Verbraucher ausschalten, dann erneut messen.": "Einspeisung erhöhen, z. B. Erzeugung abwarten oder Verbraucher ausschalten, dann erneut messen.",
-  "Import nicht vollständig. {details} Profil konnte nicht lokal gespeichert werden. Dein bisheriges Profil und dein Entwurf bleiben erhalten. Versuche den Import erneut; nur das Profil ist noch ausgewählt.": "Import nicht vollständig. {details} Profil konnte nicht lokal gespeichert werden. Dein bisheriges Profil und dein Entwurf bleiben erhalten. Versuche den Import erneut; nur das Profil ist noch ausgewählt."
+  "Import nicht vollständig. {details} Profil konnte nicht lokal gespeichert werden. Dein bisheriges Profil und dein Entwurf bleiben erhalten. Versuche den Import erneut; nur das Profil ist noch ausgewählt.": "Import nicht vollständig. {details} Profil konnte nicht lokal gespeichert werden. Dein bisheriges Profil und dein Entwurf bleiben erhalten. Versuche den Import erneut; nur das Profil ist noch ausgewählt.",
+  "Rückkehr nicht bewertbar: Der Notbetrieb wurde nicht nachgewiesen.": "Rückkehr nicht bewertbar: Der Notbetrieb wurde nicht nachgewiesen.",
+  "Das Gerät meldet keinen Notbetrieb.": "Das Gerät meldet keinen Notbetrieb.",
+  "Hell gepunktet: Notbetrieb oder Rückkehr daraus nicht nachgewiesen.": "Hell gepunktet: Notbetrieb oder Rückkehr daraus nicht nachgewiesen.",
+  "Grenze nach neuem Lebenszeichen quittieren": "Grenze nach neuem Lebenszeichen quittieren",
+  "Notbetrieb nicht unterscheidbar: Kein Leistungsabfall, der erst durch den Notbetrieb erklärbar ist.": "Notbetrieb nicht unterscheidbar: Kein Leistungsabfall, der erst durch den Notbetrieb erklärbar ist.",
+  "Notbetrieb nicht bewertbar: Zeitbezug der Lebenszeichen unklar.": "Notbetrieb nicht bewertbar: Zeitbezug der Lebenszeichen unklar."
 }

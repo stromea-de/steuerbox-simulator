@@ -69,6 +69,10 @@ type outageDevice020b struct {
 	endpoint   *Endpoint
 	powerCalls int
 	failEffect bool
+	// 046: the device answers by time; failsafe only after its (scaled) timeout.
+	stopped time.Time
+	timeout time.Duration
+	shown   bool
 }
 
 func (*outageDevice020b) Connect(context.Context) error { return nil }
@@ -92,6 +96,7 @@ func (d *outageDevice020b) Heartbeat(ctx context.Context, on bool) error {
 		d.endpoint.AllowHeartbeats()
 		return nil
 	}
+	d.stopped = time.Now()
 	return d.endpoint.StopHeartbeat(ctx)
 }
 func (d *outageDevice020b) LastHeartbeatReceipt() (time.Time, string) {
@@ -99,18 +104,18 @@ func (d *outageDevice020b) LastHeartbeatReceipt() (time.Time, string) {
 }
 func (d *outageDevice020b) Power(context.Context) (float64, error) {
 	d.powerCalls++
-	switch d.powerCalls {
-	case 1:
+	switch {
+	case d.powerCalls == 1:
 		return 11000, nil
-	case 2:
-		return 4200, nil
-	case 3:
-		if d.failEffect {
-			return 4200, context.DeadlineExceeded
-		}
+	case d.stopped.IsZero() || time.Since(d.stopped) < d.timeout:
+		return 4200, nil // limit still applies before the device's timeout
+	case d.failEffect:
+		return 4200, context.DeadlineExceeded
+	case !d.shown:
+		d.shown = true
 		return 500, nil
 	default:
-		return 11000, nil
+		return 11000, nil // return after the release
 	}
 }
 func TestUnansweredAndNegativeNotifyOnlyEffectDecides020b(t *testing.T) {
@@ -131,8 +136,11 @@ func TestUnansweredAndNegativeNotifyOnlyEffectDecides020b(t *testing.T) {
 						t.Fatal("negative result not captured")
 					}
 				}
-				d := &outageDevice020b{endpoint: e, failEffect: fail}
+				// 046: protocol timeout scaled to 500 ms instead of 120 s real time.
+				d := &outageDevice020b{endpoint: e, failEffect: fail, timeout: 500 * time.Millisecond}
 				c := inspection.DefaultDeviceConfig()
+				c.FailsafeTimeout = 500 * time.Millisecond
+				c.TestHeartbeatTimeout = c.FailsafeTimeout
 				c.Business = "Test"
 				c.Inspector = "Test"
 				c.Scope = inspection.ScopeConsumption

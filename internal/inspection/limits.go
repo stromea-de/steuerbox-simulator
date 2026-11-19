@@ -98,7 +98,13 @@ func (t *limitTimeline) begin(at time.Time, b Backend) {
 	for _, direction := range []string{"LPC", "LPP"} {
 		if t.includes(direction) {
 			t.inFS[direction] = true
-			delete(t.unconfirmed, direction)
+			// 046 (R046-12): a real device's failsafe is expected, not shown, until
+			// a measurement or its reported state confirms it.
+			if t.immediate {
+				delete(t.unconfirmed, direction)
+			} else {
+				t.unconfirmed[direction] = true
+			}
 		}
 	}
 	t.emit(at, b)
@@ -152,13 +158,24 @@ func (t *limitTimeline) HeartbeatStarted(b Backend) {
 	t.emit(now, b)
 }
 
-// FailsafeMeasured: a measurement showed the failsafe effect, so failsafe
-// began at the latest now.
-func (t *limitTimeline) FailsafeMeasured(b Backend) {
+// FailsafeMeasured: a measurement (or the device's state) showed the failsafe
+// effect of direction, so failsafe began at the latest now. The expected
+// failsafe change is confirmed in place, live and in the report (046).
+func (t *limitTimeline) FailsafeMeasured(b Backend, direction string) {
 	now := time.Now()
 	t.due(now, b)
 	if !t.deadline.IsZero() {
 		t.begin(now, b)
+	}
+	if !t.inFS[direction] || !t.unconfirmed[direction] {
+		return
+	}
+	delete(t.unconfirmed, direction)
+	if c, ok := t.last(direction); ok && c.Failsafe && c.Unconfirmed {
+		c.Unconfirmed = false
+		if observer, ok := b.(interface{ LimitChanged(LimitChange) }); ok {
+			observer.LimitChanged(*c) // same time and direction: replaces the live entry
+		}
 	}
 }
 

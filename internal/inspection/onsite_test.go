@@ -8,12 +8,18 @@ import (
 
 type onsiteFake struct {
 	fake
-	caps   Capabilities
-	active map[string]bool
+	caps    Capabilities
+	active  map[string]bool
+	receipt time.Time
 }
 
+// 046: the receipt is fixed at its first query (the heartbeat stop); a receipt
+// moving with the clock would be an ever later acknowledgement.
 func (f *onsiteFake) LastHeartbeatReceipt() (time.Time, string) {
-	return time.Now(), "Test: Empfang am Gerät"
+	if f.receipt.IsZero() {
+		f.receipt = time.Now()
+	}
+	return f.receipt, "Test: Empfang am Gerät"
 }
 func (f *onsiteFake) ReadFailsafe(context.Context, string) (FailsafeValues, error) {
 	return FailsafeValues{Power: 900, Minimum: 2 * time.Hour}, nil
@@ -37,6 +43,7 @@ func onsiteConfig() Config {
 	c := testConfig()
 	c.Authorized = true
 	c.FailsafeTimeout = 50 * time.Millisecond
+	c.TestHeartbeatTimeout = time.Nanosecond // 046: synthetic device with the configured timeout
 	c.FailsafeMinimum = 2 * time.Hour
 	c.EffectTimeout = 50 * time.Millisecond
 	c.RecoveryTimeout = 50 * time.Millisecond

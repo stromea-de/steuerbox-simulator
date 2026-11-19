@@ -449,6 +449,12 @@ func (s *Session) Power(ctx context.Context) (float64, error) {
 	return s.EG.ReadPower(ctx)
 }
 
+// PowerMeasuredAt is the device's own time of the last power reading (046).
+func (s *Session) PowerMeasuredAt() (time.Time, bool) {
+	t := s.EG.LastPowerMeasured()
+	return t, !t.IsZero()
+}
+
 func (s *Session) Paired() bool { s.mu.Lock(); defer s.mu.Unlock(); return s.paired }
 
 // The result receipt is an upper bound for reception at the controlled device.

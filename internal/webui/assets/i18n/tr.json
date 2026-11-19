@@ -1335,7 +1335,6 @@
   "(öffnet in neuem Tab)": "(yeni sekmede açılır)",
   "Kein Grenzverlauf aufgezeichnet.": "Sınır geçmişi kaydedilmedi.",
   "Gestrichelt: Grenze ab Quittung; gepunktet: Notbetrieb ab Ablauf der Ausfallfrist.": "Kesikli: onaydan itibaren sınır; noktalı: kesinti süresi dolduktan sonra acil çalışma.",
-  "Hell gepunktet: Rückkehr aus dem Notbetrieb nicht bestätigt (keine Messung).": "Açık noktalı: acil çalışmadan dönüş doğrulanmadı (ölçüm yok).",
   "Testgrenzen aufgehoben": "Test sınırları kaldırıldı",
   "Kamerazugriff nicht erlaubt. Bild oder QR-Text verwenden.": "Kamera erişimine izin verilmedi. Görsel veya QR metni kullan.",
   "Keine Kamera gefunden. Bild oder QR-Text verwenden.": "Kamera bulunamadı. Görsel veya QR metni kullan.",
@@ -1464,5 +1463,11 @@
   "{time} min": "{time} dk",
   "Leistung anpassen: für Bezug Last einschalten, für Einspeisung Erzeugung erhöhen oder Verbraucher ausschalten. Dann erneut messen.": "Gücü ayarla: tüketim için bir yük aç, şebekeye veriş için üretimi artır veya tüketicileri kapat. Sonra tekrar ölç.",
   "Einspeisung erhöhen, z. B. Erzeugung abwarten oder Verbraucher ausschalten, dann erneut messen.": "Şebekeye verişi artır, ör. üretimi bekle veya tüketicileri kapat, sonra tekrar ölç.",
-  "Import nicht vollständig. {details} Profil konnte nicht lokal gespeichert werden. Dein bisheriges Profil und dein Entwurf bleiben erhalten. Versuche den Import erneut; nur das Profil ist noch ausgewählt.": "İçe aktarma tamamlanamadı. {details} Profil yerel olarak kaydedilemedi. Önceki profilin ve taslağın korundu. İçe aktarmayı yeniden dene; yalnızca profil seçili kaldı."
+  "Import nicht vollständig. {details} Profil konnte nicht lokal gespeichert werden. Dein bisheriges Profil und dein Entwurf bleiben erhalten. Versuche den Import erneut; nur das Profil ist noch ausgewählt.": "İçe aktarma tamamlanamadı. {details} Profil yerel olarak kaydedilemedi. Önceki profilin ve taslağın korundu. İçe aktarmayı yeniden dene; yalnızca profil seçili kaldı.",
+  "Rückkehr nicht bewertbar: Der Notbetrieb wurde nicht nachgewiesen.": "Dönüş değerlendirilemiyor: Acil çalışma kanıtlanmadı.",
+  "Das Gerät meldet keinen Notbetrieb.": "Cihaz acil çalışma bildirmiyor.",
+  "Hell gepunktet: Notbetrieb oder Rückkehr daraus nicht nachgewiesen.": "Açık noktalı: Acil çalışma veya ondan dönüş kanıtlanmadı.",
+  "Grenze nach neuem Lebenszeichen quittieren": "Yeni yaşam sinyalinden sonra sınırı onayla",
+  "Notbetrieb nicht unterscheidbar: Kein Leistungsabfall, der erst durch den Notbetrieb erklärbar ist.": "Acil çalışma ayırt edilemiyor: Yalnızca acil çalışmayla açıklanabilen bir güç düşüşü yok.",
+  "Notbetrieb nicht bewertbar: Zeitbezug der Lebenszeichen unklar.": "Acil çalışma değerlendirilemiyor: Yaşam sinyallerinin zamanlaması belirsiz."
 }

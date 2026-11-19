@@ -89,6 +89,7 @@ type Endpoint struct {
 	handlers             []spineapi.EventHandlerInterface
 	powerMu              sync.Mutex
 	powerPending         map[model.MsgCounterType]powerRequest
+	lastPowerMeasured    time.Time
 	configurationPending map[model.MsgCounterType]configurationRequest
 	deviceMode           bool
 	status               string

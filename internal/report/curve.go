@@ -391,7 +391,7 @@ func (d *document) powerChart(r inspection.Report, section curveSection, legend 
 	d.y = bottom + 101
 	for _, c := range r.Limits {
 		if c.Unconfirmed {
-			d.text(left, bottom+95, 7.5, "F1", muted, "Hell gepunktet: Rückkehr aus dem Notbetrieb nicht bestätigt (keine Messung).")
+			d.text(left, bottom+95, 7.5, "F1", muted, "Hell gepunktet: Notbetrieb oder Rückkehr daraus nicht nachgewiesen.")
 			d.y = bottom + 117
 			break
 		}

@@ -412,6 +412,11 @@ func (a *App) run(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	c.NormalizeProfile()
+	if a.loopbackOnly && a.loopbackPartner.Load() && a.s.IsDeviceMode() {
+		// 046: the isolated E2E test partner is the simulated device; its configured
+		// timeout replaces the 120 s protocol minimum. Never for real devices.
+		c.TestHeartbeatTimeout = c.FailsafeTimeout
+	}
 	a.activeConfig = &c
 	a.s.ResetProgress()
 	a.busy = true

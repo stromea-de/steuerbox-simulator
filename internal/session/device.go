@@ -419,7 +419,18 @@ func cloneLimits(limits []inspection.LimitChange) []inspection.LimitChange {
 func (s *Session) LimitChanged(change inspection.LimitChange) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
-	s.limits = append(s.limits, cloneLimits([]inspection.LimitChange{change})[0])
+	owned := cloneLimits([]inspection.LimitChange{change})[0]
+	// 046: a confirmation amends the change with the same time and direction.
+	for i := len(s.limits) - 1; i >= 0; i-- {
+		if s.limits[i].Direction == change.Direction {
+			if s.limits[i].At.Equal(change.At) {
+				s.limits[i] = owned
+				return
+			}
+			break
+		}
+	}
+	s.limits = append(s.limits, owned)
 }
 func (s *Session) PowerSample(sample inspection.Sample) {
 	s.mu.Lock()

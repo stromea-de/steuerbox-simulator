@@ -1335,7 +1335,6 @@
   "(öffnet in neuem Tab)": "(opens in new tab)",
   "Kein Grenzverlauf aufgezeichnet.": "No limit history recorded.",
   "Gestrichelt: Grenze ab Quittung; gepunktet: Notbetrieb ab Ablauf der Ausfallfrist.": "Dashed: limit from acknowledgement; dotted: fallback mode from expiry of the signal-loss timeout.",
-  "Hell gepunktet: Rückkehr aus dem Notbetrieb nicht bestätigt (keine Messung).": "Light dotted: return from fallback mode not confirmed (no measurement).",
   "Testgrenzen aufgehoben": "Test limits removed",
   "Kamerazugriff nicht erlaubt. Bild oder QR-Text verwenden.": "Camera access not allowed. Use an image or the QR text.",
   "Keine Kamera gefunden. Bild oder QR-Text verwenden.": "No camera found. Use an image or the QR text.",
@@ -1464,5 +1463,11 @@
   "{time} min": "{time} min",
   "Leistung anpassen: für Bezug Last einschalten, für Einspeisung Erzeugung erhöhen oder Verbraucher ausschalten. Dann erneut messen.": "Adjust the power: switch on a load for import; for feed-in, increase generation or switch off consumers. Then measure again.",
   "Einspeisung erhöhen, z. B. Erzeugung abwarten oder Verbraucher ausschalten, dann erneut messen.": "Increase feed-in, e.g. wait for generation or switch off consumers, then measure again.",
-  "Import nicht vollständig. {details} Profil konnte nicht lokal gespeichert werden. Dein bisheriges Profil und dein Entwurf bleiben erhalten. Versuche den Import erneut; nur das Profil ist noch ausgewählt.": "Import incomplete. {details} The profile could not be saved locally. Your previous profile and draft have been kept. Try importing again; only the profile is still selected."
+  "Import nicht vollständig. {details} Profil konnte nicht lokal gespeichert werden. Dein bisheriges Profil und dein Entwurf bleiben erhalten. Versuche den Import erneut; nur das Profil ist noch ausgewählt.": "Import incomplete. {details} The profile could not be saved locally. Your previous profile and draft have been kept. Try importing again; only the profile is still selected.",
+  "Rückkehr nicht bewertbar: Der Notbetrieb wurde nicht nachgewiesen.": "Return cannot be assessed: fallback mode was not verified.",
+  "Das Gerät meldet keinen Notbetrieb.": "The device does not report fallback mode.",
+  "Hell gepunktet: Notbetrieb oder Rückkehr daraus nicht nachgewiesen.": "Light dotted: fallback mode or return from it not verified.",
+  "Grenze nach neuem Lebenszeichen quittieren": "Acknowledge limit after new keep-alive signal",
+  "Notbetrieb nicht unterscheidbar: Kein Leistungsabfall, der erst durch den Notbetrieb erklärbar ist.": "Fallback mode not distinguishable: no power drop that only fallback mode explains.",
+  "Notbetrieb nicht bewertbar: Zeitbezug der Lebenszeichen unklar.": "Fallback mode cannot be assessed: timing of the keep-alive signals unclear."
 }

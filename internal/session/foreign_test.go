@@ -196,6 +196,10 @@ func foreignConfig() inspection.Config {
 	c.StepTimeout = 8 * time.Second
 	c.EffectTimeout = 3 * time.Second
 	c.CleanupTimeout = 8 * time.Second
+	// 046: the foreign test device is the simulated device (2.5 s timeout), not a
+	// real one; its scaled timeout replaces the 120 s protocol minimum.
+	c.FailsafeTimeout = 3 * time.Second
+	c.TestHeartbeatTimeout = c.FailsafeTimeout
 	return c
 }
 func TestForeignTCPMissingLPPAndClassification(t *testing.T) {

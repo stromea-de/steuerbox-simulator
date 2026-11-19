@@ -1335,7 +1335,6 @@
   "(öffnet in neuem Tab)": "(se deschide într-o filă nouă)",
   "Kein Grenzverlauf aufgezeichnet.": "Nu s-a înregistrat istoricul limitelor.",
   "Gestrichelt: Grenze ab Quittung; gepunktet: Notbetrieb ab Ablauf der Ausfallfrist.": "Linie întreruptă: limita de la confirmare; linie punctată: regimul de avarie după expirarea termenului de detectare.",
-  "Hell gepunktet: Rückkehr aus dem Notbetrieb nicht bestätigt (keine Messung).": "Linie punctată de culoare deschisă: revenirea din regimul de avarie neconfirmată (fără măsurare).",
   "Testgrenzen aufgehoben": "Limitele de test eliminate",
   "Kamerazugriff nicht erlaubt. Bild oder QR-Text verwenden.": "Accesul la cameră nu este permis. Folosește o imagine sau textul QR.",
   "Keine Kamera gefunden. Bild oder QR-Text verwenden.": "Nu s-a găsit nicio cameră. Folosește o imagine sau textul QR.",
@@ -1464,5 +1463,11 @@
   "{time} min": "{time} min",
   "Leistung anpassen: für Bezug Last einschalten, für Einspeisung Erzeugung erhöhen oder Verbraucher ausschalten. Dann erneut messen.": "Ajustează puterea: pentru consum pornește o sarcină, pentru injecție crește producția sau oprește consumatorii. Apoi măsoară din nou.",
   "Einspeisung erhöhen, z. B. Erzeugung abwarten oder Verbraucher ausschalten, dann erneut messen.": "Crește injecția, de ex. așteaptă producția sau oprește consumatorii, apoi măsoară din nou.",
-  "Import nicht vollständig. {details} Profil konnte nicht lokal gespeichert werden. Dein bisheriges Profil und dein Entwurf bleiben erhalten. Versuche den Import erneut; nur das Profil ist noch ausgewählt.": "Importul nu este complet. {details} Profilul nu a putut fi salvat local. Profilul anterior și ciorna au fost păstrate. Încearcă din nou importul; doar profilul mai este selectat."
+  "Import nicht vollständig. {details} Profil konnte nicht lokal gespeichert werden. Dein bisheriges Profil und dein Entwurf bleiben erhalten. Versuche den Import erneut; nur das Profil ist noch ausgewählt.": "Importul nu este complet. {details} Profilul nu a putut fi salvat local. Profilul anterior și ciorna au fost păstrate. Încearcă din nou importul; doar profilul mai este selectat.",
+  "Rückkehr nicht bewertbar: Der Notbetrieb wurde nicht nachgewiesen.": "Revenirea nu poate fi evaluată: regimul de avarie nu a fost dovedit.",
+  "Das Gerät meldet keinen Notbetrieb.": "Dispozitivul nu raportează regimul de avarie.",
+  "Hell gepunktet: Notbetrieb oder Rückkehr daraus nicht nachgewiesen.": "Punctat deschis: regimul de avarie sau revenirea din el nu a fost dovedită.",
+  "Grenze nach neuem Lebenszeichen quittieren": "Confirmă limita după un nou semnal de viață",
+  "Notbetrieb nicht unterscheidbar: Kein Leistungsabfall, der erst durch den Notbetrieb erklärbar ist.": "Regimul de avarie nu poate fi distins: nicio scădere a puterii explicabilă doar prin regimul de avarie.",
+  "Notbetrieb nicht bewertbar: Zeitbezug der Lebenszeichen unklar.": "Regimul de avarie nu poate fi evaluat: momentul semnalelor de viață este neclar."
 }

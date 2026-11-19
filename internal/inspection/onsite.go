@@ -145,7 +145,7 @@ func (r Report) Outcome() string {
 const PartialExplanation = "Unvollständig: Für einzelne Funktionen fehlt ein Prüfnachweis. Einzelheiten stehen im technischen Anhang."
 
 func (c Config) LimitLease() time.Duration {
-	return c.EffectTimeout + c.FailsafeTimeout + HeartbeatReserve + 2*c.StepTimeout + time.Minute
+	return c.EffectTimeout + c.DeviceOutageTimeout() + HeartbeatReserve + 2*c.StepTimeout + time.Minute
 }
 
 func DefaultDeviceConfig() Config {
@@ -217,12 +217,18 @@ func RunOnSite(ctx context.Context, c Config, d Device, b DeviceBackend) (Report
 		return Report{}, err
 	}
 	c.NormalizeProfile()
+	raised := ""
+	if t := c.DeviceOutageTimeout(); t != c.FailsafeTimeout {
+		// 046 (R046-01): the device must not be in failsafe before its 120 s timeout.
+		raised = fmt.Sprintf(" Ausfallfrist von %s auf %s angehoben (LPC/LPP 1.0.0).", c.FailsafeTimeout, t)
+		c.FailsafeTimeout = t
+	}
 	id, err := NewReportID()
 	if err != nil {
 		return Report{}, err
 	}
 	r := Report{ID: id, SchemaVersion: 1, Business: c.Business, Inspector: c.Inspector, Started: time.Now(), Device: d, Config: c, Mode: ModeOnSite, Notice: Notice, Passed: true,
-		Profile: fmt.Sprintf("%s; Gerät vor Ort; SPINE-Messwerte des Geräts, keine unabhängige Leistungsmessung. Schritt %s; Wirkung %s; Heartbeat-Ausfall %s ab lokalem Stopp nach Sendesperre (spätere positive Quittung verlängert) + 30 s Beobachtungsreserve; Wiederkehr-Zeitlimit nur Langtest %s; Failsafe-Mindestdauer %s; Freigabe %s; Gültigkeit aktiver Grenzen %s.", c.ProfileLabel(), c.StepTimeout, c.EffectTimeout, c.FailsafeTimeout, c.RecoveryTimeout, c.FailsafeMinimum, c.CleanupTimeout, c.LimitLease())}
+		Profile: fmt.Sprintf("%s; Gerät vor Ort; SPINE-Messwerte des Geräts, keine unabhängige Leistungsmessung. Schritt %s; Wirkung %s; Heartbeat-Ausfall %s ab lokalem Stopp nach Sendesperre (spätere positive Quittung verlängert) + 30 s Beobachtungsreserve; Wiederkehr-Zeitlimit nur Langtest %s; Failsafe-Mindestdauer %s; Freigabe %s; Gültigkeit aktiver Grenzen %s.%s", c.ProfileLabel(), c.StepTimeout, c.EffectTimeout, c.FailsafeTimeout, c.RecoveryTimeout, c.FailsafeMinimum, c.CleanupTimeout, c.LimitLease(), raised)}
 	add := func(name, detail string, status string, err error, w *float64) bool {
 		reasonCode := ""
 		if err != nil {
@@ -471,6 +477,8 @@ func RunOnSite(ctx context.Context, c Config, d Device, b DeviceBackend) (Report
 			}
 			var baseline float64
 			measured := false
+			// 046: a return from failsafe can only be evaluated after its entry was shown.
+			failsafeShown := false
 			baselineName := "Ausgangsmessung MPC"
 			if k == "LPP" {
 				baselineName = "LPP Ausgangsmessung MPC"
@@ -506,9 +514,17 @@ func RunOnSite(ctx context.Context, c Config, d Device, b DeviceBackend) (Report
 					skip(name, "Wirkung nicht nachweisbar (zu wenig Leistung)")
 					return true
 				}
+				if recovery && !failsafeShown {
+					skip(name, ReturnNotEvaluable)
+					return true
+				}
 				var last *float64
+				prior := measurements.validDevice // 046: only readings measured after this count
 				ok := step(name, timeout, func(ctx context.Context) (string, error) {
 					for {
+						if measurements.validDevice.After(prior) {
+							prior = measurements.validDevice // R046-23: newest known device time before this read
+						}
 						v, err := measurements.power(ctx)
 						if err == nil {
 							err = ctx.Err()
@@ -520,9 +536,14 @@ func RunOnSite(ctx context.Context, c Config, d Device, b DeviceBackend) (Report
 						if err != nil {
 							return "", err
 						}
-						if !math.IsNaN(v) && !math.IsInf(v, 0) && sign*v <= target+c.Tolerance && sign*v >= -c.Tolerance && (!recovery || sign*v > c.Failsafe+c.Tolerance) {
+						fresh, known := measurements.fresh(prior)
+						if fresh && !math.IsNaN(v) && !math.IsInf(v, 0) && sign*v <= target+c.Tolerance && sign*v >= -c.Tolerance && (!recovery || sign*v > c.Failsafe+c.Tolerance) {
 							measurements.finish(v)
-							return fmt.Sprintf("MPC %.1f W; Obergrenze %.0f W; Toleranz %.1f W", v, target, c.Tolerance), nil
+							detail := fmt.Sprintf("MPC %.1f W; Obergrenze %.0f W; Toleranz %.1f W", v, target, c.Tolerance)
+							if recovery && !known {
+								detail += "; Gerät sendet keinen absoluten Messzeitpunkt, Aktualität nur über neue Antwort"
+							}
+							return detail, nil
 						}
 						select {
 						case <-ctx.Done():
@@ -579,12 +600,29 @@ func RunOnSite(ctx context.Context, c Config, d Device, b DeviceBackend) (Report
 						return
 					}
 				}
-				before := len(r.Steps)
-				if !effect(names[3], c.Failsafe, time.Until(observation.Deadline), false) {
-					return
-				}
-				if len(r.Steps) > before && r.Steps[len(r.Steps)-1].Passed {
-					limits.FailsafeMeasured(b)
+				if !caps.MPC || !adequate {
+					effect(names[3], c.Failsafe, 0, false) // records why it is not checked
+				} else {
+					index := len(r.Heartbeats) - 1
+					receipt := func() time.Time { t, _ := b.LastHeartbeatReceipt(); return t }
+					// A positive receipt after the reference proves a later reception at the device.
+					shift := func(latest time.Time) (time.Time, time.Time) {
+						h := NewHeartbeatObservation(k, observation.Stopped, latest, c.FailsafeTimeout)
+						h.Basis += "; Quittung nach dem Stopp empfangen, Frist ab Quittung"
+						observation = h
+						r.Heartbeats[index] = h
+						limits.HeartbeatStopped(h.Reference.Add(c.FailsafeTimeout))
+						return h.Reference.Add(c.FailsafeTimeout), h.Deadline
+					}
+					shown, ok := measureFailsafe(ctx, failsafeMeasurement{name: names[3], direction: k, sign: sign, config: c,
+						due: observation.Reference.Add(c.FailsafeTimeout), deadline: observation.Deadline, reference: observation.Reference, receipt: receipt, shift: shift}, b, &r, measurements, add)
+					if shown {
+						failsafeShown = true
+						limits.FailsafeMeasured(b, k)
+					}
+					if !ok {
+						return
+					}
 				}
 				if !step(k+" Heartbeat wieder starten", c.StepTimeout, action(func(ctx context.Context) error { return heartbeat(ctx, true) })) {
 					return
@@ -598,7 +636,8 @@ func RunOnSite(ctx context.Context, c Config, d Device, b DeviceBackend) (Report
 						if err != nil {
 							return ack, err
 						}
-						return ack, b.Recover(ctx)
+						// 046 (R046-02): protocol evidence only, no electrical return.
+						return "Protokollnachweis (Quittung), keine Wirkungsmessung: " + ack, b.Recover(ctx)
 					}) {
 						return
 					}
@@ -622,34 +661,64 @@ func RunOnSite(ctx context.Context, c Config, d Device, b DeviceBackend) (Report
 					if !step(k+" Vorzeitige Freigabe", c.StepTimeout, func(ctx context.Context) (string, error) { return writeLimit(ctx, k, 0, false) }) {
 						return
 					}
-					measurements.current = k + " Vorzeitige Rückkehr gemessene Wirkung"
-					startStep(b, measurements.current, c.EffectTimeout)
-					mctx, cancel := context.WithTimeout(ctx, c.EffectTimeout)
-					var last float64
-					recovered := false
-					for mctx.Err() == nil {
-						v, err := measurements.power(mctx)
-						last = v
-						if err != nil {
-							break
-						}
-						if !math.IsNaN(v) && !math.IsInf(v, 0) && sign*v > c.Failsafe+c.Tolerance {
-							recovered = true
-							break
-						}
-						select {
-						case <-mctx.Done():
-						case <-time.After(250 * time.Millisecond):
-						}
-					}
-					cancel()
-					if recovered {
-						limits.ReturnMeasured(b, k)
-						measurements.finish(last)
-						add(k+" Vorzeitige Rückkehr gemessene Wirkung", fmt.Sprintf("Neuer Heartbeat + Aufheben: Rückkehr vor Mindestdauer beobachtet; MPC %.1f W", last), "", nil, &last)
+					if !failsafeShown {
+						skip(k+" Vorzeitige Rückkehr gemessene Wirkung", ReturnNotEvaluable)
 					} else {
-						skip(k+" Vorzeitige Rückkehr gemessene Wirkung", fmt.Sprintf("Vorzeitige Rückkehr nicht nachgewiesen; Notbetrieb kann bis %s bleiben. Notbetriebs-Werte am Gerät prüfen", c.FailsafeMinimum))
+						measurements.current = k + " Vorzeitige Rückkehr gemessene Wirkung"
+						startStep(b, measurements.current, c.EffectTimeout)
+						mctx, cancel := context.WithTimeout(ctx, c.EffectTimeout)
+						var last float64
+						var readErr error
+						recovered, timedReturn := false, false
+						prior := measurements.validDevice // 046 (R046-10): a repeated pre-release value is no return
+						for mctx.Err() == nil {
+							if measurements.validDevice.After(prior) {
+								prior = measurements.validDevice // R046-23
+							}
+							v, err := measurements.power(mctx)
+							last = v
+							if err == nil {
+								err = mctx.Err() // a late answer after the deadline or cancel does not count
+							}
+							if err != nil {
+								readErr = err
+								break
+							}
+							if fresh, known := measurements.fresh(prior); fresh && !math.IsNaN(v) && !math.IsInf(v, 0) && sign*v > c.Failsafe+c.Tolerance {
+								recovered = true
+								timedReturn = known
+								break
+							}
+							select {
+							case <-mctx.Done():
+							case <-time.After(250 * time.Millisecond):
+							}
+						}
+						cancel()
+						if !recovered && (ctx.Err() != nil || readErr != nil && !errors.Is(readErr, context.DeadlineExceeded)) {
+							// 046 (R046-04): cancel or connection loss keep their cause.
+							cause := readErr
+							if ctx.Err() != nil {
+								cause = ctx.Err()
+							}
+							add(k+" Vorzeitige Rückkehr gemessene Wirkung", "", "", cause, nil)
+							return
+						} else if recovered {
+							limits.ReturnMeasured(b, k)
+							measurements.finish(last)
+							detail := fmt.Sprintf("Neuer Heartbeat + Aufheben: Rückkehr vor Mindestdauer beobachtet; MPC %.1f W", last)
+							if !timedReturn {
+								detail += "; Gerät sendet keinen absoluten Messzeitpunkt, Aktualität nur über neue Antwort nach Freigabe"
+							}
+							add(k+" Vorzeitige Rückkehr gemessene Wirkung", detail, "", nil, &last)
+						} else {
+							skip(k+" Vorzeitige Rückkehr gemessene Wirkung", fmt.Sprintf("Vorzeitige Rückkehr nicht nachgewiesen; Notbetrieb kann bis %s bleiben. Notbetriebs-Werte am Gerät prüfen", c.FailsafeMinimum))
+						}
 					}
+				} else if !failsafeShown {
+					// 046 (R046-02): no minimum-duration evidence without a shown failsafe.
+					skip(names[4], ReturnNotEvaluable)
+					skip(k+" Wiederkehr gemessene Wirkung", ReturnNotEvaluable)
 				} else {
 					// Wait the configured minimum before claiming return to normal operation.
 					if !step(names[4], c.RecoveryTimeout, func(ctx context.Context) (string, error) {

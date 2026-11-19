@@ -6,6 +6,12 @@ Das Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.0.0/) 
 
 ---
 
+## [1.0.1] - 2026-11-19
+
+### Behoben
+- **Notbetrieb (Failsafe) erst nach Ablauf der Ausfallfrist bewertet (LPC und LPP):** 1.0.0 konnte „Failsafe gemessene Wirkung“ unmittelbar nach dem Heartbeat-Stopp als bestanden werten, wenn die Leistung unter der aktiven Grenze schon unter dem Notbetriebswert lag. Jetzt gilt bei Geräten mindestens die Protokollfrist von 120 s (LPC/LPP 1.0.0) ab Stopp bzw. späterer Quittung plus 30 s Reserve. Bestanden nur bei einem Leistungsabfall, der erst durch den Notbetrieb erklärbar ist, oder wenn das Gerät den Notbetrieb meldet; sonst „nicht geprüft“. Rückkehrschritte ohne belegten Notbetrieb bleiben „nicht geprüft“; unbelegter Notbetrieb erscheint im Messverlauf hell gepunktet. Wiederholte Messwerte mit altem Gerätezeitstempel zählen nicht. Übungsmodus unverändert.
+- Mit 1.0.0 vor Ort erstellte Notbetriebsnachweise bitte mit 1.0.1 wiederholen.
+
 ## [1.0.0] - 2026-11-17
 
 Erste stabile Version des Stromea Steuerbox-Simulators als eigenständiges Prüfwerkzeug für Fachbetriebe und Installateure.

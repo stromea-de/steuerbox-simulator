@@ -1335,7 +1335,6 @@
   "(öffnet in neuem Tab)": "(otwiera się w nowej karcie)",
   "Kein Grenzverlauf aufgezeichnet.": "Nie zapisano przebiegu limitów.",
   "Gestrichelt: Grenze ab Quittung; gepunktet: Notbetrieb ab Ablauf der Ausfallfrist.": "Linia przerywana: limit od potwierdzenia; kropkowana: tryb awaryjny od upływu czasu wykrycia zaniku sygnału.",
-  "Hell gepunktet: Rückkehr aus dem Notbetrieb nicht bestätigt (keine Messung).": "Jasne kropki: powrót z trybu awaryjnego niepotwierdzony (brak pomiaru).",
   "Testgrenzen aufgehoben": "Limity testowe zniesione",
   "Kamerazugriff nicht erlaubt. Bild oder QR-Text verwenden.": "Brak dostępu do kamery. Użyj obrazu lub tekstu QR.",
   "Keine Kamera gefunden. Bild oder QR-Text verwenden.": "Nie znaleziono kamery. Użyj obrazu lub tekstu QR.",
@@ -1464,5 +1463,11 @@
   "{time} min": "{time} min",
   "Leistung anpassen: für Bezug Last einschalten, für Einspeisung Erzeugung erhöhen oder Verbraucher ausschalten. Dann erneut messen.": "Dostosuj moc: dla poboru włącz obciążenie, dla oddawania zwiększ wytwarzanie lub wyłącz odbiorniki. Następnie zmierz ponownie.",
   "Einspeisung erhöhen, z. B. Erzeugung abwarten oder Verbraucher ausschalten, dann erneut messen.": "Zwiększ oddawanie, np. poczekaj na wytwarzanie lub wyłącz odbiorniki, a następnie zmierz ponownie.",
-  "Import nicht vollständig. {details} Profil konnte nicht lokal gespeichert werden. Dein bisheriges Profil und dein Entwurf bleiben erhalten. Versuche den Import erneut; nur das Profil ist noch ausgewählt.": "Import nie został ukończony. {details} Nie udało się zapisać profilu lokalnie. Dotychczasowy profil i wersja robocza zostały zachowane. Spróbuj zaimportować ponownie; zaznaczony jest już tylko profil."
+  "Import nicht vollständig. {details} Profil konnte nicht lokal gespeichert werden. Dein bisheriges Profil und dein Entwurf bleiben erhalten. Versuche den Import erneut; nur das Profil ist noch ausgewählt.": "Import nie został ukończony. {details} Nie udało się zapisać profilu lokalnie. Dotychczasowy profil i wersja robocza zostały zachowane. Spróbuj zaimportować ponownie; zaznaczony jest już tylko profil.",
+  "Rückkehr nicht bewertbar: Der Notbetrieb wurde nicht nachgewiesen.": "Nie można ocenić powrotu: tryb awaryjny nie został potwierdzony.",
+  "Das Gerät meldet keinen Notbetrieb.": "Urządzenie nie zgłasza trybu awaryjnego.",
+  "Hell gepunktet: Notbetrieb oder Rückkehr daraus nicht nachgewiesen.": "Jasna kropkowana: tryb awaryjny lub powrót z niego niepotwierdzony.",
+  "Grenze nach neuem Lebenszeichen quittieren": "Potwierdź limit po nowym sygnale kontrolnym",
+  "Notbetrieb nicht unterscheidbar: Kein Leistungsabfall, der erst durch den Notbetrieb erklärbar ist.": "Trybu awaryjnego nie da się odróżnić: brak spadku mocy, który wyjaśnia wyłącznie tryb awaryjny.",
+  "Notbetrieb nicht bewertbar: Zeitbezug der Lebenszeichen unklar.": "Nie można ocenić trybu awaryjnego: niejasny czas sygnałów kontrolnych."
 }

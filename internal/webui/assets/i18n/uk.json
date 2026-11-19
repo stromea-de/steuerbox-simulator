@@ -1335,7 +1335,6 @@
   "(öffnet in neuem Tab)": "(відкриється в новій вкладці)",
   "Kein Grenzverlauf aufgezeichnet.": "Перебіг обмежень не записано.",
   "Gestrichelt: Grenze ab Quittung; gepunktet: Notbetrieb ab Ablauf der Ausfallfrist.": "Пунктир: обмеження з моменту підтвердження; крапки: аварійний режим після спливу строку виявлення втрати зв’язку.",
-  "Hell gepunktet: Rückkehr aus dem Notbetrieb nicht bestätigt (keine Messung).": "Світлі крапки: повернення з аварійного режиму не підтверджено (немає вимірювання).",
   "Testgrenzen aufgehoben": "Тестові обмеження знято",
   "Kamerazugriff nicht erlaubt. Bild oder QR-Text verwenden.": "Доступ до камери заборонено. Використай зображення або текст QR.",
   "Keine Kamera gefunden. Bild oder QR-Text verwenden.": "Камеру не знайдено. Використай зображення або текст QR.",
@@ -1464,5 +1463,11 @@
   "{time} min": "{time} хв",
   "Leistung anpassen: für Bezug Last einschalten, für Einspeisung Erzeugung erhöhen oder Verbraucher ausschalten. Dann erneut messen.": "Зміни потужність: для споживання увімкни навантаження, для віддачі збільш генерацію або вимкни споживачів. Потім виміряй знову.",
   "Einspeisung erhöhen, z. B. Erzeugung abwarten oder Verbraucher ausschalten, dann erneut messen.": "Збільш віддачу, наприклад дочекайся генерації або вимкни споживачів, потім виміряй знову.",
-  "Import nicht vollständig. {details} Profil konnte nicht lokal gespeichert werden. Dein bisheriges Profil und dein Entwurf bleiben erhalten. Versuche den Import erneut; nur das Profil ist noch ausgewählt.": "Імпорт завершено не повністю. {details} Не вдалося зберегти профіль локально. Попередній профіль і чернетку збережено. Повтори імпорт; вибрано лише профіль."
+  "Import nicht vollständig. {details} Profil konnte nicht lokal gespeichert werden. Dein bisheriges Profil und dein Entwurf bleiben erhalten. Versuche den Import erneut; nur das Profil ist noch ausgewählt.": "Імпорт завершено не повністю. {details} Не вдалося зберегти профіль локально. Попередній профіль і чернетку збережено. Повтори імпорт; вибрано лише профіль.",
+  "Rückkehr nicht bewertbar: Der Notbetrieb wurde nicht nachgewiesen.": "Повернення не можна оцінити: аварійний режим не підтверджено.",
+  "Das Gerät meldet keinen Notbetrieb.": "Пристрій не повідомляє про аварійний режим.",
+  "Hell gepunktet: Notbetrieb oder Rückkehr daraus nicht nachgewiesen.": "Світлий пунктир: аварійний режим або повернення з нього не підтверджено.",
+  "Grenze nach neuem Lebenszeichen quittieren": "Підтвердити обмеження після нового сигналу життя",
+  "Notbetrieb nicht unterscheidbar: Kein Leistungsabfall, der erst durch den Notbetrieb erklärbar ist.": "Аварійний режим не розрізнити: немає зниження потужності, яке пояснюється лише аварійним режимом.",
+  "Notbetrieb nicht bewertbar: Zeitbezug der Lebenszeichen unklar.": "Аварійний режим неможливо оцінити: час сигналів життя неясний."
 }

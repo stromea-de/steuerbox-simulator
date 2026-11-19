@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"reflect"
+	"time"
 
 	"github.com/enbility/eebus-go/features/client"
 	shipapi "github.com/enbility/ship-go/api"
@@ -17,7 +18,23 @@ import (
 type powerSample struct {
 	watts float64
 	err   error
+	// measured is the device's own measurement time, zero when not sent (046).
+	measured time.Time
 }
+
+func measuredAt(t *model.AbsoluteOrRelativeTimeType) time.Time {
+	// Only absolute times are evidence; a relative one is converted against now
+	// by spine-go and would look newer on every reply (R046-18).
+	if t == nil || t.IsRelativeTime() {
+		return time.Time{}
+	}
+	v, err := t.GetTime()
+	if err != nil {
+		return time.Time{}
+	}
+	return v
+}
+
 type powerRequest struct {
 	ski                 string
 	source, destination model.FeatureAddressType
@@ -85,14 +102,14 @@ func (e *Endpoint) capturePower(ski string, b []byte) {
 		data := cmd[0].MeasurementListData.MeasurementData
 		if req.measurementID == nil {
 			if len(data) == 1 && data[0].Value != nil && data[0].Value.Number != nil {
-				result = powerSample{watts: data[0].Value.GetValue()}
+				result = powerSample{watts: data[0].Value.GetValue(), measured: measuredAt(data[0].Timestamp)}
 			}
 		} else {
 			count := 0
 			for _, item := range data {
 				if item.MeasurementId != nil && *item.MeasurementId == *req.measurementID && item.Value != nil && item.Value.Number != nil {
 					count++
-					result = powerSample{watts: item.Value.GetValue() * req.direction}
+					result = powerSample{watts: item.Value.GetValue() * req.direction, measured: measuredAt(item.Timestamp)}
 				}
 			}
 			if count != 1 {
@@ -159,8 +176,20 @@ func (e *Endpoint) ReadPower(ctx context.Context) (float64, error) {
 	case <-ctx.Done():
 		return 0, ctx.Err()
 	case sample := <-req.samples:
+		e.powerMu.Lock()
+		e.lastPowerMeasured = sample.measured
+		e.powerMu.Unlock()
 		return sample.watts, sample.err
 	}
+}
+
+// LastPowerMeasured is the device measurement time of the last ReadPower reply
+// (device clock; zero when the device sent none). Only its order between reads
+// is meaningful (046, R046-10).
+func (e *Endpoint) LastPowerMeasured() time.Time {
+	e.powerMu.Lock()
+	defer e.powerMu.Unlock()
+	return e.lastPowerMeasured
 }
 
 func (e *Endpoint) captureDiscovery(b []byte) {

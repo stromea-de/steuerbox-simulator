@@ -74,9 +74,12 @@ type Config struct {
 	StepTimeout     time.Duration    `json:"stepTimeout"`
 	EffectTimeout   time.Duration    `json:"effectTimeout"`
 	FailsafeTimeout time.Duration    `json:"failsafeTimeout"`
-	RecoveryTimeout time.Duration    `json:"recoveryTimeout"`
-	CleanupTimeout  time.Duration    `json:"cleanupTimeout"`
-	FailsafeMinimum time.Duration    `json:"failsafeMinimum"`
+	// TestHeartbeatTimeout replaces the 120 s protocol minimum of device runs only
+	// for test partners (Go tests, --loopback-partner E2E); never via API/JSON (046).
+	TestHeartbeatTimeout time.Duration `json:"-"`
+	RecoveryTimeout      time.Duration `json:"recoveryTimeout"`
+	CleanupTimeout       time.Duration `json:"cleanupTimeout"`
+	FailsafeMinimum      time.Duration `json:"failsafeMinimum"`
 	// Authorized is retained for compatibility with older JSON/CLI clients.
 	Authorized bool `json:"authorized"`
 }
@@ -291,7 +294,7 @@ func Run(ctx context.Context, c Config, d Device, b Backend) (Report, error) {
 			if !step("LPC Failsafe gemessene Wirkung", power(func(v float64) bool { return math.Abs(v-c.Failsafe) <= c.Tolerance }, "Failsafe Soll, positiver Bezug")) {
 				return
 			}
-			limits.FailsafeMeasured(b)
+			limits.FailsafeMeasured(b, "LPC")
 			if !step("LPC Wiederkehr", func(ctx context.Context) (string, *float64, error) {
 				if err := heartbeat(ctx, true); err != nil {
 					return "", nil, err
@@ -319,7 +322,7 @@ func Run(ctx context.Context, c Config, d Device, b Backend) (Report, error) {
 		if !step("LPP Failsafe gemessene Wirkung", power(func(v float64) bool { return math.Abs(v+c.Failsafe) <= c.Tolerance }, "Failsafe Soll, negative Einspeisung")) {
 			return
 		}
-		limits.FailsafeMeasured(b)
+		limits.FailsafeMeasured(b, "LPP")
 		if !step("LPP Wiederkehr", func(ctx context.Context) (string, *float64, error) {
 			if err := heartbeat(ctx, true); err != nil {
 				return "", nil, err

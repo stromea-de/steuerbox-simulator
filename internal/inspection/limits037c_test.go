@@ -92,18 +92,11 @@ func Test037cOnsiteFailsafeEndsWithNextAcknowledgedWrite(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	want := []string{"LPC:4200", "LPC:500F", "LPC:500FU"}
+	// 046 (R046-05): without power evidence the failsafe itself is unproven and
+	// drawn unconfirmed from its start (formerly confirmed until the next write).
+	want := []string{"LPC:4200", "LPC:500FU"}
 	if got := limitTrace037c(r); !equal037c(got, want) {
 		t.Fatalf("onsite timeline\n got %v\nwant %v", got, want)
-	}
-	var restart Step
-	for _, s := range r.Steps {
-		if s.Name == "LPC Heartbeat wieder starten" {
-			restart = s
-		}
-	}
-	if r.Limits[2].At.Before(restart.At) {
-		t.Fatal("unconfirmed return only after the heartbeat restart and the following write")
 	}
 	// Failsafe starts at the deadline: reference (stop or later receipt) + timeout.
 	h := r.Heartbeats[0]

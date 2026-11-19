@@ -329,7 +329,7 @@ function renderPower(s) {
   // Reference labels belong below the plot so they cannot obscure measurements.
   const reference=document.createElement('span');reference.className='chart-reference';reference.textContent=refs.map(([,label])=>label).join(' · ');$('power-reference').append(reference);if(samples.some(item=>!Number.isFinite(item.watts))){const gap=document.createElement('span');gap.className='chart-gap-label';gap.textContent='Messausfall';$('power-reference').append(gap);}
   {const note=document.createElement('span');note.className='chart-limits';note.textContent=limits.length?'Gestrichelt: Grenze ab Quittung; gepunktet: Notbetrieb ab Ablauf der Ausfallfrist.':!s.busy?'Kein Grenzverlauf aufgezeichnet.':'';if(note.textContent)$('power-reference').append(note);
-   if(limits.some(c=>c.unconfirmed)){const extra=document.createElement('span');extra.className='chart-limits';extra.textContent='Hell gepunktet: Rückkehr aus dem Notbetrieb nicht bestätigt (keine Messung).';$('power-reference').append(extra);}}
+   if(limits.some(c=>c.unconfirmed)){const extra=document.createElement('span');extra.className='chart-limits';extra.textContent='Hell gepunktet: Notbetrieb oder Rückkehr daraus nicht nachgewiesen.';$('power-reference').append(extra);}}
   $('power-chart-description').textContent=valid.length+' Messpunkte. Bezug positiv, Einspeisung negativ. Markierte Lücken zeigen Messausfälle.';
   const tbody=$('power-table').querySelector('tbody');tbody.replaceChildren();
   for(const item of valid.slice(-4)){const row=document.createElement('tr');for(const value of [new Date(item.at).toLocaleTimeString(StromeaI18n.locale()),limits.length?limitPhase(limits,Date.parse(item.at)):powerPhase(item.step),wattsText(item.watts)+' W']){const td=document.createElement('td');td.textContent=value;row.append(td);}tbody.append(row);}
@@ -371,7 +371,7 @@ function stepName(name) {
   const names={'Lastentscheidung vor Start':'Leistung für die Prüfung zu niedrig','Last vor Prüfbeginn prüfen':'Ausgangsleistung prüfen','Verbindung':'Datenverbindung prüfen','Unterstützte Use Cases':'Gerätefunktionen prüfen','Failsafe-Werte setzen':'Notbetrieb konfigurieren','Heartbeat starten':'Lebenszeichen senden','Ausgangsmessung MPC':'Ausgangsleistung messen','LPP Ausgangsmessung MPC':'Einspeisung messen','Grenzen aufheben':'Testgrenzen aufheben'};
   if(names[name])return names[name];
   const direction=name.startsWith('LPP')?'Einspeisung':'Bezug',suffix=name.replace(/^(LPC|LPP) /,'');
-  const actions={'Ausgangsmessung MPC':'Ausgangsleistung messen','Grenze + Quittung':'Grenze setzen','gemessene Wirkung':'Leistungsanpassung messen','Heartbeat-Ausfall':'Lebenszeichen unterbrechen','Failsafe gemessene Wirkung':'Notbetrieb messen','Wiederkehr':'Mindestdauer abwarten','Wiederkehr gemessene Wirkung':'Rückkehr nach Mindestdauer messen','Heartbeat wieder starten':'Lebenszeichen senden','Grenze freigeben':'Grenze freigeben','Grenzen aufheben':'Testgrenzen aufheben','Vorzeitige Freigabe':'Freigabe versuchen','Vorzeitige Rückkehr gemessene Wirkung':'Rückkehr messen','Ausfallfrist abwarten':'Ausfallfrist abwarten','Wiederkehr Protokoll':'Rückkehr bestätigen lassen','Failsafe Ursprungswerte':'Notbetriebs-Werte sichern','Failsafe-Leistung zurückstellen':'Notbetriebs-Leistung zurückstellen','Failsafe-Mindestdauer zurückstellen':'Notbetriebs-Dauer zurückstellen'};
+  const actions={'Ausgangsmessung MPC':'Ausgangsleistung messen','Grenze + Quittung':'Grenze setzen','gemessene Wirkung':'Leistungsanpassung messen','Heartbeat-Ausfall':'Lebenszeichen unterbrechen','Failsafe gemessene Wirkung':'Notbetrieb messen','Wiederkehr':'Mindestdauer abwarten','Wiederkehr gemessene Wirkung':'Rückkehr nach Mindestdauer messen','Heartbeat wieder starten':'Lebenszeichen senden','Grenze freigeben':'Grenze freigeben','Grenzen aufheben':'Testgrenzen aufheben','Vorzeitige Freigabe':'Freigabe versuchen','Vorzeitige Rückkehr gemessene Wirkung':'Rückkehr messen','Ausfallfrist abwarten':'Ausfallfrist abwarten','Wiederkehr Protokoll':'Grenze nach neuem Lebenszeichen quittieren','Failsafe Ursprungswerte':'Notbetriebs-Werte sichern','Failsafe-Leistung zurückstellen':'Notbetriebs-Leistung zurückstellen','Failsafe-Mindestdauer zurückstellen':'Notbetriebs-Dauer zurückstellen'};
   return actions[suffix]?direction+': '+actions[suffix]:name;
 }
 
@@ -381,6 +381,10 @@ function evidenceReason(item) {
  if(detail.includes('MPC nicht') || detail.includes('MPC fehlt'))return 'Das Gerät meldet keine Leistungsmessung.';
  if(detail.includes('nicht vom Gerät gemeldet'))return 'vom Gerät nicht gemeldet';
  if(/zu wenig Leistung/i.test(detail))return 'Die Leistung reicht für diesen Nachweis nicht aus.';
+ if(detail.includes('meldet keinen Notbetrieb'))return 'Das Gerät meldet keinen Notbetrieb.';
+ if(detail.includes('Notbetrieb nicht bewertbar'))return 'Notbetrieb nicht bewertbar: Zeitbezug der Lebenszeichen unklar.';
+ if(detail.includes('nicht unterscheidbar'))return 'Notbetrieb nicht unterscheidbar: Kein Leistungsabfall, der erst durch den Notbetrieb erklärbar ist.';
+ if(detail.includes('Notbetrieb nicht nachgewiesen'))return 'Rückkehr nicht bewertbar: Der Notbetrieb wurde nicht nachgewiesen.';
  if(detail.includes('Vorzeitige Rückkehr nicht nachgewiesen'))return 'Die Rückkehr wurde nicht bestätigt. Notbetrieb am Gerät prüfen.';
  if(detail.includes('Keine Änderung ohne lesbare Ursprungswerte'))return 'Die bisherigen Notbetriebs-Werte konnten nicht gelesen werden. Es wurden keine Werte verändert.';
  return item.status==='not_checked'?'Dieser Nachweis fehlt. Prüfschritt öffnen.':!item.passed?'Der Prüfschritt ist fehlgeschlagen. Einstellungen und Gerät prüfen.':'Bestätigt';

@@ -24,7 +24,7 @@ func StepName(name string) string {
 		direction = "Einspeisung"
 	}
 	suffix := strings.TrimPrefix(strings.TrimPrefix(name, "LPC "), "LPP ")
-	actions := map[string]string{"Ausgangsmessung MPC": "Ausgangsleistung messen", "Grenze + Quittung": "Grenze setzen", "gemessene Wirkung": "Leistungsanpassung messen", "Heartbeat-Ausfall": "Lebenszeichen unterbrechen (Heartbeat)", "Failsafe gemessene Wirkung": "Notbetrieb messen", "Wiederkehr": "Mindestdauer abwarten", "Wiederkehr gemessene Wirkung": "Rückkehr nach Mindestdauer messen", "Heartbeat wieder starten": "Lebenszeichen senden (Heartbeat)", "Grenze freigeben": "Grenze freigeben", "Grenzen aufheben": "Testgrenzen aufheben", "Vorzeitige Freigabe": "Freigabe versuchen", "Vorzeitige Rückkehr gemessene Wirkung": "Rückkehr messen", "Ausfallfrist abwarten": "Ausfallfrist abwarten", "Wiederkehr Protokoll": "Rückkehr bestätigen lassen", "Failsafe Ursprungswerte": "Notbetriebs-Werte sichern", "Failsafe-Leistung zurückstellen": "Notbetriebs-Leistung zurückstellen", "Failsafe-Mindestdauer zurückstellen": "Notbetriebs-Dauer zurückstellen"}
+	actions := map[string]string{"Ausgangsmessung MPC": "Ausgangsleistung messen", "Grenze + Quittung": "Grenze setzen", "gemessene Wirkung": "Leistungsanpassung messen", "Heartbeat-Ausfall": "Lebenszeichen unterbrechen (Heartbeat)", "Failsafe gemessene Wirkung": "Notbetrieb messen", "Wiederkehr": "Mindestdauer abwarten", "Wiederkehr gemessene Wirkung": "Rückkehr nach Mindestdauer messen", "Heartbeat wieder starten": "Lebenszeichen senden (Heartbeat)", "Grenze freigeben": "Grenze freigeben", "Grenzen aufheben": "Testgrenzen aufheben", "Vorzeitige Freigabe": "Freigabe versuchen", "Vorzeitige Rückkehr gemessene Wirkung": "Rückkehr messen", "Ausfallfrist abwarten": "Ausfallfrist abwarten", "Wiederkehr Protokoll": "Grenze nach neuem Lebenszeichen quittieren", "Failsafe Ursprungswerte": "Notbetriebs-Werte sichern", "Failsafe-Leistung zurückstellen": "Notbetriebs-Leistung zurückstellen", "Failsafe-Mindestdauer zurückstellen": "Notbetriebs-Dauer zurückstellen"}
 	if action, ok := actions[suffix]; ok {
 		return direction + ": " + action
 	}
@@ -95,6 +95,14 @@ func (s Step) Reason() string {
 		return "vom Gerät nicht gemeldet"
 	case strings.Contains(s.Detail, "zu wenig Leistung"), strings.Contains(s.Detail, "Zu wenig Leistung"):
 		return "Die Leistung reicht für diesen Nachweis nicht aus."
+	case strings.Contains(s.Detail, "meldet keinen Notbetrieb"):
+		return "Das Gerät meldet keinen Notbetrieb."
+	case strings.Contains(s.Detail, "Notbetrieb nicht bewertbar"):
+		return "Notbetrieb nicht bewertbar: Zeitbezug der Lebenszeichen unklar."
+	case strings.Contains(s.Detail, "nicht unterscheidbar"):
+		return "Notbetrieb nicht unterscheidbar: Kein Leistungsabfall, der erst durch den Notbetrieb erklärbar ist."
+	case strings.Contains(s.Detail, "Notbetrieb nicht nachgewiesen"):
+		return "Rückkehr nicht bewertbar: Der Notbetrieb wurde nicht nachgewiesen."
 	case strings.Contains(s.Detail, "Vorzeitige Rückkehr nicht nachgewiesen"):
 		return "Die Rückkehr wurde nicht bestätigt. Notbetrieb am Gerät prüfen."
 	case strings.Contains(s.Detail, "Keine Änderung ohne lesbare Ursprungswerte"):
