@@ -1469,5 +1469,9 @@
   "Hell gepunktet: Notbetrieb oder Rückkehr daraus nicht nachgewiesen.": "Светлый пунктир: аварийный режим или возврат из него не подтверждён.",
   "Grenze nach neuem Lebenszeichen quittieren": "Подтвердить ограничение после нового сигнала жизни",
   "Notbetrieb nicht unterscheidbar: Kein Leistungsabfall, der erst durch den Notbetrieb erklärbar ist.": "Аварийный режим неразличим: нет снижения мощности, которое объясняется только аварийным режимом.",
-  "Notbetrieb nicht bewertbar: Zeitbezug der Lebenszeichen unklar.": "Аварийный режим нельзя оценить: время сигналов жизни неясно."
+  "Notbetrieb nicht bewertbar: Zeitbezug der Lebenszeichen unklar.": "Аварийный режим нельзя оценить: время сигналов жизни неясно.",
+  "Originalwerte wiederhergestellt": "Исходные значения восстановлены",
+  "Originalwerte der unterbrochenen Prüfung werden wiederhergestellt …": "Восстанавливаются исходные значения прерванной проверки …",
+  "Originalwerte von {device} wiederhergestellt und zurückgelesen.": "Исходные значения {device} восстановлены и считаны повторно.",
+  "Originalwerte von {device} noch nicht wiederhergestellt. Der Simulator versucht es vor der nächsten Prüfung an diesem Gerät erneut.": "Исходные значения {device} ещё не восстановлены. Симулятор повторит попытку перед следующей проверкой этого устройства."
 }

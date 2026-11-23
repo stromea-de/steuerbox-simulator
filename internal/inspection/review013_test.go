@@ -13,16 +13,23 @@ type preservingDevice struct {
 	writes      []string
 	missing     bool
 	failRestore bool
+	// R5-03 (236c): the device holds what was written; the cleanup reads before it
+	// writes, so the fake must report the test values after Configure.
+	held map[string]FailsafeValues
 }
 
-func (f *preservingDevice) Configure(context.Context, Config) error {
+func (f *preservingDevice) Configure(_ context.Context, c Config) error {
 	f.calls = append(f.calls, "configure")
+	f.held = map[string]FailsafeValues{"LPC": {Power: c.Failsafe, Minimum: c.FailsafeMinimum}, "LPP": {Power: c.Failsafe, Minimum: c.FailsafeMinimum}}
 	return nil
 }
 func (f *preservingDevice) ReadFailsafe(_ context.Context, k string) (FailsafeValues, error) {
 	f.calls = append(f.calls, "read-"+k)
 	if f.missing {
 		return FailsafeValues{}, errors.New("unlesbar")
+	}
+	if v, ok := f.held[k]; ok {
+		return v, nil
 	}
 	return FailsafeValues{Power: 777, Minimum: 3 * time.Hour}, nil
 }
@@ -36,6 +43,15 @@ func (f *preservingDevice) WriteFailsafe(ctx context.Context, k, field string, v
 	}
 	if f.failRestore {
 		return errors.New("Rückschreiben abgewiesen")
+	}
+	if f.held != nil {
+		cur := f.held[k]
+		if field == "power" {
+			cur.Power = v.Power
+		} else {
+			cur.Minimum = v.Minimum
+		}
+		f.held[k] = cur
 	}
 	return nil
 }

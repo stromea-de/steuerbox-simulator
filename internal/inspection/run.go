@@ -150,18 +150,23 @@ type Report struct {
 	Samples             []Sample                  `json:"samples,omitempty"`
 	Limits              []LimitChange             `json:"limits,omitempty"`
 	FailsafeOriginals   map[string]FailsafeValues `json:"failsafeOriginals,omitempty"`
-	Mode                string                    `json:"mode"`
-	LocalSKI            string                    `json:"localSki,omitempty"`
-	Business            string                    `json:"business"`
-	Inspector           string                    `json:"inspector"`
-	Started             time.Time                 `json:"started"`
-	Finished            time.Time                 `json:"finished"`
-	Device              Device                    `json:"device"`
-	Config              Config                    `json:"config"`
-	Profile             string                    `json:"profile"`
-	Notice              string                    `json:"notice"`
-	Steps               []Step                    `json:"steps"`
-	Passed              bool                      `json:"passed"`
+	// 236: original power limits (fresh read), proof of no active limit at the end, and
+	// whether the persistent restore record was kept for a restart.
+	LimitOriginals  map[string]LimitState `json:"limitOriginals,omitempty"`
+	ReleaseVerified *bool                 `json:"releaseVerified,omitempty"`
+	RestorePending  bool                  `json:"restorePending,omitempty"`
+	Mode            string                `json:"mode"`
+	LocalSKI        string                `json:"localSki,omitempty"`
+	Business        string                `json:"business"`
+	Inspector       string                `json:"inspector"`
+	Started         time.Time             `json:"started"`
+	Finished        time.Time             `json:"finished"`
+	Device          Device                `json:"device"`
+	Config          Config                `json:"config"`
+	Profile         string                `json:"profile"`
+	Notice          string                `json:"notice"`
+	Steps           []Step                `json:"steps"`
+	Passed          bool                  `json:"passed"`
 }
 type Backend interface {
 	Connect(context.Context) error

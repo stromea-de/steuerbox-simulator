@@ -1469,5 +1469,9 @@
   "Hell gepunktet: Notbetrieb oder Rückkehr daraus nicht nachgewiesen.": "Light dotted: fallback mode or return from it not verified.",
   "Grenze nach neuem Lebenszeichen quittieren": "Acknowledge limit after new keep-alive signal",
   "Notbetrieb nicht unterscheidbar: Kein Leistungsabfall, der erst durch den Notbetrieb erklärbar ist.": "Fallback mode not distinguishable: no power drop that only fallback mode explains.",
-  "Notbetrieb nicht bewertbar: Zeitbezug der Lebenszeichen unklar.": "Fallback mode cannot be assessed: timing of the keep-alive signals unclear."
+  "Notbetrieb nicht bewertbar: Zeitbezug der Lebenszeichen unklar.": "Fallback mode cannot be assessed: timing of the keep-alive signals unclear.",
+  "Originalwerte wiederhergestellt": "Original values restored",
+  "Originalwerte der unterbrochenen Prüfung werden wiederhergestellt …": "Restoring the original values of the interrupted test …",
+  "Originalwerte von {device} wiederhergestellt und zurückgelesen.": "Original values of {device} restored and read back.",
+  "Originalwerte von {device} noch nicht wiederhergestellt. Der Simulator versucht es vor der nächsten Prüfung an diesem Gerät erneut.": "Original values of {device} not restored yet. The simulator tries again before the next test on this device."
 }

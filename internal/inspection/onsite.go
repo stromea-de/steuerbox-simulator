@@ -326,6 +326,8 @@ func RunOnSite(ctx context.Context, c Config, d Device, b DeviceBackend) (Report
 		return err
 	}
 	originals := map[string]FailsafeValues{}
+	limitOriginals := map[string]LimitState{}
+	journal, journaled := b.(RestoreJournal)
 	configured := false
 	// Finish always releases every supported limit, including writes with lost ACKs.
 	flow := func() {
@@ -422,6 +424,19 @@ func RunOnSite(ctx context.Context, c Config, d Device, b DeviceBackend) (Report
 				measurements.last = time.Time{}
 			}
 		}
+		// R4-02: fix the entity of each function before its originals are read.
+		if pinner, ok := b.(EntityPinner); ok {
+			var kinds []string
+			for _, k := range []string{"LPC", "LPP"} {
+				if touched[k] {
+					kinds = append(kinds, k)
+				}
+			}
+			if err := pinner.PinEntities(kinds); err != nil {
+				skip("Failsafe-Werte setzen", "Gerätefunktion nicht eindeutig ("+UserError(err)+"); am Gerät nichts verändert")
+				return
+			}
+		}
 		// Capture every supported direction before the first configuration write. The
 		// minimum can be shared by LPC/LPP on one entity.
 		readable := true
@@ -439,7 +454,23 @@ func RunOnSite(ctx context.Context, c Config, d Device, b DeviceBackend) (Report
 				}
 				originals[k] = v
 				r.FailsafeOriginals = originals
-				return fmt.Sprintf("Ursprung %g W; Mindestdauer %s; Quelle: %s", v.Power, v.Minimum, v.Source), nil
+				detail := fmt.Sprintf("Ursprung %g W; Mindestdauer %s; Quelle: %s", v.Power, v.Minimum, v.Source)
+				// 236: the original limit value is restored (inactive) at the end. Optional:
+				// without it the release writes 0 W inactive as before.
+				// R236-01: with a limit reader the original limit is required, like the failsafe values.
+				if reader, ok := b.(LimitReader); ok {
+					l, err := reader.ReadLimit(ctx, k)
+					if err != nil {
+						return "", fmt.Errorf("Notbetriebs-Werte am Gerät prüfen: %s Ursprungs-Grenze nicht lesbar: %w", k, err)
+					}
+					if !l.Known || !l.HasValue || math.IsNaN(l.Watts) || math.IsInf(l.Watts, 0) || l.Watts < 0 {
+						return "", fmt.Errorf("Notbetriebs-Werte am Gerät prüfen: %s Ursprungs-Grenze unvollständig", k)
+					}
+					limitOriginals[k] = l
+					r.LimitOriginals = limitOriginals
+					detail += fmt.Sprintf("; Grenze %g W, aktiv: %t", l.Watts, l.Active)
+				}
+				return detail, nil
 			})
 			readable = readable && ok
 		}
@@ -449,6 +480,14 @@ func RunOnSite(ctx context.Context, c Config, d Device, b DeviceBackend) (Report
 		}
 		if !step("Heartbeat starten", c.StepTimeout, action(func(ctx context.Context) error { return heartbeat(ctx, true) })) {
 			return
+		}
+		// 236: persist the originals before the first configuration write, so a restart
+		// after a crash can still put the device back. No write without the record.
+		if journaled {
+			if err := journal.SaveRestore(PendingRestore{ReportID: r.ID, Saved: time.Now(), Failsafe: originals, Limits: limitOriginals}); err != nil {
+				skip("Failsafe-Werte setzen", "Originalwerte nicht gespeichert ("+err.Error()+"); am Gerät nichts verändert. Speicherort prüfen")
+				return
+			}
 		}
 		configured = true // A lost acknowledgement can still mean a successful write.
 		if !step("Failsafe-Werte setzen", c.StepTimeout, action(func(ctx context.Context) error { return b.Configure(ctx, c) })) {
@@ -759,7 +798,7 @@ func RunOnSite(ctx context.Context, c Config, d Device, b DeviceBackend) (Report
 				if err := heartbeat(cc, true); err != nil {
 					errs = append(errs, err)
 				}
-				if _, err := writeLimit(cc, k, 0, false); err != nil {
+				if _, err := writeLimit(cc, k, releaseValue(limitOriginals, k), false); err != nil {
 					if errors.Is(err, ErrControlUnresponsive) {
 						r.ControlUnresponsive = true
 					}
@@ -768,7 +807,9 @@ func RunOnSite(ctx context.Context, c Config, d Device, b DeviceBackend) (Report
 			}
 			cancel()
 		}
+		restoreFailed := false
 		if configured {
+			var done []restoredField
 			for _, k := range []string{"LPC", "LPP"} {
 				original, ok := originals[k]
 				if !ok {
@@ -782,29 +823,65 @@ func RunOnSite(ctx context.Context, c Config, d Device, b DeviceBackend) (Report
 					startStep(b, name, c.CleanupTimeout)
 					cc, cancel := context.WithTimeout(context.Background(), c.CleanupTimeout)
 					err := controlReady(cc, b, r.ControlUnresponsive)
+					detail := ""
 					if err == nil {
-						err = b.WriteFailsafe(cc, k, field, original)
+						// R5-03: read first, write only differences, re-check earlier fields.
+						detail, err = restoreFailsafeOnce(cc, b, k, field, original, done)
 					}
 					cancel()
+					if err == nil {
+						done = append(done, restoredField{k, field, original})
+					}
 					if errors.Is(err, ErrControlUnresponsive) {
 						r.ControlUnresponsive = true
 					}
 					if err != nil {
+						restoreFailed = true
 						err = fmt.Errorf("Nicht bestätigt. Notbetriebs-Werte am Gerät prüfen: %w", err)
-					}
-					detail := fmt.Sprintf("Ursprüngliche Notbetriebs-Leistung %g W geschrieben und durch Geräteantwort bestätigt", original.Power)
-					if field == "minimum" {
-						detail = fmt.Sprintf("Ursprüngliche Notbetriebs-Mindestdauer %s geschrieben und durch Geräteantwort bestätigt", original.Minimum)
 					}
 					add(name, detail, "", err, nil)
 				}
+			}
+		}
+		// 236: an acknowledgement is not enough; read every limit back after the restore.
+		releaseDetail := "Alle unterstützten Grenzen per SPINE-Quittung aufgehoben"
+		if _, ok := b.(LimitReader); ok && len(errs) > 0 {
+			verified := false // R2-03: a failed release write is never "acknowledged only"
+			r.ReleaseVerified = &verified
+		} else if ok && len(errs) == 0 {
+			verified := true
+			for _, k := range []string{"LPC", "LPP"} {
+				if !touched[k] {
+					continue
+				}
+				cc, cancel := context.WithTimeout(context.Background(), c.CleanupTimeout)
+				err := controlReady(cc, b, r.ControlUnresponsive)
+				if err == nil {
+					orig, have := limitOriginals[k]
+					err = verifyReleased(cc, b, k, orig, have)
+				}
+				cancel()
+				if err != nil {
+					verified = false
+					errs = append(errs, err)
+				}
+			}
+			r.ReleaseVerified = &verified
+			if verified {
+				releaseDetail = "Alle unterstützten Grenzen per SPINE-Quittung aufgehoben; zurückgelesen: keine aktive Begrenzung, Ursprungswert"
 			}
 		}
 		cleanupErr := errors.Join(errs...)
 		if cleanupErr != nil {
 			cleanupErr = fmt.Errorf("Freigabe nicht bestätigt; Grenzen können am Gerät weiter gelten. Verbindung wiederherstellen und am Gerät freigeben: %w", cleanupErr)
 		}
-		add("Grenzen aufheben", "Alle unterstützten Grenzen per SPINE-Quittung aufgehoben", "", cleanupErr, nil)
+		add("Grenzen aufheben", releaseDetail, "", cleanupErr, nil)
+		if journaled {
+			r.RestorePending = true
+			if cleanupErr == nil && !restoreFailed && journal.ClearRestore(r.ID) == nil {
+				r.RestorePending = false
+			}
+		}
 		if caps.MPC && !r.ControlUnresponsive {
 			measurements.current = "Grenzen aufheben"
 			cc, cancel := context.WithTimeout(context.Background(), c.CleanupTimeout)

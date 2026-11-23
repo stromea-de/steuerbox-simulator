@@ -270,5 +270,9 @@
   {
     "id": "UX-S50",
     "decision": "Beim Verbinden stehen zwischen den Verbindungsphasen und der Statuszeile mit Spinner mindestens 12 px (Raster: 16 px). Der Aktionsbereich reserviert den Platz bereits vor dem Verbinden; Statuswechsel verschieben den folgenden Inhalt nicht. Test: `scripts/test_release045.mjs`, UX-Katalog. (045, Nutzer 2026-11-16)"
+  },
+  {
+    "id": "UX-S51",
+    "decision": "Gerät vor Ort: Keine Bestätigungs- oder Warndialoge vor oder während der Prüfung. Die Absicherung ist technisch: Originalwerte (Notbetriebsleistung, Mindestdauer, Leistungsgrenze) werden vor dem ersten Schreiben gelesen und gespeichert, am Ende/bei Abbruch/nach Absturz automatisch zurückgeschrieben und zurückgelesen. Das Ergebnis zeigt eine Zeile „Originalwerte wiederhergestellt“ (✓/×) direkt vor „Testgrenzen aufgehoben“; nach einem Neustart erscheint nur eine dezente Statuszeile. Test: `scripts/test_restore047.js`, Go: haftung047. (236, Nutzer 2026-11-23)"
   }
 ]

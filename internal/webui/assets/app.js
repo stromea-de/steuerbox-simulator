@@ -330,6 +330,20 @@ function setCapabilities(caps) {
    $('device-icon').textContent='◇';renderDeviceType();
 }
 function rememberedMode(){try{return localStorage.getItem('stromea-mode');}catch{return null;}}
+// 236: automatic restore after a restart. One quiet line, no dialog.
+let restoreStatusState=null;
+// R4-05: every open record is named, not only the first one.
+function restoreNames(pending,result){const names=[];for(const p of pending)names.push(p.device||p.ski||'');if(result&&!result.ok&&result.device)names.push(...String(result.device).split(', '));return [...new Set(names.filter(Boolean))].join(', ');}
+function renderRestoreStatus(s){
+ restoreStatusState=s;const line=$('restore-status');if(!line)return;const restoring=s.kind==='restore'&&s.busy,result=s.restoreResult;
+ // The record of a running test is expected; only an interrupted one is shown (236).
+ const pending=s.busy&&!restoring?[]:(s.pendingRestores||[]);let text='';
+ if(restoring)text=StromeaI18n.t('Originalwerte der unterbrochenen Prüfung werden wiederhergestellt …');
+ else if(result&&result.ok&&!pending.length)text=StromeaI18n.t('Originalwerte von {device} wiederhergestellt und zurückgelesen.').replace('{device}',result.device||'');
+ else if(pending.length||(result&&!result.ok))text=StromeaI18n.t('Originalwerte von {device} noch nicht wiederhergestellt. Der Simulator versucht es vor der nächsten Prüfung an diesem Gerät erneut.').replace('{device}',restoreNames(pending,result));
+ line.hidden=!text;line.dataset.i18nRendered='true';if(line.textContent!==text)line.textContent=text;line.classList.toggle('restore-warning',!!text&&!restoring&&!(result&&result.ok&&!pending.length));
+}
+window.addEventListener('stromea-language',()=>{if(restoreStatusState)renderRestoreStatus(restoreStatusState);});
 function renderPairTrust() {
  const valid=skiComplete();
  $('qr-origin').hidden=!fromQR;$('ski-compare').hidden=fromQR;
@@ -766,7 +780,7 @@ async function readState(initial = false) {
  if(initial && s.search?.active)searching=true;
  if(searching && s.search?.active){renderDiscovered(s.search.devices || []);$('search-motion').setAttribute('aria-label',StromeaI18n.t('EEBUS-Geräte werden gesucht…')+' '+Math.max(0,Math.ceil((Date.parse(s.search.deadline)-Date.now())/1000))+' s');}
 renderConnectionTimings(s.connectionTimings || []);renderDeviceType();
-if(s.version)$('software-version').textContent=s.version;workspace.refreshGuide(); renderPairTrust();
+if(s.version)$('software-version').textContent=s.version;workspace.refreshGuide(); renderPairTrust();renderRestoreStatus(s);
     if (localSki !== s.localSki || !$('local-qr').firstChild) {
  localSki = s.localSki; renderSKIField($('local-ski'),localSki);$('local-ending').textContent=formatSki(localSki).split(' ').pop(); renderOwnQR();
  }

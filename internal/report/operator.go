@@ -409,7 +409,43 @@ func FailsafeRestoreWarning(r inspection.Report) string {
 	return "Achtung: Notbetriebswerte am Gerät prüfen und " + target + " einstellen. Sonst gilt bei Kommunikationsausfall womöglich noch der Prüfwert " + watts(r.Config.Failsafe) + "."
 }
 
+// OriginalsRestoredText is the PDF field "Originalwerte wiederhergestellt" (236).
+func OriginalsRestoredText(r inspection.Report) string {
+	switch r.OriginalsRestored() {
+	case "yes":
+		return "Ja, vom Gerät zurückgelesen"
+	case "unchanged":
+		return "Nicht nötig, am Gerät nichts verändert"
+	case "simulated":
+		return "Übung, kein Gerät"
+	case "unverified":
+		return "Nur quittiert, nicht zurückgelesen"
+	}
+	text := "Nein"
+	if r.RestorePending {
+		text += ". Originalwerte gespeichert; der Simulator versucht es vor der nächsten Prüfung an diesem Gerät erneut"
+	}
+	return text
+}
+
+// ActiveLimitText is the PDF field "Aktive Begrenzung nach der Prüfung" (236).
+func ActiveLimitText(r inspection.Report) string {
+	switch {
+	case r.ReleaseVerified != nil && *r.ReleaseVerified:
+		return "Keine, vom Gerät zurückgelesen"
+	case r.ReleaseVerified != nil:
+		return "Nicht ausgeschlossen, am Gerät prüfen"
+	case r.ReleaseStatus() == "passed":
+		return "Aufhebung vom Gerät quittiert, nicht zurückgelesen"
+	}
+	return "Nicht bestätigt, am Gerät prüfen"
+}
+
 func (d *document) failsafeRestore(r inspection.Report) {
+	if r.Mode == inspection.ModeOnSite && r.FailsafeRestore() != "unchanged" {
+		d.gridRow([]field{{"Originalwerte wiederhergestellt", OriginalsRestoredText(r), false}, {"Aktive Begrenzung nach der Prüfung", ActiveLimitText(r), false}})
+		d.y += 4
+	}
 	d.gridRow([]field{{"Notbetriebswerte des Geräts", FailsafeRestoreText(r), false}})
 	d.y += 4
 	lines := wrapText(failsafeExplanation(r), bodyWidth, 7.5, "F1")
@@ -421,6 +457,13 @@ func (d *document) failsafeRestore(r inspection.Report) {
 		d.reserve(float64(len(lines))*12 + 4)
 		d.lines(margin, d.y+2, 9, 12, "F2", red, lines)
 		d.y += float64(len(lines))*12 + 4
+	}
+	if r.Mode == inspection.ModeOnSite {
+		// 236: quiet line, same as the web result.
+		lines = wrapText("Kopplung am Gerät entfernen, wenn sie nicht mehr gebraucht wird.", bodyWidth, 7.5, "F1")
+		d.reserve(float64(len(lines)) * 10)
+		d.lines(margin, d.y, 7.5, 10, "F1", muted, lines)
+		d.y += float64(len(lines))*10 + 4
 	}
 	d.y += 6
 }

@@ -1469,5 +1469,9 @@
   "Hell gepunktet: Notbetrieb oder Rückkehr daraus nicht nachgewiesen.": "Hell gepunktet: Notbetrieb oder Rückkehr daraus nicht nachgewiesen.",
   "Grenze nach neuem Lebenszeichen quittieren": "Grenze nach neuem Lebenszeichen quittieren",
   "Notbetrieb nicht unterscheidbar: Kein Leistungsabfall, der erst durch den Notbetrieb erklärbar ist.": "Notbetrieb nicht unterscheidbar: Kein Leistungsabfall, der erst durch den Notbetrieb erklärbar ist.",
-  "Notbetrieb nicht bewertbar: Zeitbezug der Lebenszeichen unklar.": "Notbetrieb nicht bewertbar: Zeitbezug der Lebenszeichen unklar."
+  "Notbetrieb nicht bewertbar: Zeitbezug der Lebenszeichen unklar.": "Notbetrieb nicht bewertbar: Zeitbezug der Lebenszeichen unklar.",
+  "Originalwerte wiederhergestellt": "Originalwerte wiederhergestellt",
+  "Originalwerte der unterbrochenen Prüfung werden wiederhergestellt …": "Originalwerte der unterbrochenen Prüfung werden wiederhergestellt …",
+  "Originalwerte von {device} wiederhergestellt und zurückgelesen.": "Originalwerte von {device} wiederhergestellt und zurückgelesen.",
+  "Originalwerte von {device} noch nicht wiederhergestellt. Der Simulator versucht es vor der nächsten Prüfung an diesem Gerät erneut.": "Originalwerte von {device} noch nicht wiederhergestellt. Der Simulator versucht es vor der nächsten Prüfung an diesem Gerät erneut."
 }

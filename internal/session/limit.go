@@ -1,6 +1,7 @@
 package session
 
 import (
+	"context"
 	"errors"
 	"math"
 	"math/big"
@@ -10,6 +11,7 @@ import (
 	spineapi "github.com/enbility/spine-go/api"
 	"github.com/enbility/spine-go/model"
 	"github.com/enbility/spine-go/util"
+	"github.com/stromea-de/steuerbox-simulator/internal/inspection"
 )
 
 // scaledWatts preserves the validated milliwatt precision. spine-go v0.7.0's
@@ -79,4 +81,56 @@ func sameScaledWatts(a, b *model.ScaledNumberType) bool {
 		return r.Mul(r, new(big.Rat).SetInt(factor))
 	}
 	return rational(a).Cmp(rational(b)) == 0
+}
+
+// ReadLimit reads the device's current power limit for LPC/LPP with an owned
+// fresh request (236). LPP values are returned as positive watts.
+func (s *Session) ReadLimit(ctx context.Context, kind string) (inspection.LimitState, error) {
+	if kind != "LPC" && kind != "LPP" {
+		return inspection.LimitState{}, errors.New("unbekannter Use Case")
+	}
+	r := s.useCaseEntity(kind)
+	if r == nil || !s.EG.RemoteCurrent() {
+		return inspection.LimitState{}, errors.New("keine Verbindung")
+	}
+	lc, err := client.NewLoadControl(s.EG.Entity, r)
+	if err != nil {
+		return inspection.LimitState{}, err
+	}
+	direction := model.EnergyDirectionTypeConsume
+	if kind == "LPP" {
+		direction = model.EnergyDirectionTypeProduce
+	}
+	desc, err := lc.GetLimitDescriptionsForFilter(model.LoadControlLimitDescriptionDataType{LimitType: util.Ptr(model.LoadControlLimitTypeTypeSignDependentAbsValueLimit), LimitDirection: &direction, ScopeType: util.Ptr(model.ScopeTypeTypeActivePowerLimit)})
+	if err != nil || len(desc) != 1 || desc[0].LimitId == nil {
+		return inspection.LimitState{}, errors.New("keine eindeutige Leistungsgrenze")
+	}
+	data, err := s.EG.ReadLimits(ctx, r)
+	if err != nil {
+		return inspection.LimitState{}, err
+	}
+	var found []model.LoadControlLimitDataType
+	for _, v := range data {
+		if v.LimitId != nil && *v.LimitId == *desc[0].LimitId {
+			found = append(found, v)
+		}
+	}
+	if len(found) != 1 {
+		return inspection.LimitState{}, errors.New("Grenzwert fehlt oder ist mehrdeutig")
+	}
+	v := found[0]
+	state := inspection.LimitState{Active: v.IsLimitActive != nil && *v.IsLimitActive, Known: v.IsLimitActive != nil, ReadAt: time.Now()}
+	if v.Value != nil && v.Value.Number != nil {
+		// R236-07: LPC is non-negative, LPP non-positive on the wire; anything else is unusable.
+		raw := v.Value.GetValue()
+		if kind == "LPP" {
+			raw = -raw
+		}
+		if raw < 0 {
+			return inspection.LimitState{}, errors.New("Grenzwert mit unerwartetem Vorzeichen")
+		}
+		state.Watts = raw
+		state.HasValue = true
+	}
+	return state, nil
 }

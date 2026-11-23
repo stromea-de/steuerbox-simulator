@@ -37,6 +37,7 @@ type Options struct {
 }
 
 type App struct {
+	restoreResult      *restoreOutcome
 	loopbackOnly       bool
 	loopbackPartner    atomic.Bool // read by the session's connection gate outside App.mu
 	reportDir          string
@@ -142,6 +143,7 @@ func New(s *session.Session, options ...Options) *App {
 	mux.HandleFunc("/api/report.json", a.jsonReport)
 	mux.HandleFunc("/protokoll", a.downloadPage)
 	a.handler = mux
+	a.startPendingRestore()
 	return a
 }
 func (a *App) Close() { a.cancel(); a.wg.Wait() }
@@ -315,7 +317,7 @@ func (a *App) state(w http.ResponseWriter, r *http.Request) {
 	if !real && paired {
 		caps = &inspection.Capabilities{LPC: true, LPP: true, MPC: true}
 	}
-	send(w, map[string]any{"connectionTimings": a.s.ConnectionTimings(), "reconnection": reconnection, "controlUnresponsive": a.s.ControlError() != nil, "version": report.BuildVersion(), "preparation": a.preparation, "trust": a.s.LiveTrust(), "deviceInfo": a.deviceInfo, "progress": a.s.Progress(), "capabilities": caps, "config": a.activeConfig, "kind": a.kind, "connected": live, "connectionState": phase, "connectionAt": a.connectionAt, "search": a.search, "outcome": outcome, "counts": a.resultCounts(), "device": d, "localSki": ski, "localShipID": a.s.ShipID(), "paired": paired, "deviceMode": real, "connection": status, "operation": a.operation, "busy": a.busy, "report": a.result, "error": a.runError, "shuttingDown": a.shuttingDown})
+	send(w, map[string]any{"connectionTimings": a.s.ConnectionTimings(), "reconnection": reconnection, "controlUnresponsive": a.s.ControlError() != nil, "version": report.BuildVersion(), "preparation": a.preparation, "trust": a.s.LiveTrust(), "deviceInfo": a.deviceInfo, "progress": a.s.Progress(), "capabilities": caps, "config": a.activeConfig, "kind": a.kind, "connected": live, "connectionState": phase, "connectionAt": a.connectionAt, "search": a.search, "outcome": outcome, "counts": a.resultCounts(), "device": d, "localSki": ski, "localShipID": a.s.ShipID(), "paired": paired, "deviceMode": real, "connection": status, "operation": a.operation, "busy": a.busy, "pendingRestores": a.pendingRestoresLocked(), "restoreResult": a.restoreResult, "report": a.result, "error": a.runError, "shuttingDown": a.shuttingDown})
 }
 func (a *App) discover(w http.ResponseWriter, r *http.Request) {
 	if !method(w, r, "GET") {

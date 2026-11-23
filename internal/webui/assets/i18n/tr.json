@@ -1469,5 +1469,9 @@
   "Hell gepunktet: Notbetrieb oder Rückkehr daraus nicht nachgewiesen.": "Açık noktalı: Acil çalışma veya ondan dönüş kanıtlanmadı.",
   "Grenze nach neuem Lebenszeichen quittieren": "Yeni yaşam sinyalinden sonra sınırı onayla",
   "Notbetrieb nicht unterscheidbar: Kein Leistungsabfall, der erst durch den Notbetrieb erklärbar ist.": "Acil çalışma ayırt edilemiyor: Yalnızca acil çalışmayla açıklanabilen bir güç düşüşü yok.",
-  "Notbetrieb nicht bewertbar: Zeitbezug der Lebenszeichen unklar.": "Acil çalışma değerlendirilemiyor: Yaşam sinyallerinin zamanlaması belirsiz."
+  "Notbetrieb nicht bewertbar: Zeitbezug der Lebenszeichen unklar.": "Acil çalışma değerlendirilemiyor: Yaşam sinyallerinin zamanlaması belirsiz.",
+  "Originalwerte wiederhergestellt": "Orijinal değerler geri yüklendi",
+  "Originalwerte der unterbrochenen Prüfung werden wiederhergestellt …": "Yarıda kalan testin orijinal değerleri geri yükleniyor …",
+  "Originalwerte von {device} wiederhergestellt und zurückgelesen.": "{device} orijinal değerleri geri yüklendi ve tekrar okundu.",
+  "Originalwerte von {device} noch nicht wiederhergestellt. Der Simulator versucht es vor der nächsten Prüfung an diesem Gerät erneut.": "{device} orijinal değerleri henüz geri yüklenmedi. Simülatör bu cihazdaki bir sonraki testten önce tekrar dener."
 }

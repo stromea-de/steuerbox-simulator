@@ -46,6 +46,9 @@ type Session struct {
 	reconnection     ConnectionProgress
 	recoveryCancel   context.CancelFunc
 	recoveryStopped  bool
+	// pins holds the SPINE entity per use case while originals are journaled or
+	// restored (R3-01): every read and write goes to exactly that entity.
+	pins map[string][]model.AddressEntityType
 }
 
 func New(state string) (*Session, error) {
@@ -203,7 +206,36 @@ func (s *Session) Run(ctx context.Context, c inspection.Config) (inspection.Repo
 		ctx = runCtx
 		s.mu.Lock()
 		s.limitDuration = c.LimitLease()
+		ski := s.Device.SKI
 		s.mu.Unlock()
+		// 236: originals of an interrupted earlier test on this device go back first;
+		// a new test must never record test values as "originals".
+		defer s.setPins(nil)
+		// R4-01: one test or restore per device at a time, also across processes.
+		unlock, err := s.lockDevice(ski)
+		if err != nil {
+			close(done)
+			<-monitored
+			return inspection.Report{}, err
+		}
+		defer unlock()
+		if p, err := s.LoadRestore(ski); err != nil {
+			close(done)
+			<-monitored
+			return inspection.Report{}, fmt.Errorf("Gespeicherte Originalwerte nicht lesbar; keine Änderung am Gerät: %w", err)
+		} else if p != nil {
+			// R3-01: a cold session connects first; the entity check needs discovery.
+			err := s.Connect(ctx)
+			ok := false
+			if err == nil {
+				_, ok, err = s.restoreConnected(ctx, p)
+			}
+			if err != nil || !ok {
+				close(done)
+				<-monitored
+				return inspection.Report{}, errors.New("Originalwerte der unterbrochenen Prüfung nicht wiederhergestellt; Prüfung nicht gestartet. Verbindung prüfen und erneut starten")
+			}
+		}
 		r, err := inspection.RunOnSite(ctx, c, inspection.Device{Name: s.Device.Name, SKI: s.Device.SKI}, s)
 		close(done)
 		cancel(nil)
@@ -372,7 +404,7 @@ func (s *Session) Limit(ctx context.Context, kind string, value float64, active 
 	r := s.EG.RemoteEntity()
 	deviceMode := s.IsDeviceMode() // 040 F-10: read under s.mu
 	if deviceMode {
-		r = s.EG.EntityForUseCase(kind)
+		r = s.useCaseEntity(kind)
 	}
 	// A remote device left over from a closed transport never acknowledges.
 	if r == nil || !s.EG.RemoteCurrent() {

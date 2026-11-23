@@ -804,3 +804,4 @@ main>footer{position:static}}
 #connection-motion{margin-top:16px}
 
 @media(max-width:600px){#step-1 .pair-primary{min-height:192px}}
+.restore-status{margin:0 0 14px}.restore-status.restore-warning{color:var(--error)}

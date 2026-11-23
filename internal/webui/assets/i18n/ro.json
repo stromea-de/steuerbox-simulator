@@ -1469,5 +1469,9 @@
   "Hell gepunktet: Notbetrieb oder Rückkehr daraus nicht nachgewiesen.": "Punctat deschis: regimul de avarie sau revenirea din el nu a fost dovedită.",
   "Grenze nach neuem Lebenszeichen quittieren": "Confirmă limita după un nou semnal de viață",
   "Notbetrieb nicht unterscheidbar: Kein Leistungsabfall, der erst durch den Notbetrieb erklärbar ist.": "Regimul de avarie nu poate fi distins: nicio scădere a puterii explicabilă doar prin regimul de avarie.",
-  "Notbetrieb nicht bewertbar: Zeitbezug der Lebenszeichen unklar.": "Regimul de avarie nu poate fi evaluat: momentul semnalelor de viață este neclar."
+  "Notbetrieb nicht bewertbar: Zeitbezug der Lebenszeichen unklar.": "Regimul de avarie nu poate fi evaluat: momentul semnalelor de viață este neclar.",
+  "Originalwerte wiederhergestellt": "Valorile originale restabilite",
+  "Originalwerte der unterbrochenen Prüfung werden wiederhergestellt …": "Se restabilesc valorile originale ale testului întrerupt …",
+  "Originalwerte von {device} wiederhergestellt und zurückgelesen.": "Valorile originale ale {device} au fost restabilite și recitite.",
+  "Originalwerte von {device} noch nicht wiederhergestellt. Der Simulator versucht es vor der nächsten Prüfung an diesem Gerät erneut.": "Valorile originale ale {device} nu au fost încă restabilite. Simulatorul reîncearcă înainte de următorul test pe acest dispozitiv."
 }

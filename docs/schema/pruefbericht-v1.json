@@ -146,6 +146,21 @@
     },
     "revision": {
       "$ref": "#/$defs/reportRevision"
+    },
+    "limitOriginals": {
+      "type": "object",
+      "description": "236: vor der Prüfung frisch gelesene Leistungsgrenzen je Richtung (LPP positiv).",
+      "additionalProperties": {
+        "$ref": "#/$defs/limitState"
+      }
+    },
+    "releaseVerified": {
+      "type": "boolean",
+      "description": "236: true nur, wenn das Gerät am Ende für jede geprüfte Richtung eine inaktive Grenze zurückgemeldet hat."
+    },
+    "restorePending": {
+      "type": "boolean",
+      "description": "236: Originalwerte bleiben gespeichert, weil die Wiederherstellung nicht vollständig bestätigt ist."
     }
   },
   "required": [
@@ -558,6 +573,31 @@
           "description": "Notbetrieb vom Simulator beendet, Rückkehr des Geräts aber nicht durch Messung bestätigt (037d)."
         }
       }
+    },
+    "limitState": {
+      "type": "object",
+      "properties": {
+        "watts": {
+          "type": "number"
+        },
+        "hasValue": {
+          "type": "boolean"
+        },
+        "active": {
+          "type": "boolean"
+        },
+        "known": {
+          "type": "boolean"
+        },
+        "readAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "watts",
+        "active"
+      ]
     }
   }
 }

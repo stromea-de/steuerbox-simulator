@@ -1469,5 +1469,9 @@
   "Hell gepunktet: Notbetrieb oder Rückkehr daraus nicht nachgewiesen.": "Jasna kropkowana: tryb awaryjny lub powrót z niego niepotwierdzony.",
   "Grenze nach neuem Lebenszeichen quittieren": "Potwierdź limit po nowym sygnale kontrolnym",
   "Notbetrieb nicht unterscheidbar: Kein Leistungsabfall, der erst durch den Notbetrieb erklärbar ist.": "Trybu awaryjnego nie da się odróżnić: brak spadku mocy, który wyjaśnia wyłącznie tryb awaryjny.",
-  "Notbetrieb nicht bewertbar: Zeitbezug der Lebenszeichen unklar.": "Nie można ocenić trybu awaryjnego: niejasny czas sygnałów kontrolnych."
+  "Notbetrieb nicht bewertbar: Zeitbezug der Lebenszeichen unklar.": "Nie można ocenić trybu awaryjnego: niejasny czas sygnałów kontrolnych.",
+  "Originalwerte wiederhergestellt": "Przywrócono wartości pierwotne",
+  "Originalwerte der unterbrochenen Prüfung werden wiederhergestellt …": "Przywracanie wartości pierwotnych przerwanego testu …",
+  "Originalwerte von {device} wiederhergestellt und zurückgelesen.": "Wartości pierwotne {device} przywrócone i odczytane ponownie.",
+  "Originalwerte von {device} noch nicht wiederhergestellt. Der Simulator versucht es vor der nächsten Prüfung an diesem Gerät erneut.": "Wartości pierwotne {device} nie zostały jeszcze przywrócone. Symulator spróbuje ponownie przed następnym testem tego urządzenia."
 }

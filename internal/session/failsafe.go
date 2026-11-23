@@ -14,7 +14,7 @@ import (
 )
 
 func (s *Session) ReadFailsafe(ctx context.Context, k string) (inspection.FailsafeValues, error) {
-	r := s.EG.EntityForUseCase(k)
+	r := s.useCaseEntity(k)
 	if r == nil {
 		return inspection.FailsafeValues{}, errors.New("keine passende SPINE-Entität")
 	}
@@ -77,7 +77,7 @@ func (s *Session) WriteFailsafe(ctx context.Context, k, field string, v inspecti
 	if err := ctx.Err(); err != nil {
 		return err
 	}
-	r := s.EG.EntityForUseCase(k)
+	r := s.useCaseEntity(k)
 	if r == nil {
 		return errors.New("keine passende SPINE-Entität")
 	}
@@ -149,6 +149,11 @@ func (s *Session) configureDevice(ctx context.Context, c inspection.Config) erro
 			continue
 		}
 		if k == "LPC" && !caps.LPC || k == "LPP" && !caps.LPP {
+			continue
+		}
+		// R4-02: a function that appeared after the originals were read has no saved
+		// originals; it is left alone instead of falling back to a free entity.
+		if s.excluded(k) {
 			continue
 		}
 		if _, err = s.Limit(ctx, k, 0, false); err != nil {

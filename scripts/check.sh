@@ -10,7 +10,7 @@ go mod verify
 go vet ./...
 go test -race -count=1 ./...
 command -v node >/dev/null || { echo 'Node.js ist für die Browser- und Regressionstests erforderlich.' >&2; exit 1; }
-node scripts/test_result024c.js; node scripts/test_result040.js; node scripts/test_title042.js; node scripts/test_text034.js; node scripts/test_copy035.js; node scripts/test_review034.js; node scripts/test_inputs.js; node scripts/test_network033.js; node scripts/test_guide020.js; node scripts/test_i18n016.js
+node scripts/test_result024c.js; node scripts/test_result040.js; node scripts/test_title042.js; node scripts/test_text034.js; node scripts/test_copy035.js; node scripts/test_review034.js; node scripts/test_inputs.js; node scripts/test_network033.js; node scripts/test_guide020.js; node scripts/test_i18n016.js; node scripts/test_restore047.js
 python3 scripts/test_i18n016.py
 python3 scripts/test_i18n034.py
 python3 scripts/test_i18n040.py

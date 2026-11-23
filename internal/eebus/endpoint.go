@@ -91,6 +91,7 @@ type Endpoint struct {
 	powerPending         map[model.MsgCounterType]powerRequest
 	lastPowerMeasured    time.Time
 	configurationPending map[model.MsgCounterType]configurationRequest
+	limitsPending        map[model.MsgCounterType]limitsRequest
 	deviceMode           bool
 	status               string
 	alive                bool

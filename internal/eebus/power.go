@@ -75,6 +75,7 @@ func (r measurementReader) HandleShipPayloadMessage(b []byte) {
 	r.endpoint.captureHeartbeatReceipt(r.ski, owned)
 	r.endpoint.capturePower(r.ski, owned)
 	r.endpoint.captureConfiguration(r.ski, owned)
+	r.endpoint.captureLimits(r.ski, owned)
 	r.endpoint.captureDiscovery(owned)
 }
 

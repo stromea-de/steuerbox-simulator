@@ -245,3 +245,24 @@ func (r Report) ReportTitle() string {
 	}
 	return title
 }
+
+// OriginalsRestored answers "Originalwerte wiederhergestellt" (236): "yes" only when every
+// changed failsafe value was read back and no limit is active any more; "unchanged"
+// when nothing was written, "simulated" in practice mode, "no" otherwise.
+func (r Report) OriginalsRestored() string {
+	switch r.FailsafeRestore() {
+	case "simulated", "unchanged":
+		return r.FailsafeRestore()
+	case "confirmed":
+		if r.ReleaseStatus() != "passed" {
+			return "no" // R2-03: a failed release is never "acknowledged only"
+		}
+		if r.ReleaseVerified == nil {
+			return "unverified" // R236-01: acknowledgement only (reports before 236); no "Ja"
+		}
+		if r.ReleaseStatus() == "passed" && *r.ReleaseVerified {
+			return "yes"
+		}
+	}
+	return "no"
+}

@@ -6,6 +6,16 @@ Das Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.0.0/) 
 
 ---
 
+## [1.0.2] - 2026-11-23
+
+### Geändert
+- **Originalwerte des Geräts technisch gesichert:** Vor jeder Vor-Ort-Prüfung liest der Simulator Notbetriebswerte (Leistung, Mindestdauer) und Grenzen frisch vom Gerät und speichert sie je Gerät, bevor er etwas schreibt. Am Ende werden sie zurückgeschrieben und zurückgelesen; keine Grenze bleibt aktiv. Bricht der Simulator ab oder wird er hart beendet, stellt er beim nächsten Start die Originalwerte automatisch wieder her. Schreibt nur, was abweicht; ein unverändertes Gerät bleibt unberührt.
+- Ein Gerät kann nur von einem Simulatorfenster gleichzeitig geprüft werden.
+- Eine Statuszeile zeigt, ob die Originalwerte wiederhergestellt sind.
+
+### Behoben
+- Geräte, die im Notbetrieb neue Notbetriebswerte ablehnen oder LPC und LPP eine gemeinsame Mindestdauer führen, werden zuverlässig wiederhergestellt.
+
 ## [1.0.1] - 2026-11-19
 
 ### Behoben
