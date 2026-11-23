@@ -6,6 +6,12 @@ Das Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.0.0/) 
 
 ---
 
+## [1.0.3] - 2026-11-24
+
+### Behoben
+- Nach der automatischen Wiederherstellung beim Start kennt der Simulator die Steuerfunktionen (LPC/LPP) des verbundenen Geräts; „Prüfung starten“ geht ohne neues Verbinden. Vorher meldete er „Das Gerät meldet keine Steuerfunktion“, und erst neues Verbinden half (am Gerät ggf. Notbetrieb).
+- Ein Browser mit gemerktem Übungsmodus schaltet nach der Wiederherstellung zuerst auf den Simulator zurück; eine Übung läuft nie gegen ein reales Gerät.
+
 ## [1.0.2] - 2026-11-23
 
 ### Geändert

@@ -4,7 +4,7 @@
 
 **Steuerbox-Simulator für EEBUS**
 
-[![Version](https://img.shields.io/github/v/release/stromea-de/steuerbox-simulator?color=284D7C&label=Version)](https://github.com/stromea-de/steuerbox-simulator/releases/tag/v1.0.2)
+[![Version](https://img.shields.io/github/v/release/stromea-de/steuerbox-simulator?color=284D7C&label=Version)](https://github.com/stromea-de/steuerbox-simulator/releases/tag/v1.0.3)
 [![Lizenz: AGPL-3.0-only](https://img.shields.io/badge/Lizenz-AGPL--3.0--only-orange?color=ECA249)](LICENSE)
 
 ## Was es ist
@@ -39,18 +39,18 @@ Jede Prüfung erzeugt einen deutschen PDF-Bericht samt JSON-Messdaten:
 
 ## Download & Installation
 
-Aktuelle Version: **1.0.2** ([Release v1.0.2](https://github.com/stromea-de/steuerbox-simulator/releases/tag/v1.0.2), 23.11.2026).
+Aktuelle Version: **1.0.3** ([Release v1.0.3](https://github.com/stromea-de/steuerbox-simulator/releases/tag/v1.0.3), 24.11.2026).
 
 | Plattform | Architektur | Download | Start |
 |---|---|---|---|
-| **macOS** (Apple Silicon) | arm64 | [stromea-steuerbox-simulator_1.0.2_darwin_arm64.tar.gz](https://github.com/stromea-de/steuerbox-simulator/releases/download/v1.0.2/stromea-steuerbox-simulator_1.0.2_darwin_arm64.tar.gz) | Entpacken und `./stromea-steuerbox-simulator` starten |
-| **macOS** (Intel) | amd64 | [stromea-steuerbox-simulator_1.0.2_darwin_amd64.tar.gz](https://github.com/stromea-de/steuerbox-simulator/releases/download/v1.0.2/stromea-steuerbox-simulator_1.0.2_darwin_amd64.tar.gz) | Entpacken und `./stromea-steuerbox-simulator` starten |
-| **Windows** | amd64 (x64) | [stromea-steuerbox-simulator_1.0.2_windows_amd64.zip](https://github.com/stromea-de/steuerbox-simulator/releases/download/v1.0.2/stromea-steuerbox-simulator_1.0.2_windows_amd64.zip) | Entpacken und `stromea-steuerbox-simulator.exe` doppelklicken |
-| **Windows** | arm64 | [stromea-steuerbox-simulator_1.0.2_windows_arm64.zip](https://github.com/stromea-de/steuerbox-simulator/releases/download/v1.0.2/stromea-steuerbox-simulator_1.0.2_windows_arm64.zip) | Entpacken und `stromea-steuerbox-simulator.exe` doppelklicken |
-| **Linux** | amd64 (x86_64) | [TAR.GZ](https://github.com/stromea-de/steuerbox-simulator/releases/download/v1.0.2/stromea-steuerbox-simulator_1.0.2_linux_amd64.tar.gz) · [DEB](https://github.com/stromea-de/steuerbox-simulator/releases/download/v1.0.2/stromea-steuerbox-simulator_1.0.2_linux_amd64.deb) · [RPM](https://github.com/stromea-de/steuerbox-simulator/releases/download/v1.0.2/stromea-steuerbox-simulator_1.0.2_linux_amd64.rpm) | `./stromea-steuerbox-simulator serve` oder Paketinstallation |
-| **Linux** | arm64 | [TAR.GZ](https://github.com/stromea-de/steuerbox-simulator/releases/download/v1.0.2/stromea-steuerbox-simulator_1.0.2_linux_arm64.tar.gz) · [DEB](https://github.com/stromea-de/steuerbox-simulator/releases/download/v1.0.2/stromea-steuerbox-simulator_1.0.2_linux_arm64.deb) · [RPM](https://github.com/stromea-de/steuerbox-simulator/releases/download/v1.0.2/stromea-steuerbox-simulator_1.0.2_linux_arm64.rpm) | `./stromea-steuerbox-simulator serve` oder Paketinstallation |
+| **macOS** (Apple Silicon) | arm64 | [stromea-steuerbox-simulator_1.0.3_darwin_arm64.tar.gz](https://github.com/stromea-de/steuerbox-simulator/releases/download/v1.0.3/stromea-steuerbox-simulator_1.0.3_darwin_arm64.tar.gz) | Entpacken und `./stromea-steuerbox-simulator` starten |
+| **macOS** (Intel) | amd64 | [stromea-steuerbox-simulator_1.0.3_darwin_amd64.tar.gz](https://github.com/stromea-de/steuerbox-simulator/releases/download/v1.0.3/stromea-steuerbox-simulator_1.0.3_darwin_amd64.tar.gz) | Entpacken und `./stromea-steuerbox-simulator` starten |
+| **Windows** | amd64 (x64) | [stromea-steuerbox-simulator_1.0.3_windows_amd64.zip](https://github.com/stromea-de/steuerbox-simulator/releases/download/v1.0.3/stromea-steuerbox-simulator_1.0.3_windows_amd64.zip) | Entpacken und `stromea-steuerbox-simulator.exe` doppelklicken |
+| **Windows** | arm64 | [stromea-steuerbox-simulator_1.0.3_windows_arm64.zip](https://github.com/stromea-de/steuerbox-simulator/releases/download/v1.0.3/stromea-steuerbox-simulator_1.0.3_windows_arm64.zip) | Entpacken und `stromea-steuerbox-simulator.exe` doppelklicken |
+| **Linux** | amd64 (x86_64) | [TAR.GZ](https://github.com/stromea-de/steuerbox-simulator/releases/download/v1.0.3/stromea-steuerbox-simulator_1.0.3_linux_amd64.tar.gz) · [DEB](https://github.com/stromea-de/steuerbox-simulator/releases/download/v1.0.3/stromea-steuerbox-simulator_1.0.3_linux_amd64.deb) · [RPM](https://github.com/stromea-de/steuerbox-simulator/releases/download/v1.0.3/stromea-steuerbox-simulator_1.0.3_linux_amd64.rpm) | `./stromea-steuerbox-simulator serve` oder Paketinstallation |
+| **Linux** | arm64 | [TAR.GZ](https://github.com/stromea-de/steuerbox-simulator/releases/download/v1.0.3/stromea-steuerbox-simulator_1.0.3_linux_arm64.tar.gz) · [DEB](https://github.com/stromea-de/steuerbox-simulator/releases/download/v1.0.3/stromea-steuerbox-simulator_1.0.3_linux_arm64.deb) · [RPM](https://github.com/stromea-de/steuerbox-simulator/releases/download/v1.0.3/stromea-steuerbox-simulator_1.0.3_linux_arm64.rpm) | `./stromea-steuerbox-simulator serve` oder Paketinstallation |
 
-Ebenfalls im Release enthalten: [stromea-steuerbox-simulator_1.0.2_source.tar.gz](https://github.com/stromea-de/steuerbox-simulator/releases/download/v1.0.2/stromea-steuerbox-simulator_1.0.2_source.tar.gz) und [SHA256SUMS](https://github.com/stromea-de/steuerbox-simulator/releases/download/v1.0.2/SHA256SUMS).
+Ebenfalls im Release enthalten: [stromea-steuerbox-simulator_1.0.3_source.tar.gz](https://github.com/stromea-de/steuerbox-simulator/releases/download/v1.0.3/stromea-steuerbox-simulator_1.0.3_source.tar.gz) und [SHA256SUMS](https://github.com/stromea-de/steuerbox-simulator/releases/download/v1.0.3/SHA256SUMS).
 
 ### Systemvoraussetzungen
 
@@ -62,7 +62,7 @@ Ebenfalls im Release enthalten: [stromea-steuerbox-simulator_1.0.2_source.tar.gz
 
 - **macOS:** `./stromea-steuerbox-simulator` ohne Argumente startet Browser und Menüleiste; `./stromea-steuerbox-simulator serve` bleibt im Terminal. Die Downloads haben **keine Developer-ID-Signatur und sind nicht notarisiert**. Gatekeeper kann Quarantäne-Downloads wegen eines nicht verifizierten Entwicklers sperren. Erst nach erfolgreicher Herkunfts- und Hashprüfung: im Finder Rechtsklick → **Öffnen** (ggf. unter **Datenschutz & Sicherheit** zulassen) oder am entpackten Binary `xattr -d com.apple.quarantine ./stromea-steuerbox-simulator` ausführen. Dies entfernt nur die Quarantäne und ersetzt keine Signatur oder Notarisierung.
 - **Windows:** Das Release-Binary ist ein GUI-Build (`-H=windowsgui`); vorgesehen ist der Doppelklick auf `stromea-steuerbox-simulator.exe` für Browser und Infobereich. `.\stromea-steuerbox-simulator.exe serve` kann den Server starten, garantiert aber weder sichtbare Konsolenausgabe noch Terminal-Vordergrund-/Strg+C-Verhalten. Für Terminalbetrieb einen Konsolenbuild aus dem Quellcode verwenden, siehe unten. Es gibt **keine Authenticode-Signatur**; SmartScreen kann warnen oder blockieren. Prüfe Herkunft und Hash vor dem Start und beachte die Sicherheitsvorgaben deines Betriebs.
-- **Linux:** Archiv entpacken und `./stromea-steuerbox-simulator serve` starten, oder verifiziertes Paket installieren (`sudo apt install ./stromea-steuerbox-simulator_1.0.2_linux_amd64.deb` bzw. `sudo dnf install ./stromea-steuerbox-simulator_1.0.2_linux_amd64.rpm`, oder `arm64`) und `stromea-steuerbox-simulator serve` ausführen. Angezeigte URL im Browser öffnen.
+- **Linux:** Archiv entpacken und `./stromea-steuerbox-simulator serve` starten, oder verifiziertes Paket installieren (`sudo apt install ./stromea-steuerbox-simulator_1.0.3_linux_amd64.deb` bzw. `sudo dnf install ./stromea-steuerbox-simulator_1.0.3_linux_amd64.rpm`, oder `arm64`) und `stromea-steuerbox-simulator serve` ausführen. Angezeigte URL im Browser öffnen.
 
 ### Netzwerk, Port & Datenordner
 
@@ -82,14 +82,14 @@ Prüfe vor dem Entpacken oder Installieren sowohl `SHA256SUMS` als auch deinen g
 
 ```sh
 gh attestation verify SHA256SUMS --repo stromea-de/steuerbox-simulator
-gh attestation verify stromea-steuerbox-simulator_1.0.2_darwin_arm64.tar.gz --repo stromea-de/steuerbox-simulator
+gh attestation verify stromea-steuerbox-simulator_1.0.3_darwin_arm64.tar.gz --repo stromea-de/steuerbox-simulator
 # Nur wenn alle elf Downloads vorliegen:
 shasum -a 256 -c SHA256SUMS
 # Bei nur einem Download genau diesen Eintrag prüfen:
-grep '  stromea-steuerbox-simulator_1.0.2_darwin_arm64.tar.gz$' SHA256SUMS | shasum -a 256 -c -
+grep '  stromea-steuerbox-simulator_1.0.3_darwin_arm64.tar.gz$' SHA256SUMS | shasum -a 256 -c -
 ```
 
-Unter Linux kannst du statt `shasum -a 256` auch `sha256sum` verwenden. Unter Windows prüfst du beide Attestations (`SHA256SUMS` und die ZIP) mit `gh attestation verify` und vergleichst anschließend `Get-FileHash .\stromea-steuerbox-simulator_1.0.2_windows_amd64.zip -Algorithm SHA256` mit dem Eintrag in `SHA256SUMS`. Bei jedem Prüffehler abbrechen und nicht starten.
+Unter Linux kannst du statt `shasum -a 256` auch `sha256sum` verwenden. Unter Windows prüfst du beide Attestations (`SHA256SUMS` und die ZIP) mit `gh attestation verify` und vergleichst anschließend `Get-FileHash .\stromea-steuerbox-simulator_1.0.3_windows_amd64.zip -Algorithm SHA256` mit dem Eintrag in `SHA256SUMS`. Bei jedem Prüffehler abbrechen und nicht starten.
 
 Sicherheitsmeldungen (`kontakt@stromea.de`) und lokale Sicherheitsprinzipien stehen in [SECURITY.md](SECURITY.md), Betriebs- und Nachweisgrenzen in [docs/SICHERHEIT.md](docs/SICHERHEIT.md).
 
@@ -156,7 +156,7 @@ go build -trimpath -buildvcs=false -o stromea-steuerbox-simulator-console.exe ./
 
 Die obigen CLI-Beispiele gelten für konsolenfähige Builds; das Windows-GUI-Release garantiert auch bei `--version` oder Fehlern keine sichtbare Konsolenausgabe. Eine native Windows-Abnahme des Konsolenverhaltens steht noch aus.
 
-Weitere Dokumentation: [Entwicklung](docs/ENTWICKLUNG.md) · [Verteilung & Prüfung](docs/VERTEILUNG.md) · [Release Notes 1.0.2](docs/RELEASE_NOTES_1.0.2.md) · [Changelog](CHANGELOG.md) · [Mitmachen](CONTRIBUTING.md)
+Weitere Dokumentation: [Entwicklung](docs/ENTWICKLUNG.md) · [Verteilung & Prüfung](docs/VERTEILUNG.md) · [Release Notes 1.0.3](docs/RELEASE_NOTES_1.0.3.md) · [Changelog](CHANGELOG.md) · [Mitmachen](CONTRIBUTING.md)
 
 ## Lizenz & Markenhinweis
 

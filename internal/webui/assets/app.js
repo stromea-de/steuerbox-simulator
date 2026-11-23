@@ -787,6 +787,8 @@ if(s.version)$('software-version').textContent=s.version;workspace.refreshGuide(
     if (initial) {
       resetPower();
       real = s.busy || s.report && /(?:[?&]step=3)(?:&|$)/.test(location.protocol==='file:'?location.hash:location.search) ? s.deviceMode : rememberedMode() ? rememberedMode()==='onsite' : s.deviceMode || !s.paired; paired = s.paired; connected = s.connected;
+      // 236e-01: the automatic restore leaves the backend connected to the real device; the practice view switches it back first.
+      if(!real && s.deviceMode && !s.busy){await api('/api/simulator',{});return readState(true);}
       modeView();if(!real && paired)$('paired-status').replaceChildren(drawnCheck(),document.createTextNode('Simulator erfolgreich gekoppelt.'));try{const saved=sessionStorage.getItem('stromea-scope-'+(real?'onsite-'+(s.device?.ski||''):'simulator'));if(['both','consumption','production',''].includes(saved)){$('scope').value=saved;scopeTouched=true;}}catch{}
       setCapabilities(!real && paired?{lpc:true,lpp:true,mpc:true}:s.capabilities);
       if (real) {

@@ -94,7 +94,25 @@ func (a *App) startPendingRestore() {
 		if failed = append(failed, broken...); len(failed) > 0 && last != nil && !last.OK {
 			last.Device = strings.Join(failed, ", ")
 		}
+		// 236d-01: the restore leaves the session connected. Learn the control functions
+		// from this connection like connect does, so a test can start without reconnecting
+		// (a reconnect sends LPP on a real Opta into failsafe).
+		var caps *inspection.Capabilities
+		var info *inspection.Device
+		if ctx.Err() == nil && a.s.LiveConnected() {
+			if v, e := a.s.Capabilities(ctx); e == nil {
+				caps = &v
+			}
+			v := a.s.DeviceInfo()
+			info = &v
+		}
 		a.mu.Lock()
+		// R236e-03: a cancel between reading and publishing keeps the old state.
+		if caps != nil && ctx.Err() == nil {
+			a.capabilities = caps
+			a.deviceInfo = info
+			a.connected = true
+		}
 		a.runCancel = nil
 		a.busy = false
 		a.kind = ""

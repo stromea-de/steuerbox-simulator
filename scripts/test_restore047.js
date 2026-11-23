@@ -21,4 +21,10 @@ ctx.renderRestoreStatus({busy:true,kind:'run',pendingRestores:[{device:'WP'}]});
 ctx.renderRestoreStatus({pendingRestores:[],restoreResult:{ok:false,device:'kaputt.json'}});assert(!line.hidden&&/kaputt.json noch nicht/.test(line.textContent)&&line.classList.on,'unreadable record stays visible');
 ctx.renderRestoreStatus({pendingRestores:[{device:'WP'},{device:'WR'},{device:'kaputt.json'}],restoreResult:{ok:false,device:'WP, kaputt.json'}});assert(/WP, WR, kaputt.json noch nicht/.test(line.textContent),'R4-05: every open record is named once');
 assert(line.dataset.i18nRendered==='true'&&/addEventListener\('stromea-language',\(\)=>\{if\(restoreStatusState\)renderRestoreStatus/.test(app),'line is re-rendered on language change');
-console.log('PASS 236 restore status (no dialog, matrix row, 7 languages)');
+// 236e-01: after the automatic restore the backend stays connected to the real device. A browser that
+// remembers the practice mode must switch the backend to the simulator before it shows step 2, otherwise
+// "Prüfung starten · Übungsmodus" would test the real device.
+const boot=app.match(/if \(initial\) \{[^]*?goStep\(1, false\);/)[0];
+assert(boot.includes("if(!real && s.deviceMode && !s.busy){await api('/api/simulator',{});return readState(true);}")&&boot.indexOf('real = ')<boot.indexOf('if(!real && s.deviceMode'),'236e-01: practice view never keeps a real-device backend');
+assert(boot.indexOf("api('/api/simulator'")<boot.indexOf('goStep(2, false)'),'236e-01: switch happens before step 2');
+console.log('PASS 236 restore status (no dialog, matrix row, 7 languages, practice never on restored device)');

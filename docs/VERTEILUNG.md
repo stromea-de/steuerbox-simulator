@@ -1,6 +1,6 @@
 # Pakete, Release-Build und Verifikation
 
-Stand: 23.11.2026. Aktuelle Version: **1.0.2** (Tag `v1.0.2`); erste öffentliche Version: **1.0.0**, Tag `v1.0.0`,
+Stand: 24.11.2026. Aktuelle Version: **1.0.3** (Tag `v1.0.3`); erste öffentliche Version: **1.0.0**, Tag `v1.0.0`,
 AGPL-3.0-only. Projekt: https://github.com/stromea-de/steuerbox-simulator.
 
 ## Öffentlicher Releasepfad
@@ -17,12 +17,12 @@ hinterlegte Upstream-SHA256 und die Toolversion. Cocoa benötigt macOS und Xcode
 Command Line Tools, CGO bleibt unter Windows/Linux aus. Das macOS-Deployment-
 Target ist explizit 13.0 und wird am erzeugten Binary geprüft. Der Wrapper
 `scripts/release-ci.sh tag` verlangt einen sauberen Checkout und einen exakten
-stabilen Tag. `--version` nennt die Tagversion (z. B. `1.0.2`) und den Commit ohne Test-/Dirty-Zusatz.
+stabilen Tag. `--version` nennt die Tagversion (z. B. `1.0.3`) und den Commit ohne Test-/Dirty-Zusatz.
 
 Nach Go-Tests und Build prüft der Workflow Dateiliste und Prüfsummen, erzeugt
 GitHub Artifact Attestations für alle zwölf Dateien und verifiziert sie. Erst
 anschließend erstellt er ein reguläres Release mit den englisch/deutschen
-[Release Notes](RELEASE_NOTES_1.0.2.md). Standard ist direkte Veröffentlichung.
+[Release Notes](RELEASE_NOTES_1.0.3.md). Standard ist direkte Veröffentlichung.
 Die Repositoryvariable `RELEASE_DRAFT=true` erstellt stattdessen einen Entwurf;
 dessen Veröffentlichung erfolgt danach manuell. Es gibt keine Vorabversion.
 Attestations und Veröffentlichung sind auf das öffentliche Zielrepository
@@ -33,7 +33,7 @@ Pfad `.github/workflows/release.yml` auf dem Standardbranch liegen.
 
 ## Dateien
 
-Präfix aller Archive/Pakete: `stromea-steuerbox-simulator_1.0.2_`.
+Präfix aller Archive/Pakete: `stromea-steuerbox-simulator_1.0.3_`.
 
 | Suffix | Plattform |
 | --- | --- |
@@ -55,16 +55,16 @@ Start oder Installation Prüfsummenliste und gewählten Download verifizieren:
 
 ```sh
 gh attestation verify SHA256SUMS --repo stromea-de/steuerbox-simulator
-gh attestation verify stromea-steuerbox-simulator_1.0.2_darwin_arm64.tar.gz --repo stromea-de/steuerbox-simulator
+gh attestation verify stromea-steuerbox-simulator_1.0.3_darwin_arm64.tar.gz --repo stromea-de/steuerbox-simulator
 # Alle elf Downloads müssen vorliegen:
 shasum -a 256 -c SHA256SUMS
 # Bei nur einem Download genau dessen Eintrag prüfen:
-grep '  stromea-steuerbox-simulator_1.0.2_darwin_arm64.tar.gz$' SHA256SUMS | shasum -a 256 -c -
+grep '  stromea-steuerbox-simulator_1.0.3_darwin_arm64.tar.gz$' SHA256SUMS | shasum -a 256 -c -
 ```
 
 Linux kann `sha256sum` verwenden. Unter Windows zunächst ebenfalls beide
 Attestations mit `gh attestation verify` prüfen, dann
-`Get-FileHash .\stromea-steuerbox-simulator_1.0.2_windows_amd64.zip -Algorithm SHA256`
+`Get-FileHash .\stromea-steuerbox-simulator_1.0.3_windows_amd64.zip -Algorithm SHA256`
 mit genau dem Eintrag in der verifizierten Liste vergleichen. Bei Fehler anhalten.
 
 ## Systemvoraussetzungen
