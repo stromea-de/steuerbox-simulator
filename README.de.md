@@ -2,7 +2,7 @@
 
 # Stromea Steuerbox-Simulator
 
-**Steuerbox-Simulator für EEBUS**
+**EEBUS-Steuerbox-Simulator für § 14a EnWG und EEG**
 
 [![Version](https://img.shields.io/github/v/release/stromea-de/steuerbox-simulator?color=284D7C&label=Version)](https://github.com/stromea-de/steuerbox-simulator/releases/tag/v1.0.3)
 [![Lizenz: AGPL-3.0-only](https://img.shields.io/badge/Lizenz-AGPL--3.0--only-orange?color=ECA249)](LICENSE)
@@ -40,6 +40,8 @@ Jede Prüfung erzeugt einen deutschen PDF-Bericht samt JSON-Messdaten:
 ## Download & Installation
 
 Aktuelle Version: **1.0.3** ([Release v1.0.3](https://github.com/stromea-de/steuerbox-simulator/releases/tag/v1.0.3), 24.11.2026).
+
+Website: [stromea.de/steuerbox-simulator](https://stromea.de/steuerbox-simulator) · Checkliste: [EEBUS-Funktionstest vor Ort](https://stromea.de/wissen/eebus-funktionstest)
 
 | Plattform | Architektur | Download | Start |
 |---|---|---|---|
